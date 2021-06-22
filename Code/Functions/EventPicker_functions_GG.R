@@ -7,22 +7,20 @@ library(tidyverse)
  sb_pk_thresh <- 0.000001
  sf_pk_thresh <- 0
 #cond_data is the EC timeseries for the site or cl_ts_data is the chloride timeseries calculated from the cond
-source("Data/USGS_discharge/call_discharge_datasets.R")
-
-df.orig = DC_discharge
 
 #the find.peaks function should ingest a dataframe and output a dataframe with the peaks idenitified
 find.peaks <- function(df.orig, timestamp, plot_var, sb_pk_thresh, sf_pk_thresh, cl_ts_data){
-  df <- df.orig %>%
+  df <- test %>%
     group_by(as.Date(dateTime, format = "%m/%d/%y")) %>%
-    summarise(mean(RunningMean_dis_cms)) %>%
+    summarise(mean(RunningMean_dis_cms),
+              mean(baseflow)) %>%
     rename(date = 'as.Date(dateTime, format = "%m/%d/%y")',
            Daily_dis_cms = 'mean(RunningMean_dis_cms)',
-           value = 'mean(value)',
-           threshold_peak = 'mean(threshold_peak)') %>%
+           baseflow = 'mean(baseflow)') %>%
     ungroup() %>%
     as.data.frame() %>%
-    mutate(threshold_peak = value + (mean(Daily_dis_cms))/2)
+    mutate(threshold_peak = baseflow + (mean(Daily_dis_cms))/2) %>%
+    mutate(thresold_stop_event = Daily_dis_cms - baseflow)
   
   
   #convert to seconds
