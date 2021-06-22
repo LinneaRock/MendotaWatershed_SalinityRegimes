@@ -57,13 +57,11 @@ find.peaks <- function(df.orig, timestamp, plot_var, sb_pk_thresh, sf_pk_thresh,
     }
   }
   
-  df <- df %>%
-    mutate(threshold = mean(df$Daily_dis_cms))
-  
-  ggplot() +
-    geom_line(df, mapping = aes(date, Daily_dis_cms)) +
-    geom_point(df%>%filter(peak.flag == 1), mapping = aes(date, Daily_dis_cms), color = "red") +
-    geom_line(df, mapping = aes(date, threshold_peak),color = "blue")
+
+  # ggplot() +
+  #   geom_line(df, mapping = aes(date, Daily_dis_cms)) +
+  #   geom_point(df%>%filter(peak.flag == 1), mapping = aes(date, Daily_dis_cms), color = "red") +
+  #   geom_line(df, mapping = aes(date, threshold_peak),color = "blue")
   
   df <- df %>%
     mutate(peak.flag = ifelse(peak.flag == 1 & Daily_dis_cms > threshold_peak, 1, 0)) 
