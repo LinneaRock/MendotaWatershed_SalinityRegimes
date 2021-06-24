@@ -57,11 +57,11 @@ find_outliers <- function(ConductivityData) {
 }
 
 #finalized datasets
-YRI_cond <- find_outliers(YRI_cond)
-SMC_cond <- find_outliers(SMC_cond)
-DC_cond <- find_outliers(DC_cond)
-PB_cond <- find_outliers(PB_cond)
-YRO_cond <- find_outliers(YRO_cond)
+YRI_cond <- find_outliers(YRI_cond) #Yahara River inflow
+SMC_cond <- find_outliers(SMC_cond) #Sixmile Creek
+DC_cond <- find_outliers(DC_cond) #Dorn Creek
+PB_cond <- find_outliers(PB_cond) #Pheasant Branch Creek
+YRO_cond <- find_outliers(YRO_cond) #Yahara River outlfow
 
 #gets percentage outliers detected 
 # (count(DC_cond %>% filter(outlier == "Y"))/nrow(DC_cond)) * 100
