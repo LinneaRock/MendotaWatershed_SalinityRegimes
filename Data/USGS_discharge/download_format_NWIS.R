@@ -38,11 +38,7 @@ rolling_ave_discharge <- function(cond_data, discharge_data) {
   
   #join discharge with 30-minute conductivity to keep only the datetimes of discharge collection necessary
   d.x <- cond_data %>%
-    mutate(dateTime = as.character(dateTime)) %>%
-    mutate(dateTime = gsub("T", " ", dateTime),
-           dateTime = gsub("Z", "", dateTime),
-           dateTime = as.POSIXct(dateTime, format = '%Y-%m-%d %H:%M:%S')) %>%
-    mutate(dateTime = as.POSIXct(dateTime, format='%Y-%m-%d %H:%M:%S', tz = "America/Chicago")) %>%
+    mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago")) %>%
     mutate(join_time = dateTime) %>%
     mutate(dateTime = dateTime) %>%
     mutate(check = dateTime) %>%
@@ -62,28 +58,28 @@ rolling_ave_discharge <- function(cond_data, discharge_data) {
   dis_data <- qsc %>%
     select(i.dateTime, discharge_cms) %>%
     rename(dateTime = i.dateTime) %>%
-    mutate(RunningMean_dis_cms = rollmean(discharge_cms, 13, fill = NA, na.rm = TRUE)) %>% #use zoo::rollmean over 13 rows (6 hours - 3 before and 3 after each point)
-    mutate(RunningMean_dis_cms = ifelse(row_number() <= 6, mean(discharge_cms[1:6]), RunningMean_dis_cms)) %>% # rollmean leaves empty rows at beginning and end of dataset. This line and the one below uses the mean of those empty rows
-    mutate(RunningMean_dis_cms = ifelse(row_number() >= (nrow(qsc) - 5), mean(discharge_cms[(nrow(qsc) - 5):nrow(qsc)]), RunningMean_dis_cms)) %>%
-    mutate(RunningMean_dis_cms = ifelse(RunningMean_dis_cms <= 0, 0, RunningMean_dis_cms)) #if discharge is negative, make it 0 cms
+    mutate(MovingAverage_dis_cms = rollmean(discharge_cms, 13, fill = NA, na.rm = TRUE)) %>% #use zoo::rollmean over 13 rows (6 hours - 3 before and 3 after each point)
+    mutate(MovingAverage_dis_cms = ifelse(row_number() <= 6, mean(discharge_cms[1:6]), MovingAverage_dis_cms)) %>% # rollmean leaves empty rows at beginning and end of dataset. This line and the one below uses the mean of those empty rows
+    mutate(MovingAverage_dis_cms = ifelse(row_number() >= (nrow(qsc) - 5), mean(discharge_cms[(nrow(qsc) - 5):nrow(qsc)]), MovingAverage_dis_cms)) %>%
+    mutate(MovingAverage_dis_cms = ifelse(MovingAverage_dis_cms <= 0, 0, MovingAverage_dis_cms)) #if discharge is negative, make it 0 cms
   
-  return(dis_data) #returns dataframe with dateTime, discharge_cms, RunningMean_dis_cms
+  return(dis_data) #returns dataframe with dateTime, discharge_cms, MovingAverage_dis_cms
 }
 
 
 #get running mean for discharge and write data to .csv files
 #Yahara River inlet to Lake Mendota
-YRI_discharge <- rolling_ave_discharge(read.csv("Data/Conductivity/YR-I_cond.csv"), d.YRI)
+YRI_discharge <- rolling_ave_discharge(read_csv("Data/Conductivity/YR-I_cond.csv"), d.YRI)
 write_csv(YRI_discharge, "Data/USGS_discharge/YR-I_discharge.csv")
 #Sixmile Creek
-SMC_discharge <- rolling_ave_discharge(read.csv("Data/Conductivity/SMC_cond.csv"), d.SMC)
+SMC_discharge <- rolling_ave_discharge(read_csv("Data/Conductivity/SMC_cond.csv"), d.SMC)
 write_csv(SMC_discharge, "Data/USGS_discharge/SMC_discharge.csv")
 #Dorn Creek
-DC_discharge <- rolling_ave_discharge(read.csv("Data/Conductivity/DC_cond.csv"), d.DC)
+DC_discharge <- rolling_ave_discharge(read_csv("Data/Conductivity/DC_cond.csv"), d.DC)
 write_csv(DC_discharge, "Data/USGS_discharge/DC_discharge.csv")
 #Pheasant Branch Creek
-PB_discharge <- rolling_ave_discharge(read.csv("Data/Conductivity/PB_cond.csv"), d.PB)
+PB_discharge <- rolling_ave_discharge(read_csv("Data/Conductivity/PB_cond.csv"), d.PB)
 write_csv(PB_discharge, "Data/USGS_discharge/PB_discharge.csv")
 #Yahara River outlet of Lake Mendota
-YRO_discharge <- rolling_ave_discharge(read.csv("Data/Conductivity/YR-O_cond.csv"), d.YRO)
+YRO_discharge <- rolling_ave_discharge(read_csv("Data/Conductivity/YR-O_cond.csv"), d.YRO)
 write_csv(YRO_discharge, "Data/USGS_discharge/YR-O_discharge.csv")
