@@ -7,12 +7,7 @@ source("Data/Conductivity/call_cond_datasets.R")
 source("Data/Chloride/call_Clfield_datasets.R")
 
 #function to join field and logger data to fill in missing field specific conductivity values with logger values where possible
-join_for_linreg <- function(field_data, logger_data) {
-  data <- field_data %>%
-    mutate(date = round_date(dateTime, unit = "30 minutes")) %>%
-    left_join(logger_data %>% mutate(date = dateTime), by = c("date", "dateTime")) %>%
-    mutate(SpCond_uScm.x = ifelse(is.na(SpCond_uScm.x), MovingAverage_SpCond_uScm, SpCond_uScm.x))
-}
+source("Functions/join_field_cond_function.R")
 
 #join datasets for each river
 a <- join_for_linreg(YRI_cl, YRI_cond)
@@ -42,23 +37,7 @@ ggsave("Figures/Supplemental/FigureS1_linearRegresions.png", width = 6.25, heigh
 
 
 ##Stats for regressions##
-#function to obtain slope:
-slope <- function(field_data, logger_data) {
-  round(coef(summary(lm(chloride_mgL ~ SpCond_uScm.x, join_for_linreg(field_data, logger_data))))[2,1], 2)
-}
-#function to obtain intercept
-intercept <- function(field_data, logger_data) {
-  round(coef(summary(lm(chloride_mgL ~ SpCond_uScm.x,join_for_linreg(field_data, logger_data))))[1,1], 2)
-}
-#function to obtain R^2
-r.sqr.lm <- function(field_data, logger_data) {
-  #round((info(cl, cond)$adj.r.squared), 2)
-  round((summary(lm(chloride_mgL ~ SpCond_uScm.x,join_for_linreg(field_data, logger_data)))$r.squared), 2)
-}
-#function to obtain p-value
-pvalue <- function(field_data, logger_data) {
-  coef(summary(lm(chloride_mgL ~ SpCond_uScm.x,join_for_linreg(field_data, logger_data))))[2,4]
-}
+source("Functions/regression_stats_functions.R")
 
 
 #make a table of regression stats
@@ -113,9 +92,8 @@ simpleregtable <- gt_tbl %>%
     P_value = "P-Value"
   ) %>%
   tab_header(
-    title = "Chloride - Specific Conductivity Linear Regression Statistics") %>%
-  tab_source_note(source_note = "Table S1."
-  ); simpleregtable
+    title = "Chloride - Specific Conductivity Linear Regression Statistics"
+    ); simpleregtable
 
 # whitespace can be set, zoom sets resolution
 gtsave(data = simpleregtable, "Figures/Supplemental/TableS1_linearRegressionStats.png", expand = 10, zoom = 10)
