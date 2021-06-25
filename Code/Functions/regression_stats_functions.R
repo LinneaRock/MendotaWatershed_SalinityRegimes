@@ -1,6 +1,6 @@
 #functions to get linear regression statistics
 
-source("Functions/join_field_cond.R")
+source("Code/Functions/join_field_cond.R")
 
 
 #function to obtain slope:

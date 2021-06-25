@@ -7,7 +7,7 @@ source("Data/Conductivity/call_cond_datasets.R")
 source("Data/Chloride/call_Clfield_datasets.R")
 
 #function to join field and logger data to fill in missing field specific conductivity values with logger values where possible
-source("Functions/join_field_cond_function.R")
+source("Code/Functions/join_field_cond_function.R")
 
 #join datasets for each river
 a <- join_for_linreg(YRI_cl, YRI_cond)
@@ -37,7 +37,7 @@ ggsave("Figures/Supplemental/FigureS1_linearRegresions.png", width = 6.25, heigh
 
 
 ##Stats for regressions##
-source("Functions/regression_stats_functions.R")
+source("Code/Functions/regression_stats_functions.R")
 
 
 #make a table of regression stats
