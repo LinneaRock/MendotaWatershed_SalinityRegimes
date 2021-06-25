@@ -37,4 +37,86 @@ ggplot(all_river_linreg, aes(SpCond_uScm.x , chloride_mgL)) +
   theme_minimal() + theme(legend.title = element_blank())
 
 #save as a supplemental figure
-ggsave("Figures/Supplemental/S1_linearRegresions.png", width = 6.25, height = 4.25, units = "in")
+ggsave("Figures/Supplemental/FigureS1_linearRegresions.png", width = 6.25, height = 4.25, units = "in")
+
+
+
+##Stats for regressions##
+#function to obtain slope:
+slope <- function(field_data, logger_data) {
+  round(coef(summary(lm(chloride_mgL ~ SpCond_uScm.x, join_for_linreg(field_data, logger_data))))[2,1], 2)
+}
+#function to obtain intercept
+intercept <- function(field_data, logger_data) {
+  round(coef(summary(lm(chloride_mgL ~ SpCond_uScm.x,join_for_linreg(field_data, logger_data))))[1,1], 2)
+}
+#function to obtain R^2
+r.sqr.lm <- function(field_data, logger_data) {
+  #round((info(cl, cond)$adj.r.squared), 2)
+  round((summary(lm(chloride_mgL ~ SpCond_uScm.x,join_for_linreg(field_data, logger_data)))$r.squared), 2)
+}
+#function to obtain p-value
+pvalue <- function(field_data, logger_data) {
+  coef(summary(lm(chloride_mgL ~ SpCond_uScm.x,join_for_linreg(field_data, logger_data))))[2,4]
+}
+
+
+#make a table of regression stats
+River_stats <- data.frame(
+  River = c(
+    "YR-I",
+    "SMC",
+    "DC",
+    "PB",
+    "YR-O"
+  ),
+  Slope = c(
+    slope(YRI_cl, YRI_cond),
+    slope(SMC_cl, SMC_cond),
+    slope(DC_cl, DC_cond),
+    slope(PB_cl, PB_cond),
+    slope(YRO_cl, YRO_cond)
+  ),
+  Intercept = c(
+    intercept(YRI_cl, YRI_cond),
+    intercept(SMC_cl, SMC_cond),
+    intercept(DC_cl, DC_cond),
+    intercept(PB_cl, PB_cond),
+    intercept(YRO_cl, YRO_cond)
+  ),
+  Adjusted_R2 = c(
+    r.sqr.lm(YRI_cl, YRI_cond),
+    r.sqr.lm(SMC_cl, SMC_cond),
+    r.sqr.lm(DC_cl, DC_cond),
+    r.sqr.lm(PB_cl, PB_cond),
+    r.sqr.lm(YRO_cl, YRO_cond)
+      ),
+  P_value = c("<0.001", "<0.001", "<0.001","<0.001","<0.001"
+               # pvalue(YRI_cl, YRI_cond),
+               # pvalue(SMC_cl, SMC_cond),
+               # pvalue(DC_cl, DC_cond),
+               # pvalue(PB_cl, PB_cond),
+               # pvalue(YRO_cl, YRO_cond)
+  )
+)
+
+library(gt)
+library(webshot)
+
+gt_tbl <- gt(River_stats)
+simpleregtable <- gt_tbl %>%
+  cols_label(
+    River = "River Name",
+    Slope = "Slope",
+    Intercept = "Intercept",
+    Adjusted_R2 = html("R<sup>2<sup>"),
+    P_value = "P-Value"
+  ) %>%
+  tab_header(
+    title = "Chloride - Specific Conductivity Linear Regression Statistics") %>%
+  tab_source_note(source_note = "Table S1."
+  ); simpleregtable
+
+# whitespace can be set, zoom sets resolution
+gtsave(data = simpleregtable, "Figures/Supplemental/TableS1_linearRegressionStats.png", expand = 10, zoom = 10)
+
