@@ -8,7 +8,8 @@ library(lubridate)
 
 #read data, set timezone
 YRI_cond <- read_csv("Data/Conductivity/YR-I_cond.csv") %>%
-  mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))
+  mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago")) %>%
+  mutate(ID = "YR-I")
 SMC_cond <- read_csv("Data/Conductivity/SMC_cond.csv") %>%
   mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))
 DC_cond <- read_csv("Data/Conductivity/DC_cond.csv") %>%
@@ -16,7 +17,8 @@ DC_cond <- read_csv("Data/Conductivity/DC_cond.csv") %>%
 PB_cond <- read_csv("Data/Conductivity/PB_cond.csv") %>%
   mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))
 YRO_cond <- read_csv("Data/Conductivity/YR-O_cond.csv") %>%
-  mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))
+  mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))%>%
+  mutate(ID = "YR-O")
 
 
 #function to detect outliers
