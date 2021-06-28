@@ -164,7 +164,7 @@ build_dataset <- function(ws_, name, id, road_density_) {
 ws_all <- build_dataset(wsYRI, "Yahara River inflow", "YR-I", road_densityYRI) %>%
    bind_rows(build_dataset(wsYRO, "Yahara River outflow", "YR-O", road_densityYRO)) %>%
    bind_rows(build_dataset(wsSMC, "Sixmile Creek", "SMC", road_densitySMC)) %>%
-   bind_rows(build_dataset(wsDC, "Dorn Creek", "DC", road_densitySMC)) %>%
+   bind_rows(build_dataset(wsDC, "Dorn Creek", "DC", road_densityDC)) %>%
    bind_rows(build_dataset(wsPB, "Pheasant Branch Creek", "PB", road_densityPB)) 
 
 write_rds(ws_all, "Code/Map/watershed_info.rds")
