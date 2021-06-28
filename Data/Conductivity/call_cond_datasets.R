@@ -11,7 +11,8 @@ YRI_cond <- read_csv("Data/Conductivity/YR-I_cond.csv") %>%
   mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago")) %>%
   mutate(ID = "YR-I")
 SMC_cond <- read_csv("Data/Conductivity/SMC_cond.csv") %>%
-  mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))
+  mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))%>%
+  mutate(ID = "SMC")
 DC_cond <- read_csv("Data/Conductivity/DC_cond.csv") %>%
   mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))
 PB_cond <- read_csv("Data/Conductivity/PB_cond.csv") %>%
