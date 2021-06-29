@@ -1,26 +1,28 @@
 #code modified from:Gorski, G. (2020). EventPicker. GitHub Repository, https://github.com/galengorski/EventPicker 
 library(tidyverse)
 
-#df is a dataframe with baseflow and threshold calculated already 
- timestamp <- 'date'
- plot_var <- 'Daily_dis_cms'
- sb_pk_thresh <- 0.000001
- sf_pk_thresh <- 0
-#cond_data is the EC timeseries for the site or cl_ts_data is the chloride timeseries calculated from the cond
+#df.orig is a dataframe with baseflow and threshold calculated already 
+
+# cl_ts_data is the chloride timeseries calculated from the cond
 
 #the find.peaks function should ingest a dataframe and output a dataframe with the peaks idenitified
-find.peaks <- function(df.orig, timestamp, plot_var, sb_pk_thresh, sf_pk_thresh, cl_ts_data){
-  df <- test %>%
+find.peaks <- function(df.orig, cl_ts_data){
+  
+  timestamp <- 'date'
+  plot_var <- 'Daily_dis_cms'
+  sb_pk_thresh <- 0.000001
+  sf_pk_thresh <- 0
+  
+  df <- df.orig %>%
     group_by(as.Date(dateTime, format = "%m/%d/%y")) %>%
-    summarise(mean(RunningMean_dis_cms),
-              mean(baseflow)) %>%
+    summarise(mean(MovingAverage_dis_cms),
+              mean(eckhardt)) %>%
     rename(date = 'as.Date(dateTime, format = "%m/%d/%y")',
-           Daily_dis_cms = 'mean(RunningMean_dis_cms)',
-           baseflow = 'mean(baseflow)') %>%
+           Daily_dis_cms = 'mean(MovingAverage_dis_cms)',
+           eckhardt = 'mean(eckhardt)') %>%
     ungroup() %>%
     as.data.frame() %>%
-    mutate(threshold_peak = baseflow + (mean(Daily_dis_cms))/2) %>%
-    mutate(thresold_stop_event = Daily_dis_cms - baseflow)
+    mutate(threshold_peak = eckhardt + (mean(Daily_dis_cms))/2) 
   
   
   #convert to seconds
@@ -57,16 +59,30 @@ find.peaks <- function(df.orig, timestamp, plot_var, sb_pk_thresh, sf_pk_thresh,
     }
   }
   
+  
+  #get dates during rain and for 2 days following rain events
+  precip_data <- read.csv("Data/precipitation.csv") %>%  #data in mm already
+    mutate(date = as.POSIXct(as.character(DATE))) %>%
+    filter(date > "2019-12-17") %>%
+    mutate(rain = ifelse(PRCP == 0, "N", "Y")) %>%
+   # mutate(keep = ifelse(lag(rain, n = 1L) == "Y" | PRCP > 0, 1, 0)) %>%
+    mutate(keep = ifelse(lag(rain, n = 1L) == "Y" | lag(rain, n = 2L) == "Y" | PRCP > 0, 1, 0)) %>%
+    filter(keep == 1) %>%
+    dplyr::select(date, PRCP, rain, keep)
 
-  # ggplot() +
-  #   geom_line(df, mapping = aes(date, Daily_dis_cms)) +
-  #   geom_point(df%>%filter(peak.flag == 1), mapping = aes(date, Daily_dis_cms), color = "red") +
-  #   geom_line(df, mapping = aes(date, threshold_peak),color = "blue")
   
   df <- df %>%
     mutate(peak.flag = ifelse(peak.flag == 1 & Daily_dis_cms > threshold_peak, 1, 0)) 
   
-  
+  df <- df %>%
+    left_join(precip_data) %>%
+    mutate(peak.flag = ifelse(peak.flag == 1 & keep == 1, 1, 0))
+ 
+    ggplot() +
+     geom_line(df, mapping = aes(date, Daily_dis_cms)) +
+     geom_point(df%>%filter(peak.flag == 1), mapping = aes(date, Daily_dis_cms), color = "red") +
+     geom_line(df, mapping = aes(date, threshold_peak),color = "blue") +
+      geom_point(df, mapping = aes(date, keep), color = "purple")
   
   ##-Flag the changes in derivatitives, events is the row of single site which have events
   events <- which(df$peak.flag == 1)
@@ -117,35 +133,43 @@ find.peaks <- function(df.orig, timestamp, plot_var, sb_pk_thresh, sf_pk_thresh,
       }
     }
   }
-  
-  df1 <- df.orig %>%
-    rename(DATE = date) %>%
-    mutate(date = as.Date(DATE)) %>%
-    left_join(df, by = "date") %>%
-    rename(dummy = date) %>%
-    rename(date = DATE)
+
   
   
-  df_combine <- df1 %>%
-    left_join(cl_ts_data)
+  df_combine <- df %>%
+    left_join(
+      cl_ts_data %>% mutate(date = as.Date(dateTime)) %>% group_by(date) %>% summarise(
+        Daily_chloride_mgL = mean(chloride_estimated_mgL),
+        Daily_chloride_load_Mg = sum(chloride_mass_Mg)
+      ),
+      by = "date")
+  
   
   df_peaks <- df_combine %>%
     drop_na(event.flag) %>%
-    rename(event_flow = runningmeandis.x,
-           event_cond = runningmean,
-           event_cl = chloride_predict)
+    rename(event_flow = Daily_dis_cms,
+           event_conc = Daily_chloride_mgL,
+           event_mass = Daily_chloride_load_Mg)
   
   df_baseflow_only <- df_combine %>%
     filter(is.na(event.flag)) %>%
-    rename(bf = runningmeandis.x,
-           bf_cond = runningmean,
-           bf_cl = chloride_predict)
+    rename(bf = Daily_dis_cms,
+           bf_conc = Daily_chloride_mgL,
+           bf_mass = Daily_chloride_load_Mg)
   
   df_all_flow <- df_baseflow_only %>%
     bind_rows(df_peaks) %>%
     arrange(date) %>%
-    dplyr::select(date, bf, bf_cl, bf_cond, event_flow, event_cl, event_cond, value.x, threshold_peak.y, peak.flag, event.flag) %>%
-    rename(value = value.x,
-           threshold_peak = threshold_peak.y)
+    dplyr::select(date, bf, bf_conc, bf_mass, event_flow, event_conc, event_mass, eckhardt)
+  
   return(df_all_flow)
+  #bf = discharge (cms) not during events
+  #bf_conc = chloride concentration (mg L^-1) during non-events
+  #bf_mass = chloride mass (metric tonnes) during non-events
+  #event_flow = discharge (cms) during stormflow events
+  #event_conc = chloride concentration (mg L^-1) during stormflow events
+  #event_mass = chloride mass (metric tonnes) during stormflow events
+  #eckhardt = eckhardt baseflow (cms)
 }
+
+

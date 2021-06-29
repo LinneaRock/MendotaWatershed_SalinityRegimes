@@ -176,28 +176,25 @@ get_eckhardt_bf <- function(siteno, discharge.df) {
 # estimate recession constant
 # The recession constant describes the rate at which baseflow recedes between storm events. 
 # It is defined as the ratio of baseflow at the current time, to the baseflow one day earlier.
-k <- baseflow_RecessionConstant(dv$RunningMean_dis_cms, UB_prc=0.95, method="Brutsaert", min_pairs=30); k
-BFImax <- baseflow_BFImax(Q=dv$RunningMean_dis_cms, k=k)
+k <- baseflow_RecessionConstant(dv$MovingAverage_dis_cms, UB_prc=0.95, method="Brutsaert", min_pairs=30); k
+BFImax <- baseflow_BFImax(Q=dv$MovingAverage_dis_cms, k=k)
 
 ## perform baseflow separations - using eckhardt for these analyses
- # dv$HYSEP_fixed <- baseflow_HYSEP(Q = dv$RunningMean_dis_cms, area_mi2 = area_mi2, method="fixed")
- # dv$HYSEP_slide <- baseflow_HYSEP(Q = dv$RunningMean_dis_cms, area_mi2 = area_mi2, method="sliding")
- # dv$HYSEP_local <- baseflow_HYSEP(Q = dv$RunningMean_dis_cms, area_mi2 = area_mi2, method="local")
- # dv$UKIH <- baseflow_UKIH(Q = dv$RunningMean_dis_cms, endrule="B")
- # dv$BFLOW_1pass <- baseflow_BFLOW(Q = dv$RunningMean_dis_cms, beta=0.95, passes=1)
- # dv$BFLOW_3pass <- baseflow_BFLOW(Q = dv$RunningMean_dis_cms, beta=0.95, passes=3)
-dv$Eckhardt <- baseflow_Eckhardt(Q = dv$RunningMean_dis_cms, BFImax=BFImax, k=k)
+ # dv$HYSEP_fixed <- baseflow_HYSEP(Q = dv$MovingAverage_dis_cms, area_mi2 = area_mi2, method="fixed")
+ # dv$HYSEP_slide <- baseflow_HYSEP(Q = dv$MovingAverage_dis_cms, area_mi2 = area_mi2, method="sliding")
+ # dv$HYSEP_local <- baseflow_HYSEP(Q = dv$MovingAverage_dis_cms, area_mi2 = area_mi2, method="local")
+ # dv$UKIH <- baseflow_UKIH(Q = dv$MovingAverage_dis_cms, endrule="B")
+ # dv$BFLOW_1pass <- baseflow_BFLOW(Q = dv$MovingAverage_dis_cms, beta=0.95, passes=1)
+ # dv$BFLOW_3pass <- baseflow_BFLOW(Q = dv$MovingAverage_dis_cms, beta=0.95, passes=3)
+dv$Eckhardt <- baseflow_Eckhardt(Q = dv$MovingAverage_dis_cms, BFImax=BFImax, k=k)
 
 dv.melt <- 
   dv %>% 
-  subset(select = c("dateTime", "RunningMean_dis_cms", "Eckhardt")) %>%
-  #subset(select=c("dateTime", "RunningMean_dis_cms", "HYSEP_fixed", "HYSEP_slide", "HYSEP_local", "UKIH", "BFLOW_1pass", "BFLOW_3pass", "Eckhardt")) %>% 
-  melt(id=c("dateTime", "RunningMean_dis_cms")) %>%
-  rename(baseflow = value) %>%
-  mutate(threshold_peak = baseflow + mean(dv$RunningMean_dis_cms)) %>%
-  mutate(threshold_stop_event = RunningMean_dis_cms - baseflow)
-  #mutate(threshold_stop_event = baseflow + mean(dv$RunningMean_dis_cms)/4)
-
+  subset(select = c("dateTime", "MovingAverage_dis_cms", "Eckhardt")) %>%
+  #subset(select=c("dateTime", "MovingAverage_dis_cms", "HYSEP_fixed", "HYSEP_slide", "HYSEP_local", "UKIH", "BFLOW_1pass", "BFLOW_3pass", "Eckhardt")) %>% 
+  melt(id=c("dateTime", "MovingAverage_dis_cms")) %>%
+  rename(eckhardt = value) %>%
+  mutate(threshold_peak = eckhardt + mean(dv$MovingAverage_dis_cms)) 
 
 
 }
@@ -209,34 +206,11 @@ calc_bfi <- function(data) {
 # The BFI is the ratio of base flow to total flow, expressed as a percentage.
 data %>% 
   group_by(variable) %>% 
-  summarize(discharge.sum = sum(RunningMean_dis_cms),
-            baseflow.sum = sum(baseflow),
+  summarize(discharge.sum = sum(MovingAverage_dis_cms),
+            baseflow.sum = sum(eckhardt),
             BFI = round(baseflow.sum/discharge.sum, 2))
 }
   
 
-
-## make plot
-plot_bf_qt <- function(bfqt, name) {
-  p.date.start = ymd("2019-12-15")
-  p.date.end = ymd("2021-04-11")
-  
-  ggplot(subset(bfqt, date >= p.date.start & date <= p.date.end)) +
-    geom_ribbon(data=subset(bfqt, date >= p.date.start & date <= p.date.end), 
-                aes(x=date, ymin=0, ymax=RunningMean_dis_cms), fill="black") +
-    geom_ribbon(mapping = aes(x = date, ymin = 0, ymax = baseflow),fill = "hot pink") +
-    #geom_line(mapping = aes(date, threshold_peak), color = "blue") +
-    #geom_line(aes(x=date, y=baseflow, color=variable)) +
-    scale_y_continuous(name="Discharge [m3]") +
-    # scale_x_date(expand=c(0,0)) +
-    scale_color_discrete(name="Method") +
-    theme_bw() + 
-    theme(panel.grid=element_blank(),
-          legend.position=c(0.99, 0.99),
-          legend.justification=c(1,1))
-  
-  ggsave(paste("Plots/QC_plots/Eckhardt_Method/separation/", name, ".png", sep = ""), height = 4.25, width =6.25, units = "in")
-  
-}
 
 
