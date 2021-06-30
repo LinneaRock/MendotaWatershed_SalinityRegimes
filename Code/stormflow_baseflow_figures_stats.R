@@ -4,14 +4,10 @@
 source("Code/estimated_chloride_conc_mass.R")
 
 
-#functions needed:
-source("Code/Functions/baseflow_separation_functions_Zipper2018.R")
-source("Code/Functions/EventPicker_functions_Gorski2020.R")
-
-
 
 
 ##Get eckhardt baseflow for each river using GlobalBaseflow code from Zipper (2018)####
+source("Code/Functions/baseflow_separation_functions_Zipper2018.R")
 
 #filter out NA and anything below 0 cms
 YRI_d <- YRI_discharge %>%
@@ -55,7 +51,10 @@ calc_bfi(YRO_d) #bfi = 76%
 
 
 
+
 ##Identify stormflow events using EventPicker code from Gorski (2020)####
+source("Code/Functions/EventPicker_functions_Gorski2020.R")
+
 YRI_events_bf <- find.peaks(YRI_d, YRI_ts_mass)
 SMC_events_bf <- find.peaks(SMC_d, SMC_ts_mass)
 DC_events_bf <- find.peaks(DC_d, DC_ts_mass)
@@ -64,6 +63,55 @@ YRO_events_bf <- find.peaks(YRO_d, YRO_ts_mass)
 
 
 
+
 ##Create plots of chemographs and hydrographs####
-grid(YRI_events_bf, "YR_I")
-ggsave("Figures/Supplemental/YR-I_grid.png", width = 6.25, height =4.25, units = "in")
+source("Code/Functions/chemo_hydro_graph_grid_function.R")
+
+grid(YRI_events_bf, "Yahara River Inflow")
+ggsave("Figures/Supplemental/FigureS2_YR-I_grid.png", width = 6.25, height = 5.5, units = "in")
+grid(SMC_events_bf, "Sixmile Creek")
+ggsave("Figures/Supplemental/FigureS3_SMC_grid.png", width = 6.25, height = 5.5, units = "in")
+grid(DC_events_bf, "Dorn Creek")
+ggsave("Figures/Supplemental/FigureS4_DC_grid.png", width = 6.25, height = 5.5, units = "in")
+grid(PB_events_bf, "Pheasant Branch Creek")
+ggsave("Figures/Supplemental/FigureS5_PB_grid.png", width = 6.25, height = 5.5, units = "in")
+grid(YRO_events_bf, "Yahara River Outflow")
+ggsave("Figures/Supplemental/FigureS6_YR-O_grid.png", width = 6.25, height = 5.5, units = "in")
+
+
+
+
+##Full record cQ slopes####
+source("Code/Functions/fullRecord_cQ_dataframe_function.R")
+
+YRI_fullrecord <- fullRecord(YRI_events_bf, "YR-I")
+SMC_fullrecord <- fullRecord(SMC_events_bf, "SMC")
+DC_fullrecord <- fullRecord(DC_events_bf, "DC")
+PB_fullrecord <- fullRecord(PB_events_bf, "PB")
+YRO_fullrecord <- fullRecord(YRO_events_bf, "YR-O")
+
+
+
+
+##Baseflow cQ slopes####
+source("Code/Functions/baseflow_cQ_dataframe_function.R")
+
+YRI_baseflow <- baseflow(YRI_events_bf, "YR-I")
+SMC_baseflow <- baseflow(SMC_events_bf, "SMC")
+DC_baseflow <- baseflow(DC_events_bf, "DC")
+PB_baseflow <- baseflow(PB_events_bf, "PB")
+YRO_baseflow <- baseflow(YRO_events_bf, "YR-O")
+
+
+
+##individual stormflow cQ slopes####
+source("Code/Functions/stormflow_cQ_dataframe_function.R")
+
+# YRI_events <- each_event_cq(YRI_events_bf, "YR-I")
+# SMC_events <- each_event_cq(SMC_events_bf, "SMC")
+# DC_events <- each_event_cq(DC_events_bf, "DC")
+# PB_events <- each_event_cq(PB_events_bf, "PB")
+# YRO_events <- each_event_cq(YRO_events_bf, "YR-O")
+
+
+

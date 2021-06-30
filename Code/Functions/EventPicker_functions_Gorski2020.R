@@ -160,7 +160,10 @@ find.peaks <- function(df.orig, cl_ts_data){
   df_all_flow <- df_baseflow_only %>%
     bind_rows(df_peaks) %>%
     arrange(date) %>%
-    dplyr::select(date, bf, bf_conc, bf_mass, event_flow, event_conc, event_mass, eckhardt)
+    mutate(all_dis = ifelse(is.na(bf), event_flow, bf)) %>%
+    mutate(all_conc = ifelse(is.na(bf_conc), event_conc, bf_conc)) %>%
+    mutate(all_mass = ifelse(is.na(bf_mass), event_mass, bf_mass)) %>%
+    dplyr::select(date, bf, bf_conc, bf_mass, event_flow, event_conc, event_mass, eckhardt, all_dis, all_conc, all_mass, event.flag)
   
   return(df_all_flow)
   #bf = discharge (cms) not during events
@@ -170,6 +173,10 @@ find.peaks <- function(df.orig, cl_ts_data){
   #event_conc = chloride concentration (mg L^-1) during stormflow events
   #event_mass = chloride mass (metric tonnes) during stormflow events
   #eckhardt = eckhardt baseflow (cms)
+  #all_dis = all (bf and stormflow) discharge (cms)
+  #all_conc = all (bf and stormflow) chloride concentrations (mg L^-1)
+  #all_mass = all (bf and stormflow) chloride mass loading (metric tonnes)
+  #event.flag = identifies individual events
 }
 
 

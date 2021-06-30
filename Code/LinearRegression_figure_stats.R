@@ -95,6 +95,7 @@ simpleregtable <- gt_tbl %>%
     title = "Chloride - Specific Conductivity Linear Regression Statistics"
     ); simpleregtable
 
-# whitespace can be set, zoom sets resolution
-gtsave(data = simpleregtable, "Figures/Supplemental/TableS1_linearRegressionStats.png", expand = 10, zoom = 10)
+#copy table as latex
+as_latex(simpleregtable)
+
 
