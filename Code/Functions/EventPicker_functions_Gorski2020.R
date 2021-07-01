@@ -1,3 +1,5 @@
+#code returns a dataframe with stormflow events identified. 
+
 #code modified from:Gorski, G. (2020). EventPicker. GitHub Repository, https://github.com/galengorski/EventPicker 
 library(tidyverse)
 
@@ -134,48 +136,51 @@ find.peaks <- function(df.orig, cl_ts_data){
     }
   }
 
+  #df now has daily values, remainder of lines add back in all sub-hourly data
+  df1 <- df.orig %>% #sub-hourly discharge data
+    mutate(date = as.Date(dateTime)) %>%
+    left_join(df, by = "date")
   
-  
-  df_combine <- df %>%
-    left_join(
-      cl_ts_data %>% mutate(date = as.Date(dateTime)) %>% group_by(date) %>% summarise(
-        Daily_chloride_mgL = mean(chloride_estimated_mgL),
-        Daily_chloride_load_Mg = sum(chloride_mass_Mg)
-      ),
-      by = "date")
-  
-  
-  df_peaks <- df_combine %>%
+  df_combine <- df1 %>%
+    left_join(cl_ts_data) #sub-hourly chloride data
+
+  #dataframe with events only  
+  df_peaks <- df_combine %>% 
     drop_na(event.flag) %>%
-    rename(event_flow = Daily_dis_cms,
-           event_conc = Daily_chloride_mgL,
-           event_mass = Daily_chloride_load_Mg)
+    rename(event_flow_cms = MovingAverage_dis_cms,
+           event_chloride_mgL = chloride_estimated_mgL,
+           event_chloride_Mg = chloride_mass_Mg)
   
+  #dataframe without any events
   df_baseflow_only <- df_combine %>%
     filter(is.na(event.flag)) %>%
-    rename(bf = Daily_dis_cms,
-           bf_conc = Daily_chloride_mgL,
-           bf_mass = Daily_chloride_load_Mg)
+    rename(bf_cms = MovingAverage_dis_cms,
+           bf_chloride_mgL = chloride_estimated_mgL,
+           bf_chloride_Mg = chloride_mass_Mg)
   
+
+  #all data
   df_all_flow <- df_baseflow_only %>%
     bind_rows(df_peaks) %>%
     arrange(date) %>%
-    mutate(all_dis = ifelse(is.na(bf), event_flow, bf)) %>%
-    mutate(all_conc = ifelse(is.na(bf_conc), event_conc, bf_conc)) %>%
-    mutate(all_mass = ifelse(is.na(bf_mass), event_mass, bf_mass)) %>%
-    dplyr::select(date, bf, bf_conc, bf_mass, event_flow, event_conc, event_mass, eckhardt, all_dis, all_conc, all_mass, event.flag)
+    mutate(all_dis_cms = ifelse(is.na(bf_cms), event_flow_cms, bf_cms)) %>%
+    mutate(all_chloride_mgL = ifelse(is.na(bf_chloride_mgL), event_chloride_mgL, bf_chloride_mgL)) %>%
+    mutate(all_chloride_Mg = ifelse(is.na(bf_chloride_Mg), event_chloride_Mg, bf_chloride_Mg)) %>%
+    rename(eckhardt = eckhardt.x) %>%
+    dplyr::select(dateTime, bf_cms, bf_chloride_mgL, bf_chloride_Mg, event_flow_cms, event_chloride_mgL, event_chloride_Mg, eckhardt, all_dis_cms, all_chloride_mgL, all_chloride_Mg, event.flag)
+
   
   return(df_all_flow)
-  #bf = discharge (cms) not during events
-  #bf_conc = chloride concentration (mg L^-1) during non-events
-  #bf_mass = chloride mass (metric tonnes) during non-events
-  #event_flow = discharge (cms) during stormflow events
-  #event_conc = chloride concentration (mg L^-1) during stormflow events
-  #event_mass = chloride mass (metric tonnes) during stormflow events
+  #bf_cms = discharge (cms) not during events
+  #bf_chloride_mgL = chloride concentration (mg L^-1) during non-events
+  #bf_chloride_Mg = chloride mass (metric tonnes) during non-events
+  #event_flow_cms = discharge (cms) during stormflow events
+  #event_chloride_mgL = chloride concentration (mg L^-1) during stormflow events
+  #event_chloride_Mg = chloride mass (metric tonnes) during stormflow events
   #eckhardt = eckhardt baseflow (cms)
-  #all_dis = all (bf and stormflow) discharge (cms)
-  #all_conc = all (bf and stormflow) chloride concentrations (mg L^-1)
-  #all_mass = all (bf and stormflow) chloride mass loading (metric tonnes)
+  #all_dis_cms = all (bf and stormflow) discharge (cms)
+  #all_chloride_mgL = all (bf and stormflow) chloride concentrations (mg L^-1)
+  #all_chloride_mass = all (bf and stormflow) chloride mass loading (metric tonnes)
   #event.flag = identifies individual events
 }
 

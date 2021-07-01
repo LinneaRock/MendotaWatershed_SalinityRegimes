@@ -3,11 +3,11 @@
 
 source("Code/Functions/cQ_stats_functions.R")
 
-fullRecord <- function(df, name) {
+fullRecord <- function(events_bf, name) {
 
-  #add seasons to the dataset
-  df1 <- df %>%
-    mutate(mon = months.POSIXt(date)) %>%
+  #identify months and seasons
+  df1 <- events_bf %>%
+    mutate(mon = months.POSIXt(dateTime)) %>%
     mutate(season = NA) %>%
     mutate(season = ifelse(
       mon == "October" |
@@ -29,8 +29,8 @@ fullRecord <- function(df, name) {
   
   #calculate log of the full record of chloride concentration and discharge 
   df2 <- df1 %>%
-    mutate(discharge = all_dis) %>%
-    mutate(chloride = all_conc) %>%
+    mutate(discharge = all_dis_cms) %>%
+    mutate(chloride = all_chloride_mgL) %>%
     filter(chloride > 0) %>%
     filter(discharge > 0) %>%
     mutate(chloride = log10(chloride)) %>%

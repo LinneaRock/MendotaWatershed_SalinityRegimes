@@ -67,18 +67,16 @@ YRO_events_bf <- find.peaks(YRO_d, YRO_ts_mass)
 ##Create plots of chemographs and hydrographs####
 source("Code/Functions/chemo_hydro_graph_grid_function.R")
 
-grid(YRI_events_bf, "Yahara River Inflow")
+chemo_hydro_graph(YRI_d, YRI_ts_mass, "Yahara River Inflow")
 ggsave("Figures/Supplemental/FigureS2_YR-I_grid.png", width = 6.25, height = 5.5, units = "in")
-grid(SMC_events_bf, "Sixmile Creek")
+chemo_hydro_graph(SMC_d, SMC_ts_mass, "Sixmile Creek")
 ggsave("Figures/Supplemental/FigureS3_SMC_grid.png", width = 6.25, height = 5.5, units = "in")
-grid(DC_events_bf, "Dorn Creek")
+chemo_hydro_graph(DC_d, DC_ts_mass, "Dorn Creek")
 ggsave("Figures/Supplemental/FigureS4_DC_grid.png", width = 6.25, height = 5.5, units = "in")
-grid(PB_events_bf, "Pheasant Branch Creek")
+chemo_hydro_graph(PB_d, PB_ts_mass, "Pheasant Branch Creek")
 ggsave("Figures/Supplemental/FigureS5_PB_grid.png", width = 6.25, height = 5.5, units = "in")
-grid(YRO_events_bf, "Yahara River Outflow")
+chemo_hydro_graph(YRO_d, YRO_ts_mass, "Yahara River Outflow")
 ggsave("Figures/Supplemental/FigureS6_YR-O_grid.png", width = 6.25, height = 5.5, units = "in")
-
-
 
 
 ##Full record cQ slopes####
@@ -90,7 +88,7 @@ DC_fullrecord <- fullRecord(DC_events_bf, "DC")
 PB_fullrecord <- fullRecord(PB_events_bf, "PB")
 YRO_fullrecord <- fullRecord(YRO_events_bf, "YR-O")
 
-
+all_full <- bind_rows(YRI_fullrecord, SMC_fullrecord, DC_fullrecord, PB_fullrecord, YRO_fullrecord)
 
 
 ##Baseflow cQ slopes####
@@ -102,16 +100,26 @@ DC_baseflow <- baseflow(DC_events_bf, "DC")
 PB_baseflow <- baseflow(PB_events_bf, "PB")
 YRO_baseflow <- baseflow(YRO_events_bf, "YR-O")
 
-
+all_baseflow <- bind_rows(YRI_baseflow, SMC_baseflow, DC_baseflow, PB_baseflow, YRO_baseflow)
 
 ##individual stormflow cQ slopes####
-source("Code/Functions/stormflow_cQ_dataframe_function.R")
+source("Code/Functions/eachEvent_cQ_dataframe_function.R")
 
-# YRI_events <- each_event_cq(YRI_events_bf, "YR-I")
-# SMC_events <- each_event_cq(SMC_events_bf, "SMC")
-# DC_events <- each_event_cq(DC_events_bf, "DC")
-# PB_events <- each_event_cq(PB_events_bf, "PB")
-# YRO_events <- each_event_cq(YRO_events_bf, "YR-O")
+ YRI_events <- each_event_cq(YRI_events_bf, "YR-I")
+ SMC_events <- each_event_cq(SMC_events_bf, "SMC")
+ DC_events <- each_event_cq(DC_events_bf, "DC")
+ PB_events <- each_event_cq(PB_events_bf, "PB")
+ YRO_events <- each_event_cq(YRO_events_bf, "YR-O")
 
 
-
+ ##bulk stormflow cQ slopes####
+ source("Code/Functions/bulkEvent_cQ_dataframe_function.R")
+ 
+ YRI_bulkstorm <- bulk_event_cq(YRI_events_bf, "YR-I")
+ SMC_bulkstorm <- bulk_event_cq(SMC_events_bf, "SMC")
+ DC_bulkstorm <- bulk_event_cq(DC_events_bf, "DC")
+ PB_bulkstorm <- bulk_event_cq(PB_events_bf, "PB")
+ ##Before running the next line, the function in bulkEvent_cQ_dataframe_function.R needs to be ammended
+ ##The outlet only has a few events that occur in Apr-Jun and Oct-Dec. Need to comment out the other 
+ ##two seasons before running. Notes in the function for what to comment out and include. 
+ YRO_bulkstorm <- bulk_event_cq(YRO_events_bf, "YR-O")

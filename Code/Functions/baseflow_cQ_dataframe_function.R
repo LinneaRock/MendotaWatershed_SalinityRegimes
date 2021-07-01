@@ -3,11 +3,11 @@
 
 source("Code/Functions/cQ_stats_functions.R")
 
-baseflow <- function(df, name) {
+baseflow <- function(events_bf, name) {
   
-  df <- df %>%
+  df <- events_bf %>%
     filter(is.na(event.flag)) %>%
-    mutate(mon = months.POSIXt(date)) %>%
+    mutate(mon = months.POSIXt(dateTime)) %>%
     mutate(season = NA) %>%
     mutate(season = ifelse(
       mon == "October" |
@@ -29,11 +29,11 @@ baseflow <- function(df, name) {
   
   
   df1 <- df %>%
-    drop_na(bf_conc) %>%
-    filter(bf > 0) %>%
-    filter(bf_conc > 0) %>%
-    mutate(discharge = log10(bf)) %>%
-    mutate(chloride = log10(bf_conc)) %>%
+    drop_na(bf_chloride_mgL) %>%
+    filter(bf_cms > 0) %>%
+    filter(bf_chloride_mgL > 0) %>%
+    mutate(discharge = log10(bf_cms)) %>%
+    mutate(chloride = log10(bf_chloride_mgL)) %>%
     mutate(trib = "name")
   
   #get regression information into dataframes
