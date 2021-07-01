@@ -200,11 +200,12 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
   b <- ggplot(df_all_flow) +
     geom_line(aes(date, all_dis)) +
     geom_line(aes(date, event_flow, color = "red")) +
-    # geom_ribbon(mapping = aes(x = date, ymin = 0, ymax = eckhardt, fill = "#E5C4A1")) +
+    geom_ribbon(mapping = aes(x = date, ymin = 0, ymax = eckhardt, fill = "#E5C4A1")) +
     theme_minimal() +
     scale_color_manual(labels = "Stormflow",
                        values = "red") +
-    
+    scale_fill_manual(labels = "Eckhardt Baseflow",
+                     values = "#E5C4A1") +
     labs(x = "", y = "Discharge"~(m^3~s^-1)) + 
     theme(legend.title = element_blank(),
           legend.position = "bottom") +
