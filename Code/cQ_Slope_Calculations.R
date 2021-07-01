@@ -1,4 +1,5 @@
-#script to separate storm events in hydrographs and chemographs
+#script to separate storm events in hydrographs and chemographs and calculate cQ Slopes
+#slope datasets are saved under the Data folder and can be loaded via sourcing Data/cQ_slopes/call_cQslope_datasets.R
 
 #call in chloride and discharge data:
 source("Code/estimated_chloride_conc_mass.R")
