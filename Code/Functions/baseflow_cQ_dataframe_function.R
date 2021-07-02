@@ -25,7 +25,9 @@ baseflow <- function(events_bf, name) {
         mon == "July" |
           mon == "August" |
           mon == "September", "Jul-Sep", season),
-    ) 
+    ) %>%
+    mutate(timestep = (dateTime - lag(dateTime)) *  60) %>% #timestep in seconds
+    mutate(vol_water = bf_cms * timestep)
   
   
   df1 <- df %>%
@@ -43,6 +45,20 @@ baseflow <- function(events_bf, name) {
   bf_apr <- summary(lm(chloride~discharge, data = df1 %>% filter(season == "Apr-Jun")))
   bf_jul <- summary(lm(chloride~discharge, data = df1 %>% filter(season == "Jul-Sep")))
   
+  #total volume of water discharged over full study period, plus seasonal volumes (limited to 2020)
+  discharge_annual <- sum(df1$vol_water, na.rm = TRUE)
+  discharge_OctDec <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Oct-Dec"))$vol_water, na.rm = TRUE)
+  discharge_JanMar <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Jan-Mar"))$vol_water, na.rm = TRUE)
+  discharge_AprJun <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Apr-Jun"))$vol_water, na.rm = TRUE)
+  discharge_JulSep <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Jul-Sep"))$vol_water, na.rm = TRUE)
+  
+  #total mass of chloride over full study period, plus seasonal masses (limited to 2020)
+  chloride_mass_annual <- sum(df1$bf_chloride_Mg, na.rm = TRUE)
+  chloride_mass_OctDec <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Oct-Dec"))$bf_chloride_Mg, na.rm = TRUE)
+  chloride_mass_JanMar <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Jan-Mar"))$bf_chloride_Mg, na.rm = TRUE)
+  chloride_mass_AprJun <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Apr-Jun"))$bf_chloride_Mg, na.rm = TRUE)
+  chloride_mass_JulSep <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Jul-Sep"))$bf_chloride_Mg, na.rm = TRUE)
+  
   
   baseflow_fits <- data.frame(
     trib = c(name, name, name, name, name),
@@ -59,7 +75,17 @@ baseflow <- function(events_bf, name) {
                   intercept_cq(bf_jan),
                   intercept_cq(bf_apr),
                   intercept_cq(bf_jul)
-    )
+    ),
+    water_volume_cm = c(discharge_annual,
+                        discharge_OctDec,
+                        discharge_JanMar,
+                        discharge_AprJun,
+                        discharge_JulSep),
+    total_chloride_mass_Mg = c(chloride_mass_annual,
+                               chloride_mass_OctDec,
+                               chloride_mass_JanMar,
+                               chloride_mass_AprJun,
+                               chloride_mass_JulSep)
   )
   
   return(baseflow_fits)

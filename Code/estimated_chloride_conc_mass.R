@@ -35,4 +35,3 @@ ggplot(all_ts_mass) +
   scale_color_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete"))
   
   
-

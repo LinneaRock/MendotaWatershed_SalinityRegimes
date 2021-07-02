@@ -16,11 +16,11 @@ chloride_ts_mass <- function(field_data, logger_data, discharge_data) {
   
   
   ts_load <- combined %>%
-    mutate(timestep = dateTime - lag(dateTime)) %>% #timestep in minutes
+    mutate(timestep = (dateTime - lag(dateTime)) *  60) %>% #timestep in seconds
     mutate(chloride_estimated_mgL = (sl * MovingAverage_SpCond_uScm) + int) %>% #estimate chloride [mg L^-1] for each specific conductivity measure
     mutate(chloride_estimated_mgL = ifelse(chloride_estimated_mgL <= 0, minobs, chloride_estimated_mgL)) %>% #if concentration falls to or below zero, use the minimum observed value
     mutate(chloride_mass_Mg = ((chloride_estimated_mgL * MovingAverage_dis_cms) * timestep) / 1000000) %>% #load in metric tonnes [Mg]
-    mutate(chloride_mass_Mg  = ifelse(timestep > 5000, NA, chloride_mass_Mg )) %>% #loggers were removed for a week 
+    mutate(chloride_mass_Mg  = ifelse(timestep > 5000, NA, chloride_mass_Mg )) %>% #loggers were removed for a week and I don't want to calculate for that time. 
     filter(timestep > 0)
   
   return(ts_load)

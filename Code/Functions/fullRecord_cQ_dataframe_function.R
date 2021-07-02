@@ -25,7 +25,9 @@ fullRecord <- function(events_bf, name) {
         mon == "July" |
           mon == "August" |
           mon == "September", "Jul-Sep", season),
-    )
+    ) %>%
+    mutate(timestep = (dateTime - lag(dateTime)) *  60) %>% #timestep in seconds
+    mutate(vol_water = all_dis_cms * timestep)
   
   #calculate log of the full record of chloride concentration and discharge 
   df2 <- df1 %>%
@@ -43,6 +45,19 @@ fullRecord <- function(events_bf, name) {
   full_apr <- summary(lm(chloride~discharge, data = df2 %>% filter(season == "Apr-Jun")))
   full_jul <- summary(lm(chloride~discharge, data = df2 %>% filter(season == "Jul-Sep")))
  
+  #total volume of water discharged over full study period, plus seasonal volumes (limited to 2020)
+ discharge_annual <- sum(df1$vol_water, na.rm = TRUE)
+ discharge_OctDec <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Oct-Dec"))$vol_water, na.rm = TRUE)
+ discharge_JanMar <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Jan-Mar"))$vol_water, na.rm = TRUE)
+ discharge_AprJun <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Apr-Jun"))$vol_water, na.rm = TRUE)
+ discharge_JulSep <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Jul-Sep"))$vol_water, na.rm = TRUE)
+ 
+ #total mass of chloride over full study period, plus seasonal masses (limited to 2020)
+ chloride_mass_annual <- sum(df1$all_chloride_Mg, na.rm = TRUE)
+ chloride_mass_OctDec <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Oct-Dec"))$all_chloride_Mg, na.rm = TRUE)
+ chloride_mass_JanMar <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Jan-Mar"))$all_chloride_Mg, na.rm = TRUE)
+ chloride_mass_AprJun <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Apr-Jun"))$all_chloride_Mg, na.rm = TRUE)
+ chloride_mass_JulSep <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Jul-Sep"))$all_chloride_Mg, na.rm = TRUE)
    
   fullRecord_fits <- data.frame(
     trib = c(name, name, name, name, name),
@@ -59,7 +74,17 @@ fullRecord <- function(events_bf, name) {
                   intercept_cq(full_jan),
                   intercept_cq(full_apr),
                   intercept_cq(full_jul)
-    )
+    ),
+    water_volume_cm = c(discharge_annual,
+                     discharge_OctDec,
+                     discharge_JanMar,
+                     discharge_AprJun,
+                     discharge_JulSep),
+    total_chloride_mass_Mg = c(chloride_mass_annual,
+                               chloride_mass_OctDec,
+                               chloride_mass_JanMar,
+                               chloride_mass_AprJun,
+                               chloride_mass_JulSep)
   )
   
   return(fullRecord_fits)

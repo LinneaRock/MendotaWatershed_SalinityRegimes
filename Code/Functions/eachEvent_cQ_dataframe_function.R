@@ -40,8 +40,8 @@ each_event_cq <- function(events_bf, name) {
     mutate(discharge = log10(event_flow_cms)) %>% #calculate logs
     mutate(chloride = log10(event_chloride_mgL)) %>%
     group_by(event.flag) %>% #grouping by events for individual stormflow event slopes
-    mutate(slope = slope_cq(summary(lm(chloride~discharge, data = df1 %>% group_by(event.flag))))) %>%
-    mutate(intercept = intercept_cq(summary(lm(chloride~discharge, data = df1 %>% group_by(event.flag))))) %>%
+    mutate(slope = slope_cq(summary(lm(chloride~discharge, data = df %>% group_by(event.flag))))) %>%
+    mutate(intercept = intercept_cq(summary(lm(chloride~discharge, data = df %>% group_by(event.flag))))) %>%
     dplyr::select(trib, event.flag, mon, season, slope, intercept) %>%
     distinct() %>%
     mutate(new = ifelse(event.flag == lag(event.flag), "X", event.flag)) %>% #sometimes an event may cross months, next lines ensure these are not double counted
