@@ -216,4 +216,4 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
   
 }
 
-chemo_hydro_graph(YRI_d, YRI_ts_mass, "Yahara River")
+

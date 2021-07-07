@@ -3,7 +3,7 @@
 #load in cQ slope dataframes
 source("Data/cQ_slopes/call_cQslope_datasets.R")
 
-
+library(wesanderson)
 ##plot showing seasonal and annual cQ slopes for full record, baseflow, and bulk stormflow####
 
 #full record seasonal cQ using all_full dataframe
@@ -181,11 +181,18 @@ ggplot() +
     size = 6
   ) +
   geom_point(
-    all_bulkstorm %>% filter(season == "Annual"),
+    all_baseflow %>% filter(season == "Annual"),
     mapping = aes(slope, trib),
     shape = "|",
     size = 6,
     color = "red"
+  ) +
+  geom_point(
+    all_bulkstorm %>% filter(season == "Annual"),
+    mapping = aes(slope, trib),
+    shape = "|",
+    size = 6,
+    color = "blue"
   )
 
 ggsave(

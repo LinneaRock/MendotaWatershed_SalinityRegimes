@@ -49,7 +49,7 @@ bulk_event_cq <- function(events_bf, name) {
   stormflow_oct <- summary(lm(chloride~discharge, data = df %>% filter(season == "Oct-Dec")))
   stormflow_jan <- summary(lm(chloride~discharge, data = df %>% filter(season == "Jan-Mar"))) #comment out for running YR-O
   stormflow_apr <- summary(lm(chloride~discharge, data = df %>% filter(season == "Apr-Jun")))
- stormflow_jul <- summary(lm(chloride~discharge, data = df %>% filter(season == "Jul-Sep"))) #comment out for running YR-O
+  stormflow_jul <- summary(lm(chloride~discharge, data = df %>% filter(season == "Jul-Sep"))) #comment out for running YR-O
   
   #total volume of water discharged over full study period, plus seasonal volumes (limited to 2020)
   discharge_annual <- sum(df$vol_water, na.rm = TRUE)
