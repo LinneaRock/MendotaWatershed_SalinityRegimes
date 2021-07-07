@@ -68,7 +68,6 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
     mutate(date = as.POSIXct(as.character(DATE))) %>%
     filter(date > "2019-12-17") %>%
     mutate(rain = ifelse(PRCP == 0, "N", "Y")) %>%
-    # mutate(keep = ifelse(lag(rain, n = 1L) == "Y" | PRCP > 0, 1, 0)) %>%
     mutate(keep = ifelse(lag(rain, n = 1L) == "Y" | lag(rain, n = 2L) == "Y" | PRCP > 0, 1, 0)) %>%
     filter(keep == 1) %>%
     dplyr::select(date, PRCP, rain, keep)
@@ -166,7 +165,7 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
     mutate(all_dis = ifelse(is.na(bf), event_flow, bf)) %>%
     mutate(all_conc = ifelse(is.na(bf_conc), event_conc, bf_conc)) %>%
     mutate(all_mass = ifelse(is.na(bf_mass), event_mass, bf_mass)) %>%
-    dplyr::select(date, bf, bf_conc, bf_mass, event_flow, event_conc, event_mass, eckhardt, all_dis, all_conc, all_mass, event.flag)
+    dplyr::select(date, bf, bf_conc, bf_mass, event_flow, event_conc, event_mass, eckhardt, all_dis, all_conc, all_mass, event.flag) 
   
   #bf = discharge (cms) not during events
   #bf_conc = chloride concentration (mg L^-1) during non-events
@@ -199,7 +198,7 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
   #hydrograph (discharge)
   b <- ggplot(df_all_flow) +
     geom_line(aes(date, all_dis)) +
-    geom_line(aes(date, event_flow, color = "red")) +
+    geom_line(aes(date, event_flow), color = "red") +
     geom_ribbon(mapping = aes(x = date, ymin = 0, ymax = eckhardt, fill = "#E5C4A1")) +
     theme_minimal() +
     scale_color_manual(labels = "Stormflow",
