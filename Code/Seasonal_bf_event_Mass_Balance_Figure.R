@@ -1,5 +1,5 @@
-#script to make plot of seasonal chloride mass in each river, with distinctions between baseflow and stormflow
-#portions of total mass
+#script to make plot of seasonal chloride mass in each river and get distinctions between baseflow and stormflow contributions to chloride export
+
 
 
 #call in datasets of baseflow and event discharge and chloride
@@ -38,8 +38,6 @@ all_rivers_events_bf <- bind_rows(YRI_events_bf %>% mutate(ID = "YR-I"), SMC_eve
 
 #only calculate mass for seasons which we have no missing data, i.e., do not include the partial months Dec 2019 or Apr 2021
 seasonal_mass_events_bf <- all_rivers_events_bf %>%
-  # mutate(bf_chloride_Mg = ifelse(ID == "YR-O", bf_chloride_Mg * -1, bf_chloride_Mg),
-  #        event_chloride_Mg = ifelse(ID == "YR-O", event_chloride_Mg * -1, event_chloride_Mg)) %>%
   filter(yr != 2019) %>%
   filter(dateTime < "2021-04-01 00:00:00") %>%
   group_by(ID, yr, season) %>%
@@ -58,11 +56,18 @@ seasonal_mass_events_bf$season = factor(seasonal_mass_events_bf$season, levels =
 library(wesanderson)
 
 ggplot() +
-  geom_bar(seasonal_mass_events_bf, mapping = aes(fill = ID, x = reorder(season, desc(season)), y = total_chloride_mass_Mg, color = flow_type), stat = "identity") +
+  geom_bar(seasonal_mass_events_bf, mapping = aes(fill = ID, x = reorder(season, desc(season)), y = total_chloride_mass_Mg), stat = "identity") +
   scale_fill_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete")) +
   scale_color_manual(values = c("black", NA), guide = FALSE) +
   theme_minimal() + theme(legend.title = element_blank()) +
   labs(y = "Mass of Chloride (Mg)", x = "") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   coord_flip()
+
+ggsave(
+  "Figures/F5_massbalance.png",
+  height = 4.25,
+  width = 6.25,
+  units = "in"
+)
 
