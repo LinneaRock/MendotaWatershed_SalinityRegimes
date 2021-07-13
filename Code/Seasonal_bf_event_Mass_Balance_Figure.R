@@ -47,15 +47,20 @@ seasonal_mass_events_bf <- all_rivers_events_bf %>%
             eventTOT_chloride_Mg = sum(event_chloride_Mg, na.rm = TRUE)) %>%
   #pivot longer for easier graphing
   pivot_longer(c(bfTOT_chloride_Mg, eventTOT_chloride_Mg), names_to = "flow_type", values_to = "total_chloride_mass_Mg") %>%
-  mutate(total_chloride_mass_Mg = ifelse(ID == "YR-O", total_chloride_mass_Mg * -1, total_chloride_mass_Mg))
+  mutate(total_chloride_mass_Mg = ifelse(ID == "YR-O", total_chloride_mass_Mg * -1, total_chloride_mass_Mg)) %>%
+  group_by(ID, season) %>%
+  mutate(total_mass = sum(total_chloride_mass_Mg)) %>%
+  ungroup() %>%
+  mutate(percent = total_chloride_mass_Mg/total_mass)
 
 seasonal_mass_events_bf$season = factor(seasonal_mass_events_bf$season, levels = c("2020 Jan-Mar", "2020 Apr-Jun", "2020 Jul-Sep", "2020 Oct-Dec", "2021 Jan-Mar"))
 
+library(wesanderson)
 
 ggplot() +
-  geom_bar(seasonal_mass_events_bf, mapping = aes(fill = ID, x = reorder(season, desc(season)), y = total_chloride_mass_Mg), stat = "identity") +
-  geom_bar(seasonal_mass_events_bf %>% filter(flow_type == "bfTOT_chloride_Mg"), mapping = aes(x = reorder(season, desc(season)), y = total_chloride_mass_Mg, fill = NA), color = "black", stat = "identity") +
+  geom_bar(seasonal_mass_events_bf, mapping = aes(fill = ID, x = reorder(season, desc(season)), y = total_chloride_mass_Mg, color = flow_type), stat = "identity") +
   scale_fill_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete")) +
+  scale_color_manual(values = c("black", NA), guide = FALSE) +
   theme_minimal() + theme(legend.title = element_blank()) +
   labs(y = "Mass of Chloride (Mg)", x = "") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
