@@ -61,8 +61,8 @@ rolling_ave_discharge <- function(cond_data, discharge_data) {
     mutate(MovingAverage_dis_cms = rollmean(discharge_cms, 13, fill = NA, na.rm = TRUE)) %>% #use zoo::rollmean over 13 rows (6 hours - 3 before and 3 after each point)
     mutate(MovingAverage_dis_cms = ifelse(row_number() <= 6, mean(discharge_cms[1:6]), MovingAverage_dis_cms)) %>% # rollmean leaves empty rows at beginning and end of dataset. This line and the one below uses the mean of those empty rows
     mutate(MovingAverage_dis_cms = ifelse(row_number() >= (nrow(qsc) - 5), mean(discharge_cms[(nrow(qsc) - 5):nrow(qsc)]), MovingAverage_dis_cms)) %>%
-    mutate(MovingAverage_dis_cms = ifelse(MovingAverage_dis_cms <= 0, 0, MovingAverage_dis_cms)) #if discharge is negative, make it 0 cms
-  
+    mutate(MovingAverage_dis_cms = ifelse(MovingAverage_dis_cms <= 0, 0, MovingAverage_dis_cms))
+    
   return(dis_data) #returns dataframe with dateTime, discharge_cms, MovingAverage_dis_cms
 }
 
