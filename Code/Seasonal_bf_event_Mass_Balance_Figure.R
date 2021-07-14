@@ -66,7 +66,7 @@ ggplot() +
 
 ggsave(
   "Figures/F5_massbalance.png",
-  height = 4.25,
+  height = 3,
   width = 6.25,
   units = "in"
 )
