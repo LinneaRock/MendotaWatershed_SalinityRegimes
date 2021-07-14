@@ -1,7 +1,7 @@
 #script to separate storm events in discharge and chloride timeseries data
 
 #call in chloride and discharge data:
-source("Code/estimated_chloride_conc_mass.R")
+source("Code/Estimated_Chloride_Conc_Mass.R") 
 
 
 ##Get eckhardt baseflow for each river using GlobalBaseflow code from Zipper (2018)####
