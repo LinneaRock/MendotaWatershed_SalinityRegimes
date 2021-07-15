@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>Dane County Land Information Office</origin>
+				<geoform Sync="TRUE">vector digital data</geoform>
+				<pubinfo>
+					<pubplace>Madison, WI</pubplace>
+					<publish>Dane County Land Information Office</publish>
+				</pubinfo>
+				<ftname Sync="TRUE">GISdw.L.HydroPoly</ftname><title>Hydrography Polygon 2005, Dane County (WI)</title><onlink Sync="TRUE">Server=LIO-SQLdw; Service=sde:sqlserver:lio-SQLdw; Database=GISdw; User=L; Version=sde.DEFAULT</onlink><pubdate>20080304</pubdate></citeinfo>
+		</citation>
+		<descript>
+			<langdata Sync="TRUE">en</langdata><abstract>This is a county wide hydrolography dataset that provides a comprehensive 2,400 scale hydrographic dataset of the hydrologic features in Dane County.</abstract><purpose>This information is intended for cartographic use, general spatial analysis and as a spatial index to land related information.  It is not intended for site specific analysis.</purpose></descript>
+		<timeperd>
+			<timeinfo>
+				<sngdate><caldate>April 2005</caldate></sngdate></timeinfo>
+			<current>ground condition</current>
+		</timeperd>
+		<status>
+			<progress>Complete</progress>
+			<update>5 years</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc Sync="TRUE">-89.842036</westbc>
+				<eastbc Sync="TRUE">-89.004614</eastbc>
+				<northbc Sync="TRUE">43.296906</northbc>
+				<southbc Sync="TRUE">42.839251</southbc>
+			</bounding>
+			<lboundng><leftbc Sync="TRUE">699226.665844</leftbc><rightbc Sync="TRUE">922186.073531</rightbc><bottombc Sync="TRUE">397292.496000</bottombc><topbc Sync="TRUE">563828.153875</topbc></lboundng></spdom>
+		<keywords>
+			<theme>
+				<themekt>none</themekt>
+				<themekey>Hydrography</themekey><themekey>Lakes</themekey><themekey>Water</themekey><themekey>Open water</themekey><themekey>Water bodies</themekey></theme>
+			<place>
+				<placekt>none</placekt>
+				<placekey>City of Edgerton</placekey>
+				<placekey>City of Fitchburg</placekey>
+				<placekey>City of Madison</placekey>
+				<placekey>City of Middleton</placekey>
+				<placekey>City of Monona</placekey>
+				<placekey>City of Stoughton</placekey>
+				<placekey>City of Sun Prairie</placekey>
+				<placekey>City of Verona</placekey>
+				<placekey>Dane County</placekey>
+				<placekey>Town of Albion</placekey>
+				<placekey>Town of Black Earth</placekey>
+				<placekey>Town of Blooming Grove</placekey>
+				<placekey>Town of Blue Mounds</placekey>
+				<placekey>Town of Bristol</placekey>
+				<placekey>Town of Burke</placekey>
+				<placekey>Town of Berry</placekey>
+				<placekey>Town of Cottage Grove</placekey>
+				<placekey>Town of Christiana</placekey>
+				<placekey>Town of Cross Plains</placekey>
+				<placekey>Town of Dane</placekey>
+				<placekey>Town of Deerfield</placekey>
+				<placekey>Town of Dunkirk</placekey>
+				<placekey>Town of Dunn</placekey>
+				<placekey>Town of Madison</placekey>
+				<placekey>Town of Medina</placekey>
+				<placekey>Town of Middleton</placekey>
+				<placekey>Town of Montrose</placekey>
+				<placekey>Town of Mazomanie</placekey>
+				<placekey>Town of Oregon</placekey>
+				<placekey>Town of Primrose</placekey>
+				<placekey>Town of Pleasant Springs</placekey>
+				<placekey>Town of Perry</placekey>
+				<placekey>Town of Rutland</placekey>
+				<placekey>Town of Roxbury</placekey>
+				<placekey>Town of Springdale</placekey>
+				<placekey>Town of Springfield</placekey>
+				<placekey>Town of Sun Prairie</placekey>
+				<placekey>Town of Vermont</placekey>
+				<placekey>Town of Verona</placekey>
+				<placekey>Town of Vienna</placekey>
+				<placekey>Town of Windsor</placekey>
+				<placekey>Town of Westport</placekey>
+				<placekey>Town of York</placekey>
+				<placekey>Village of Belleville</placekey>
+				<placekey>Village of Black Earth</placekey>
+				<placekey>Village of Blue Mounds</placekey>
+				<placekey>Village of Brooklyn</placekey>
+				<placekey>Village of Cambridge</placekey>
+				<placekey>Village of Cross Plains</placekey>
+				<placekey>Village of Cottage Grove</placekey>
+				<placekey>Village of Dane</placekey>
+				<placekey>Village of Deerfield</placekey>
+				<placekey>Village of DeForest</placekey>
+				<placekey>Village of Maple Bluff</placekey>
+				<placekey>Village of Marshall</placekey>
+				<placekey>Village of Mazomanie</placekey>
+				<placekey>Village of McFarland</placekey>
+				<placekey>Village of Mount Horeb</placekey>
+				<placekey>Village of Oregon</placekey>
+				<placekey>Village of Rockdale</placekey>
+				<placekey>Village of Shorewood Hills</placekey>
+				<placekey>Village of Waunakee</placekey>
+			</place>
+		</keywords>
+		<accconst>Data is copyright and licensed for use.</accconst>
+		<useconst>Refer to the License Agreement for Dane County Digital Geographic Data
+Sets. &lt;URL: http://www.co.dane.wi.us/lio/gis/licenseaggreement.pdf &gt;</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Dane County Land Information Office</cntorg>
+					<cntper>Fred Iausly</cntper>
+				</cntorgp>
+				<cntpos>Senior GIS Analyst</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>210 Martin Luther King Jr. Blvd; Room 339</address>
+					<city>Madison</city>
+					<state>WI</state>
+					<postal>53703</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>(608) 266-4398</cntvoice>
+				<cntfax>(608) 266-1242</cntfax>
+				<cntemail>iausly@co.dane.wi.us</cntemail>
+				<hours>Normal Business Hours (8:00am - 4:30pm)</hours>
+				<cntinst>Additional Contact Persons:
+Tim Confare (Senior GIS Analyst) (608) 267-1598,
+Dave Watson (Senior GIS Systems Administrator) (608) 266-4265</cntinst>
+			</cntinfo>
+		</ptcontac>
+		<native>ESRI ArcGIS SDE 9.2, Microsoft SQL Server</native><natvform Sync="TRUE">SDE Feature Class</natvform><crossref><citeinfo><origin>Dane County Land Information Office</origin><title>Hydrography Lines 2005, Dane County (WI)</title><pubinfo><pubplace>Madison, WI</pubplace><publish>Dane County Land Information Office</publish></pubinfo></citeinfo></crossref></idinfo>
+	<dataqual>
+		<attracc>
+			<attraccr>Data has been reviewed for accuracy and believed to be complete.</attraccr></attracc>
+		<logic>The digital data set covers all of Dane County, WI, was created from breaklines identified during photogrammetric processing.  The data set is topologically structured line data with no gaps or omissions.</logic>
+		<complete>The data set is 100% percent complete for 2005.</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>The data set meets the National Map Accuracy Standards for the scale 1:2,400 (or 1"=200').  The horizontal accuracy is +/- 6 feet for well-defined points, at a ninety percent confidence level. (Fly Dane Accuracy Report, Ayres Associates)</horizpar></horizpa>
+			<vertacc><vertaccr>Not applicable</vertaccr></vertacc></posacc>
+		<lineage>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>Dane County Land Information Office</origin>
+						<geoform>vector digital data</geoform>
+						<pubinfo><pubplace>Madison, Wisconsin</pubplace><publish>Dane County Land Information Office</publish></pubinfo><title>Daen County Hydrography - Polygons</title></citeinfo>
+				</srccite>
+				<srcscale>2400</srcscale>
+				<srctime>
+					<timeinfo>
+						<rngdates>
+						</rngdates>
+					</timeinfo>
+					<srccurr>ground condition</srccurr>
+				</srctime>
+			</srcinfo>
+			<procstep>
+				<proccont>
+					<cntinfo>
+						<cntorgp>
+							<cntorg>Dane County Land Information Office</cntorg>
+							<cntper>Fred Iausly</cntper>
+						</cntorgp>
+						<cntpos>Senior GIS Analyst</cntpos>
+						<cntaddr>
+							<addrtype>mailing and physical address</addrtype>
+							<address>210 Martin Luther King Jr. Blvd; Room 339</address>
+							<city>Madison</city>
+							<state>WI</state>
+							<postal>53703</postal>
+							<country>USA</country>
+						</cntaddr>
+						<cntvoice>(608) 266-4398</cntvoice>
+						<cntfax>(608) 266-1242</cntfax>
+						<cntemail>iausly@co.dane.wi.us</cntemail>
+						<hours>Normal Business Hours (8::00am - 4::30pm)</hours>
+						<cntinst>Additional Contact Persons::
+Tim Confare (Senior GIS Analyst) (608) 267-1598,
+Dave Watson (Senior GIS Systems Administrator) (608) 266-4265</cntinst>
+					</cntinfo>
+				</proccont>
+				<procdesc>The hydrology was created as part of the Fly Dane 2000 project.  The dataset was produced from breaklines created in the terrain modeling process.  Additional linework was added through photo interpretation to include intermittant stream.  The DNR 24,000 scale hydrography data was use as a reference data layer to code the linework.</procdesc></procstep>
+			<procstep><procdesc>The hydrography linework from of the Fly Dane 2005 project was used to update the linework.  Linework from the coverage version that followed the outline of polygons was removed.  Network connectivity was develop by linking linework across polygon features.  The DNR 24,000 scale hydrography data was use as a reference data layer to enhance the linework attribution.</procdesc><date Sync="TRUE">20051004</date><time Sync="TRUE">11223300</time><proccont><cntinfo><cntorgp><cntorg>Dane County Land Information Office</cntorg><cntper>Fred Iausly</cntper></cntorgp><cntpos>Senior GIS Analyst</cntpos><cntaddr><addrtype>mailing and physical address</addrtype><address>210 Martin Luther King Jr. Blvd; Room 339</address><city>Madison</city><state>WI</state><postal>53703</postal><country>USA</country></cntaddr><cntvoice>(608) 266-4398</cntvoice><cntfax>(608) 266-1242</cntfax><cntemail>iausly@co.dane.wi.us</cntemail><hours>Normal Business Hours (8:00am - 4:30pm)</hours><cntinst>Additional Contact Persons:
+Tim Confare (Senior GIS Analyst) (608) 267-1598
+Dave Watson (Senior GIS Systems Administrator) (608) 266-4265
+</cntinst></cntinfo></proccont></procstep><procstep><procdesc Sync="TRUE">Dataset copied.</procdesc><srcused Sync="TRUE">Server=lio1-data; Service=sde:sqlserver:lio1-data; Database=GISdw; User=L; Version=sde.DEFAULT</srcused><procdate Sync="TRUE">20090619</procdate><proctime Sync="TRUE">09274000</proctime></procstep></lineage>
+	</dataqual>
+	<spdoinfo>
+		<indspref>None</indspref>
+		<direct Sync="TRUE">Vector</direct>
+		<ptvctinf><esriterm Name="HydroPoly"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom Sync="TRUE">4</efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">0</efeacnt><spindex Sync="TRUE">FALSE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf></spdoinfo>
+	<spref>
+		<horizsys>
+			<planar>
+				<planci>
+					<plance Sync="TRUE">coordinate pair</plance>
+					<coordrep>
+						<absres Sync="TRUE">0.000031</absres>
+						<ordres Sync="TRUE">0.000031</ordres>
+					</coordrep>
+					<plandu Sync="TRUE">survey feet</plandu>
+				</planci>
+			</planar>
+			<geodetic>
+				<horizdn Sync="TRUE">D_North_American_1983_HARN</horizdn>
+				<ellips Sync="TRUE">Geodetic Reference System 80</ellips>
+				<semiaxis Sync="TRUE">6378137.000000</semiaxis>
+				<denflat Sync="TRUE">298.257222</denflat>
+			</geodetic>
+			<cordsysn><geogcsn Sync="TRUE">GCS_North_American_1983_HARN</geogcsn><projcsn Sync="TRUE">NAD_1983_HARN_WISCRS_Dane_County_Feet</projcsn></cordsysn></horizsys>
+		<vertdef><altsys><altenc Sync="TRUE">Explicit elevation coordinate included with horizontal coordinates</altenc><altres Sync="TRUE">1.000000</altres></altsys></vertdef></spref>
+	<eainfo>
+		<overview>
+			<eadetcit>Not available</eadetcit>
+			<eaover>The attribute information found in this dataset was collected by the Dane County Land Information Office (LIO).</eaover></overview>
+		<detailed Name="HydroPoly"><enttyp><enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">0</enttypc><enttypl Sync="TRUE">HydroPoly</enttypl></enttyp><attr><attrlabl Sync="TRUE">FID</attrlabl><attalias Sync="TRUE">FID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Internal feature number.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv></attr><attr><attrlabl Sync="TRUE">HYDELEV</attrlabl><attalias Sync="TRUE">HYDELEV</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">19</attwidth><atprecis Sync="TRUE">18</atprecis><attscale Sync="TRUE">8</attscale><attrdef>The elevation of the polygon features derived from the elevation model development and expressed in feet above sea level.</attrdef><attrdefs>Dane County LIO</attrdefs></attr><attr><attrlabl Sync="TRUE">CARTOUSE</attrlabl><attalias Sync="TRUE">CARTOUSE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">3</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdomv><edom><edomv>Yes</edomv><edomvd>Indicates linework that should be shown for cartographic purposes</edomvd><edomvds>EGIS Geoframeworks Hydrography Workgroup</edomvds></edom><edom><edomv>No</edomv><edomvd>Indicates linework that should not be shown for cartographic purposes</edomvd></edom></attrdomv><attrdef>An item that allows for easy cartographic representation</attrdef><attrdefs>Dane County LIO</attrdefs></attr><attr><attrlabl Sync="TRUE">DXFLAYER</attrlabl><attalias Sync="TRUE">DXFLAYER</attalias><attrtype Sync="TRUE">Integer</attrtype><attwidth Sync="TRUE">5</attwidth><atprecis Sync="TRUE">5</atprecis><attscale Sync="TRUE">0</attscale><attrdomv><edom><edomv>0</edomv><edomvd>Unknown</edomvd><edomvds>Ayres Associates</edomvds></edom><edom><edomv>1</edomv><edomvd>Island</edomvd><edomvds>Ayres Associates</edomvds></edom><edom><edomv>2</edomv><edomvd>Land Surrounded by Water</edomvd><edomvds>Ayres Associates</edomvds></edom><edom><edomv>3</edomv><edomvd>Pond</edomvd><edomvds>Ayres Associates</edomvds></edom><edom><edomv>4</edomv><edomvd>River</edomvd><edomvds>Ayres Associates</edomvds></edom></attrdomv><attrdef>DXF layer coding</attrdef><attrdefs>Ayres Associates</attrdefs></attr><attr><attrlabl Sync="TRUE">HYDTYPE</attrlabl><attalias Sync="TRUE">HYDTYPE</attalias><attrtype Sync="TRUE">Integer</attrtype><attwidth Sync="TRUE">5</attwidth><atprecis Sync="TRUE">5</atprecis><attscale Sync="TRUE">0</attscale><attrdomv><edom><edomv>0</edomv><edomvd>Unknown</edomvd><edomvds>EGIS Geoframeworks Hydrography Workgroup</edomvds></edom><edom><edomv>1</edomv><edomvd>Island</edomvd><edomvds>EGIS Geoframeworks Hydrography Workgroup</edomvds></edom><edom><edomv>2</edomv><edomvd>Lake</edomvd><edomvds>EGIS Geoframeworks Hydrography Workgroup</edomvds></edom><edom><edomv>3</edomv><edomvd>Land</edomvd><edomvds>EGIS Geoframeworks Hydrography Workgroup</edomvds></edom><edom><edomv>4</edomv><edomvd>River</edomvd><edomvds>EGIS Geoframeworks Hydrography Workgroup</edomvds></edom></attrdomv><attrdef>The type of hydrographic polygon feature.</attrdef><attrdefs>Dane County LIO</attrdefs></attr><attr><attrlabl Sync="TRUE">NAME</attrlabl><attalias Sync="TRUE">NAME</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef>Water body name</attrdef><attrdefs>Dane County LIO</attrdefs></attr><attr><attrlabl Sync="TRUE">Shape</attrlabl><attalias Sync="TRUE">Shape</attalias><attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Feature geometry.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Coordinates defining the features.</udom></attrdomv></attr><attr><attrlabl Sync="TRUE">DNRDESIGNA</attrlabl><attalias Sync="TRUE">DNRDESIGNA</attalias><attrtype Sync="TRUE">Integer</attrtype><attwidth Sync="TRUE">5</attwidth><atprecis Sync="TRUE">5</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">Shape_area</attrlabl><attalias Sync="TRUE">Shape_area</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">19</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Area of feature in internal units squared.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Positive real numbers that are automatically generated.</udom></attrdomv></attr><attr><attrlabl Sync="TRUE">Shape_len</attrlabl><attalias Sync="TRUE">Shape_len</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">19</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr></detailed></eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Dane County Land Information Office</cntorg>
+					<cntper>Fred Iausly</cntper>
+				</cntorgp>
+				<cntpos>Senior GIS Analyst</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>210 Martin Luther King Jr. Blvd; Room 339</address>
+					<city>Madison</city>
+					<state>WI</state>
+					<postal>53703</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>(608) 266-4398</cntvoice>
+				<cntfax>(608) 266-1242</cntfax>
+				<cntemail>iausly@co.dane.wi.us</cntemail>
+				<hours>Normal Business Hours (8:00am - 4:30pm)</hours>
+				<cntinst>Additional Contact Persons::
+Tim Confare (Senior GIS Analyst) (608) 267-1598,
+Dave Watson (Senior GIS Systems Administrator) (608) 266-4265</cntinst>
+			</cntinfo>
+		</distrib>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<formname>ARCG</formname>
+					<formspec>ESRI Personal Geodatabase</formspec>
+					<transize Sync="TRUE">19.610</transize>
+					<dssize Sync="TRUE">19.610</dssize></digtinfo>
+				<digtopt>
+					<offoptn>
+						<offmedia>CD-ROM</offmedia>
+						<reccap>
+							<recden>700</recden>
+							<recdenu>Megabytes</recdenu>
+						</reccap>
+						<recfmt>DOS copy</recfmt>
+					</offoptn>
+					<offoptn><offmedia>DVD</offmedia><reccap><recden>4.7</recden><recdenu>Gigabytes</recdenu></reccap><recfmt>DOS Copy</recfmt></offoptn></digtopt>
+			</digform>
+			<fees>A fee of $200 per standard data packages, for license to use the data.  Prices are subject to change without notice.</fees>
+			<ordering>Log on to the Dane County On-line GIS Data Ordering System at http://www.co.dane.wi.us/lio/digital_order.asp.  Complete each of the steps in the ordering process and submit your order.  All requests will be invoiced following delivery of the data.</ordering>
+			<digform><digtinfo><formname>ARCG</formname><formspec>ESRI Shapefile</formspec></digtinfo><digtopt><offoptn><offmedia>CD-ROM</offmedia><reccap><recden>700</recden><recdenu>Megabytes</recdenu></reccap><recfmt>DOS Copy</recfmt></offoptn><offoptn><offmedia>DVD</offmedia><reccap><recden>4.7</recden><recdenu>Gigabytes</recdenu></reccap><recfmt>DOS Copy</recfmt></offoptn></digtopt></digform><digform><digtinfo><formname>DWG</formname><formspec>AutoCAD Drawing File</formspec></digtinfo><digtopt><offoptn><offmedia>CD-ROM</offmedia><reccap><recden>700</recden><recdenu>Megabytes</recdenu></reccap><recfmt>DOS Copy</recfmt></offoptn><offoptn><offmedia>DVD</offmedia><reccap><recden>4.7</recden><recdenu>Gigabytes</recdenu></reccap><recfmt>DOS Copy</recfmt></offoptn></digtopt></digform><turnarnd>Three to five business days.</turnarnd></stdorder>
+		<custom>An additional cost of $30/hour for staff time plus computer time and media charges is assessed for non-standard datasets or non-standard data file formats.  Prices are subject to change without notice.  See Price/Product list for more information, http://www.co.dane.wi.us/lio/datacatalog.asp.  Data can be order online using the Dane County's On-line GIS Data Order System, http://www.co.dane.wi.us/lio/digital_order.asp.  Acceptance of the License Agreement for Dane County Digital Geographic Data Sets must be received before data can be released.  All requests will be invoiced following delivery of the data.</custom>
+		<distliab>The burden for determining 'fitness for use' rests entirely upon the requester/Licensee.  Dane County and its co-producers will not be liable in any way for accuracy of the data or for uses other than intended.  Dane County assumes no responsibility whatsoever for direct, indirect, special, consequential, exemplary or other damages.  Licensee agrees to indemnify, hold harmless and defend Dane County, its employees, agents, representatives and co-producers from any claims, damages, liabilities and expenses arising from Licensee's use of licensed data sets or products derived there from.</distliab><resdesc Sync="TRUE">Downloadable Data</resdesc></distinfo>
+	<metainfo>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Dane County Land Information Office</cntorg>
+					<cntper>Fred Iausly</cntper>
+				</cntorgp>
+				<cntpos>Senior GIS Analyst</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>210 Martin Luther King Jr. Blvd; Room 339</address>
+					<city>Madison</city>
+					<state>WI</state>
+					<postal>53709</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>(608) 266-4398</cntvoice>
+				<cntfax>(608) 266-1242</cntfax>
+				<cntemail>iausly@co.dane.wi.us</cntemail>
+				<hours>Normal Business Hours (8:00am - 4:30pm)</hours>
+				<cntinst>Additional Contact Persons:
+Tim Confare (Senior GIS Analyst) (608) 267-1598,
+Dave Watson (Senior GIS Systems Administrator) (608) 266-4265</cntinst>
+			</cntinfo>
+		</metc>
+		<metstdn Sync="TRUE">FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv Sync="TRUE">FGDC-STD-001-1998</metstdv>
+		<langmeta Sync="TRUE">en</langmeta><mettc Sync="TRUE">local time</mettc><metd Sync="TRUE">20100504</metd></metainfo>
+	<Esri><ModDate>20110519</ModDate><ModTime>11000100</ModTime><CreaDate>20140428</CreaDate><CreaTime>20234600</CreaTime><SyncOnce>FALSE</SyncOnce><SyncDate>20110519</SyncDate><SyncTime>11000100</SyncTime><DataProperties><lineage><Process Name="FeatureClassToFeatureClass_2" ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20080730" Time="095536">FeatureClassToFeatureClass "Database Connections\L@HYDRO@LIO1-SQL.sde\HYDRO.L.Hydrography\HYDRO.L.HydroPoly" "Database Connections\L@GISdw@LIO1-Data (Publish 9.2).sde" HydroPoly # "DXFLAYER DXFLayer true true false 2 Short 0 5 ,First,#,Database Connections\L@HYDRO@LIO1-SQL.sde\HYDRO.L.Hydrography\HYDRO.L.HydroPoly,DXFLAYER,-1,-1;HYDTYPE HydType true true false 2 Short 0 5 ,First,#,Database Connections\L@HYDRO@LIO1-SQL.sde\HYDRO.L.Hydrography\HYDRO.L.HydroPoly,HYDTYPE,-1,-1;HYDELEV HYDELEV true true false 8 Double 8 38 ,First,#,Database Connections\L@HYDRO@LIO1-SQL.sde\HYDRO.L.Hydrography\HYDRO.L.HydroPoly,HYDELEV,-1,-1;CARTOUSE CartoUse true true false 3 Text 0 0 ,First,#,Database Connections\L@HYDRO@LIO1-SQL.sde\HYDRO.L.Hydrography\HYDRO.L.HydroPoly,CARTOUSE,-1,-1;NAME NAME true true false 50 Text 0 0 ,First,#,Database Connections\L@HYDRO@LIO1-SQL.sde\HYDRO.L.Hydrography\HYDRO.L.HydroPoly,NAME,-1,-1;DNRDESIGNATED DNRDesignated true true false 2 Short 0 5 ,First,#,Database Connections\L@HYDRO@LIO1-SQL.sde\HYDRO.L.Hydrography\HYDRO.L.HydroPoly,DNRDESIGNATED,-1,-1" # "Database Connections\L@GISdw@LIO1-Data (Publish 9.2).sde\GISdw.L.HydroPoly"</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\DeleteFeatures" Date="20090717" Time="150358">DeleteFeatures "Database Connections\L@GISdw@LIO-SQLdw (9.3 Publish).sde\GISdw.L.HydroPoly" "Database Connections\L@GISdw@LIO-SQLdw (9.3 Publish).sde\GISdw.L.HydroPoly"</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\DeleteFeatures" Date="20090728" Time="151132">DeleteFeatures "Database Connections\L@GISdw@LIO-SQLdw (9.3 Publish).sde\GISdw.L.HydroPoly" "Database Connections\L@GISdw@LIO-SQLdw (9.3 Publish).sde\GISdw.L.HydroPoly"</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\DeleteFeatures" Date="20090729" Time="082928">DeleteFeatures "Database Connections\L@GISdw@LIO-SQLdw (9.3 Publish).sde\GISdw.L.HydroPoly" "Database Connections\L@GISdw@LIO-SQLdw (9.3 Publish).sde\GISdw.L.HydroPoly"</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\DeleteFeatures" Date="20091201" Time="133722">DeleteFeatures "Database Connections\L@GISdw@LIO-SQLdw (9.3 Publish).sde\GISdw.L.HydroPoly" "Database Connections\L@GISdw@LIO-SQLdw (9.3 Publish).sde\GISdw.L.HydroPoly"</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\DeleteFeatures" Date="20100504" Time="072332">DeleteFeatures "Database Connections\L@GISdw@LIO-SQLdw (9.3 Publish).sde\GISdw.L.HydroPoly" "Database Connections\L@GISdw@LIO-SQLdw (9.3 Publish).sde\GISdw.L.HydroPoly"</Process><Process ToolSource="C:\Program Files\ArcGIS\Desktop10.0\ArcToolbox\Toolboxes\Data Management Tools.tbx\ChangePrivileges" Date="20100823" Time="110410">ChangePrivileges 'Database Connections\l@gisdw@lio-sqldw.sde\GISdw.L.HydroPoly' webview GRANT #</Process><Process Name="Copy Features (4)" ToolSource="P:\GISDEV\Development\Applications\DataDistribution\Tools\Data Distribution.tbx\CopyFeatures" Date="20110519" Time="110005">CopyFeatures "Lakes and Ponds" P:\GISPUBLIC\DataDistribution\Shape\CountyData\HydroPoly.shp # 0 0 0</Process></lineage><itemProps><itemName Sync="TRUE">HydroPoly</itemName><imsContentType Sync="TRUE">002</imsContentType><itemSize Sync="TRUE">0.000</itemSize><itemLocation><linkage Sync="TRUE">file://\\WIN-6HNCJQ1\C$\Users\booth\Desktop\WSC\Data\GIS\Water_Features\DaneCounty\YaharaLakes\YaharaLakes_DaneCty</linkage><protocol Sync="TRUE">Local Area Network</protocol></itemLocation></itemProps><coordRef><type Sync="TRUE">Projected</type><geogcsn Sync="TRUE">GCS_North_American_1983_HARN</geogcsn><projcsn Sync="TRUE">NAD_1983_HARN_WISCRS_Dane_County_Feet</projcsn><peXml Sync="TRUE">&lt;ProjectedCoordinateSystem xsi:type='typens:ProjectedCoordinateSystem' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:typens='http://www.esri.com/schemas/ArcGIS/10.0'&gt;&lt;WKT&gt;PROJCS[&amp;quot;NAD_1983_HARN_WISCRS_Dane_County_Feet&amp;quot;,GEOGCS[&amp;quot;GCS_North_American_1983_HARN&amp;quot;,DATUM[&amp;quot;D_North_American_1983_HARN&amp;quot;,SPHEROID[&amp;quot;GRS_1980&amp;quot;,6378137.0,298.257222101]],PRIMEM[&amp;quot;Greenwich&amp;quot;,0.0],UNIT[&amp;quot;Degree&amp;quot;,0.0174532925199433]],PROJECTION[&amp;quot;Lambert_Conformal_Conic&amp;quot;],PARAMETER[&amp;quot;False_Easting&amp;quot;,811000.0],PARAMETER[&amp;quot;False_Northing&amp;quot;,480943.886],PARAMETER[&amp;quot;Central_Meridian&amp;quot;,-89.42222222222223],PARAMETER[&amp;quot;Standard_Parallel_1&amp;quot;,43.0695160375],PARAMETER[&amp;quot;Scale_Factor&amp;quot;,1.0000384786],PARAMETER[&amp;quot;Latitude_Of_Origin&amp;quot;,43.0695160375],UNIT[&amp;quot;Foot_US&amp;quot;,0.3048006096012192],AUTHORITY[&amp;quot;ESRI&amp;quot;,103412]]&lt;/WKT&gt;&lt;XOrigin&gt;-119400400&lt;/XOrigin&gt;&lt;YOrigin&gt;-97309100&lt;/YOrigin&gt;&lt;XYScale&gt;37463997.818597034&lt;/XYScale&gt;&lt;ZOrigin&gt;-100000&lt;/ZOrigin&gt;&lt;ZScale&gt;10000&lt;/ZScale&gt;&lt;MOrigin&gt;-100000&lt;/MOrigin&gt;&lt;MScale&gt;10000&lt;/MScale&gt;&lt;XYTolerance&gt;0.0032808333333333335&lt;/XYTolerance&gt;&lt;ZTolerance&gt;0.001&lt;/ZTolerance&gt;&lt;MTolerance&gt;0.001&lt;/MTolerance&gt;&lt;HighPrecision&gt;true&lt;/HighPrecision&gt;&lt;WKID&gt;103412&lt;/WKID&gt;&lt;/ProjectedCoordinateSystem&gt;</peXml></coordRef><copyHistory><copy source="C:\Users\booth\Desktop\WSC\Data\GIS\Water_Features\DaneCounty\YaharaLakes_DaneCty" dest="\\WIN-6HNCJQ1\C$\Users\booth\Desktop\WSC\Data\GIS\Water_Features\DaneCounty\YaharaLakes\YaharaLakes_DaneCty" date="20140428" time="20234600"></copy></copyHistory></DataProperties><ArcGISstyle>XTools Pro Metadata</ArcGISstyle></Esri><mdDateSt Sync="TRUE">20110519</mdDateSt><dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcGIS 10.0.0.2414</envirDesc><dataLang><languageCode Sync="TRUE" value="en" country="US"></languageCode></dataLang><idCitation><resTitle Sync="TRUE">HydroPoly</resTitle><presForm><PresFormCd Sync="TRUE" value="005"></PresFormCd></presForm></idCitation><spatRpType><SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd></spatRpType><dataExt><geoEle><GeoBndBox esriExtentType="native"><westBL Sync="TRUE">699226.665844</westBL><eastBL Sync="TRUE">922186.073531</eastBL><northBL Sync="TRUE">563828.153875</northBL><southBL Sync="TRUE">397292.496</southBL><exTypeCode Sync="TRUE">1</exTypeCode></GeoBndBox></geoEle></dataExt><geoBox esriExtentType="decdegrees"><westBL Sync="TRUE">-89.842036</westBL><eastBL Sync="TRUE">-89.004614</eastBL><northBL Sync="TRUE">43.296906</northBL><southBL Sync="TRUE">42.839251</southBL><exTypeCode Sync="TRUE">1</exTypeCode></geoBox><descKeys><thesaName uuidref="723f6998-058e-11dc-8314-0800200c9a66"></thesaName><keyword Sync="TRUE">002</keyword></descKeys></dataIdInfo><mdLang><languageCode Sync="TRUE" value="en"></languageCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="006"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><distInfo><distributor><distorTran><onLineSrc><orDesc Sync="TRUE">002</orDesc><linkage Sync="TRUE">Server=LIO-SQLdw; Service=sde:sqlserver:lio-SQLdw; Database=GISdw; User=L; Version=sde.DEFAULT</linkage><protocol Sync="TRUE">ArcSDE Connection</protocol></onLineSrc></distorTran><distorFormat><formatName Sync="TRUE">SDE Feature Class</formatName></distorFormat></distributor><distFormat><formatName Sync="TRUE">Shapefile</formatName></distFormat><distTranOps><transSize Sync="TRUE">0.000</transSize></distTranOps></distInfo><refSysInfo><RefSystem><refSysID><identCode Sync="TRUE" code="103412">NAD_1983_HARN_WISCRS_Dane_County_Feet</identCode><idCodeSpace Sync="TRUE">ESRI</idCodeSpace><idVersion Sync="TRUE">10.0.0</idVersion></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><topLvl><TopoLevCd Sync="TRUE" value="001"></TopoLevCd></topLvl><geometObjs Name="GISdw.L.HydroPoly"><geoObjTyp><GeoObjTypCd Sync="TRUE" value="002"></GeoObjTypCd><geoObjCnt Sync="TRUE">0</geoObjCnt></geoObjTyp><geoObjCnt Sync="TRUE">4891</geoObjCnt></geometObjs></VectSpatRep></spatRepInfo></metadata>
