@@ -32,7 +32,7 @@ ggplot(all_river_linreg, aes(SpCond_uScm.x , chloride_mgL)) +
   theme_minimal() + theme(legend.title = element_blank())
 
 #save as a supplemental figure
-ggsave("Figures/Supplemental/FigureS1_linearRegresions.png", width = 6.25, height = 4.25, units = "in")
+ggsave("Figures/Supplemental/FigureS1_linearRegresions.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
 
 
 

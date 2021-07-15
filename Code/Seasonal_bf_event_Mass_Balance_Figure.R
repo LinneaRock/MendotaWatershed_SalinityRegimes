@@ -68,6 +68,7 @@ ggsave(
   "Figures/F5_massbalance.png",
   height = 3,
   width = 6.25,
-  units = "in"
+  units = "in",
+  dpi = 500
 )
 

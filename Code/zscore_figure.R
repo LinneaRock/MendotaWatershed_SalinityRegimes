@@ -24,4 +24,4 @@ ggplot() +
   theme_minimal() + theme(legend.title = element_blank()) +
   labs(y = "Z-score of flow-normalized chloride", x = "") 
 
-ggsave("Figures/F2_flow_norm_cl_zscore.png", width = 6.25, height = 4.25, units = "in")
+ggsave("Figures/F2_flow_norm_cl_zscore.png", width = 6.25, height = 4.25, units = "in", dpi = 500)

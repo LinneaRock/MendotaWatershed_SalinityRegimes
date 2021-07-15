@@ -140,7 +140,8 @@ ggsave(
   "Figures/F3_fR_bf_qf_slopes.png",
   height = 4.25,
   width = 6.25,
-  units = "in"
+  units = "in",
+  dpi = 500
 )
 
 
@@ -199,7 +200,8 @@ ggsave(
   "Figures/F4_individualSlopes.png",
   height = 4.25,
   width = 6.25,
-  units = "in"
+  units = "in",
+  dpi = 500
 )
 
 source("Code/Functions/count_stormflow_events_functions.R")
