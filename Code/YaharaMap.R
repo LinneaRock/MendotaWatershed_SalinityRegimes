@@ -157,5 +157,5 @@ combo = m1 + w2 + m2 + m3 +
   plot_layout(design = layout) + 
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
   theme(plot.tag = element_text(size = 8)) & theme(plot.margin = margin(0,0,0,0, "cm"))
-ggsave(plot = combo, filename = "Figures/F1_map.png", width = 6.5, height = 3, units = "in")
+ggsave(plot = combo, filename = "Figures/F1_map.png", width = 6.5, height = 3, units = "in", dpi = 500)
  
