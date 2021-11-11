@@ -20,13 +20,15 @@ e <- join_for_linreg(YRO_cl, YRO_cond)
 all_river_linreg <- bind_rows(a, b, c, d, e)
 
 #plot regressions on one graph
-library(wesanderson)
+library(colorblindr)
 
 ggplot(all_river_linreg, aes(SpCond_uScm.x , chloride_mgL)) +
   geom_point(aes(color = ID.x), size = 0.75) +
   geom_smooth(method = "lm", se = FALSE, size = 0.5, aes(color = ID.x)) +
-  scale_color_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete")) +
-  scale_fill_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete")) +
+  scale_color_OkabeIto() +
+  scale_fill_OkabeIto() +
+  # scale_color_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete")) +
+  # scale_fill_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete")) +
   labs(x = "Specific Conductivity"~(mu~S~cm^-1)~"@ 25"*~degree*C~"\n", 
        y = "\nChloride Concentration"~(mg~L^-1)) +
   theme_minimal() + theme(legend.title = element_blank())

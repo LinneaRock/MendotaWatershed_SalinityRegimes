@@ -53,11 +53,12 @@ seasonal_mass_events_bf <- all_rivers_events_bf %>%
 
 seasonal_mass_events_bf$season = factor(seasonal_mass_events_bf$season, levels = c("2020 Jan-Mar", "2020 Apr-Jun", "2020 Jul-Sep", "2020 Oct-Dec", "2021 Jan-Mar"))
 
-library(wesanderson)
+library(colorblindr)
 
 ggplot() +
   geom_bar(seasonal_mass_events_bf, mapping = aes(fill = ID, x = reorder(season, desc(season)), y = total_chloride_mass_Mg), stat = "identity") +
-  scale_fill_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete")) +
+  scale_fill_OkabeIto() +
+  #scale_fill_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete")) +
   scale_color_manual(values = c("black", NA), guide = FALSE) +
   theme_minimal() + theme(legend.title = element_blank()) +
   labs(y = "Mass of Chloride (Mg)", x = "") +
