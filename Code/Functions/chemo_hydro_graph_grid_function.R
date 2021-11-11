@@ -82,8 +82,8 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
   
   ggplot() +
     geom_line(df, mapping = aes(date, Daily_dis_cms)) +
-    geom_point(df%>%filter(peak.flag == 1), mapping = aes(date, Daily_dis_cms), color = "red") +
-    geom_line(df, mapping = aes(date, threshold_peak),color = "blue") +
+    geom_point(df%>%filter(peak.flag == 1), mapping = aes(date, Daily_dis_cms), color = "#CD5000") +
+    geom_line(df, mapping = aes(date, threshold_peak),color = "#016CA3") +
     geom_point(df, mapping = aes(date, keep), color = "purple")
   
   ##-Flag the changes in derivatitives, events is the row of single site which have events
@@ -188,7 +188,7 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
   #chemograph (chloride concentration)
   a <- ggplot(df_all_flow) +
     geom_line(aes(date, all_conc)) +
-    geom_line(aes(date, event_conc), color = "red") +
+    geom_line(aes(date, event_conc), color = "#CD5000") +
     theme_minimal() +
     labs(x = "", y = "Chloride Concentration"~(mg~L^-1),
          title = rivername) + 
@@ -198,13 +198,13 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
   #hydrograph (discharge)
   b <- ggplot(df_all_flow) +
     geom_line(aes(date, all_dis)) +
-    geom_line(aes(date, event_flow), color = "red") +
-    geom_ribbon(mapping = aes(x = date, ymin = 0, ymax = eckhardt, fill = "#E5C4A1")) +
+    geom_line(aes(date, event_flow), color = "#CD5000") +
+    geom_ribbon(mapping = aes(x = date, ymin = 0, ymax = eckhardt, fill = "#016CA3")) +
     theme_minimal() +
     scale_color_manual(labels = "Stormflow",
-                       values = "red") +
+                       values = "#CD5000") +
     scale_fill_manual(labels = "Eckhardt Baseflow",
-                     values = "#E5C4A1") +
+                     values = "#016CA3") +
     labs(x = "", y = "Discharge"~(m^3~s^-1)) + 
     theme(legend.title = element_blank(),
           legend.position = "bottom") +

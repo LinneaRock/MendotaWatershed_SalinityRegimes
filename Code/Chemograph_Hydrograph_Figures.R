@@ -2,7 +2,7 @@
 
 
 #call in chloride and discharge data:
-source("Code/estimated_chloride_conc_mass.R")
+source("Code/Estimated_Chloride_Conc_Mass.R")
 
 
 

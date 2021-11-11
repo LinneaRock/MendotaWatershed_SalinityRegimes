@@ -1,6 +1,6 @@
 library(sf)
 library(tidyverse)
-library(wesanderson)
+library(colorblindr)
 library(ggspatial)
 library(patchwork)
 library(readxl)
@@ -13,7 +13,7 @@ basemap <- paste0('https://tiles.wmflabs.org/osm-no-labels/${z}/${x}/${y}.png')
 gage.bb = data.frame(site = c('DC', 'PBMS', 'SMC','YR-I', 'YR-O'),
                      lat = c(43.14027778, 43.10333333, 43.14683333, 43.15083333, 43.08944444), 
                      lon = c(-89.44222222, -89.51166667, -89.43694444, -89.40194444,-89.36083333), 
-                     fill = as.character(wes_palette("Darjeeling1", n = 5, type = "discrete")),
+                     fill = as.character(palette_OkabeIto[1:5]),
                      shape = c(22, 22, 22, 22, 22))
 gage.bb.sf = st_as_sf(gage.bb, coords = c("lon", "lat"), 
                       crs = 4326)
@@ -81,9 +81,11 @@ m2 = ggplot() +
   ylim(0,1) +
   geom_point(aes(x = 0, y = seq(0.8,0.2,length.out = 6)), 
              size = 2, shape = c(rep(22,5),21), 
-             fill = c(as.character(wes_palette("Darjeeling1", n = 5, type = "discrete")), 'gold')) +
+             fill = c(palette_OkabeIto[1:5], 'gold')) +
+             #fill = c(as.character(wes_palette("Darjeeling1", n = 5, type = "discrete")), 'gold')) +
   geom_text(aes(x=0.08,y=0.5,
-                label='Dorn Creek (DC)\nSix Mile Creek (SMC)\nPheasant Branch (PB)\nYahara River (YR-I)\nYahara Outlet (YR-O)\nLake Mendota '),
+                #label='Dorn Creek (DC)\nSix Mile Creek (SMC)\nPheasant Branch (PB)\nYahara River (YR-I)\nYahara Outlet (YR-O)\nLake Mendota '),
+                label='Dorn Creek (DC)\nPheasant Branch (PB)\nSix Mile Creek (SMC)\nYahara River (YR-I)\nYahara Outlet (YR-O)\nLake Mendota '),
             hjust = 0,
             size = 2.4) +
   xlab(NULL); m2
