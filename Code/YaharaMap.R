@@ -88,7 +88,7 @@ m2 = ggplot() +
                 label='Dorn Creek (DC)\nPheasant Branch (PB)\nSix Mile Creek (SMC)\nYahara River (YR-I)\nYahara Outlet (YR-O)\nLake Mendota '),
             hjust = 0,
             size = 2.4) +
-  xlab(NULL); m2
+  xlab(NULL) + plot_layout(tag_level = 'new'); m2
 
 ##### Figure B #####
 ## Inset Map of Wisconsin
@@ -159,5 +159,5 @@ combo = m1 + w2 + m2 + m3 +
   plot_layout(design = layout) + 
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
   theme(plot.tag = element_text(size = 8)) & theme(plot.margin = margin(0,0,0,0, "cm"))
-ggsave(plot = combo, filename = "Figures/F1_map.png", width = 6.5, height = 3, units = "in", dpi = 500)
+ggsave(plot = combo, filename = "Figures/F1_map.png", width = 6.5, height = 3, units = "in", dpi = 300)
  
