@@ -15,7 +15,8 @@ tests <- data.frame(
   agriculture = c(75.66, 77.84, 83.84, 55.7, 63.32), #percentage agricultural land in subwatershed
   road_denisty_mha = c(32.41, 42.04, 24.18, 112.8, 57.84), #road density in subwatershed (m/ha)
   watershed_size_ha = c(29408.4, 12532.03, 3270.64, 4750.4, 60805.84), #waterhsed area (ha)
-  BFI = c(42, 82, 77, 49, 76) #BFI from cQ_Slope_Calculations.R
+  BFI = c(42, 82, 77, 49, 76), #BFI from cQ_Slope_Calculations.R
+  Ave_discharge_cms = c(mean(YRI_discharge$MovingAverage_dis_cms, na.rm = TRUE),mean(SMC_discharge$MovingAverage_dis_cms, na.rm = TRUE),mean(DC_discharge$MovingAverage_dis_cms, na.rm = TRUE),mean(PB_discharge$MovingAverage_dis_cms, na.rm = TRUE), mean(YRO_discharge$MovingAverage_dis_cms, na.rm = TRUE))
 )
 
 tests <- tests %>%
@@ -29,6 +30,7 @@ summary(lm(median_chloride_mgL~road_denisty_mha, tests)) #p = 0.004322, r = 0.95
 summary(lm(total_chloride_mass_Mg ~watershed_size_ha, tests)) #p = 3.493e-05, r = 0.9981
 summary(lm(yield~development, tests)) #p = 0.006818, r = 0.9371
 summary(lm(yield~road_denisty_mha, tests))#p = 0.01625 , r = 0.889
+summary(lm(total_chloride_mass_Mg~Ave_discharge_cms, tests)) #p = 0.0007497, r = 0.9854
 
 
 
