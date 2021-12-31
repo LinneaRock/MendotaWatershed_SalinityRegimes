@@ -12,8 +12,19 @@ DC_cl <- read_csv("Data/Chloride/DC_cl.csv") %>% #Dorn Creek
 PB_cl <- read_csv("Data/Chloride/PB_cl.csv") %>% #Pheasant Branch Creek
   force_tz(dateTime, tzone = "America/Chicago")%>%
   mutate(ID = "PB")
-YRO_cl <- read_csv("Data/Chloride/YR-O_cl.csv") %>% #Yahara River outlfow
+YRO_cl <- read_csv("Data/Chloride/YR-O_cl.csv") %>% #Yahara River outflow
   force_tz(dateTime, tzone = "America/Chicago")%>%
   mutate(ID = "YR-O")
 
-
+YRS_cl <- read_csv("Data/Chloride/YS_cl.csv") %>% #Yahara River outflow from Monona 
+  force_tz(dateTime, tzone = "America/Chicago")%>%
+  mutate(ID = "YR-S")
+SW_cl <- read_csv("Data/Chloride/SW_cl.csv") %>% #Starkweather Creek
+  force_tz(dateTime, tzone = "America/Chicago")%>%
+  mutate(ID = "SW")
+ME_cl <- read_csv("Data/Chloride/ME_cl.csv") %>% #Lake Mendota
+  force_tz(dateTime, tzone = "America/Chicago")%>%
+  mutate(ID = "ME")
+MO_cl <- read_csv("Data/Chloride/MO_cl.csv") %>% #Lake Monona 
+  force_tz(dateTime, tzone = "America/Chicago")%>%
+  mutate(ID = "MO")

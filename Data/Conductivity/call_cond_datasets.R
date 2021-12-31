@@ -22,7 +22,18 @@ YRO_cond <- read_csv("Data/Conductivity/YR-O_cond.csv") %>%
   mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))%>%
   mutate(ID = "YR-O")
 
-
+YRS_cond <- read_csv("Data/Conductivity/YS_cond.csv") %>% 
+  force_tz(dateTime, tzone = "America/Chicago")%>%
+  mutate(ID = "YR-S")
+SW_cond <- read_csv("Data/Conductivity/SW_cond.csv") %>% 
+  force_tz(dateTime, tzone = "America/Chicago")%>%
+  mutate(ID = "SW")
+ME_cond <- read_csv("Data/Conductivity/ME_cond.csv") %>% 
+  force_tz(dateTime, tzone = "America/Chicago")%>%
+  mutate(ID = "ME")
+MO_cond <- read_csv("Data/Conductivity/MO_cond.csv") %>% 
+  force_tz(dateTime, tzone = "America/Chicago")%>%
+  mutate(ID = "MO")
 
 #function to calculate moving average
 mov_ave <- function(ConductivityData) {
@@ -41,5 +52,8 @@ SMC_cond <- mov_ave(SMC_cond) #Sixmile Creek
 DC_cond <- mov_ave(DC_cond) #Dorn Creek
 PB_cond <- mov_ave(PB_cond) #Pheasant Branch Creek
 YRO_cond <- mov_ave(YRO_cond) #Yahara River outlfow
-
+YRS_cond <- mov_ave(YRS_cond) #Yahara River outflow
+SW_cond <- mov_ave(SW_cond) #Starkweather
+ME_cond <- mov_ave(ME_cond) #Mendota
+MO_cond <- mov_ave(MO_cond) #Monona
 
