@@ -15,14 +15,22 @@ b <- join_for_linreg(SMC_cl, SMC_cond)
 c <- join_for_linreg(DC_cl, DC_cond)
 d <- join_for_linreg(PB_cl, PB_cond)
 e <- join_for_linreg(YRO_cl, YRO_cond) 
+f <- join_for_linreg(SW_cl, SW_cond) 
+g <- join_for_linreg(YRS_cl, YRS_cond) 
 
 #bind together 
-all_river_linreg <- bind_rows(a, b, c, d, e)
+all_river_linreg <- bind_rows(a, b, c, d, e, f, g)
+
+# Check EC similarities
+ggplot(all_river_linreg) +
+  geom_point(aes(x = SpCond_uScm.x, y = MovingAverage_SpCond_uScm)) +
+  geom_abline()
+
 
 #plot regressions on one graph
 library(colorblindr)
 
-ggplot(all_river_linreg, aes(SpCond_uScm.x , chloride_mgL)) +
+ggplot(all_river_linreg, aes(SpCond_uScm.y , chloride_mgL)) +
   geom_point(aes(color = ID.x), size = 0.75) +
   geom_smooth(method = "lm", se = FALSE, size = 0.5, aes(color = ID.x)) +
   scale_color_OkabeIto() +
@@ -36,7 +44,34 @@ ggplot(all_river_linreg, aes(SpCond_uScm.x , chloride_mgL)) +
 #save as a supplemental figure
 ggsave("Figures/Supplemental/FigureS1_linearRegresions.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
 
+lakes = all_river_linreg |> 
+  # filter(ID.x %in% c('YR-O','YR-S')) |> 
+  select(date, ID.x, chloride_mgL, SpCond_uScm.x, MovingAverage_SpCond_uScm) |> 
+  filter(!is.na(SpCond_uScm.x) | !is.na(MovingAverage_SpCond_uScm)) |> 
+  pivot_longer(cols = SpCond_uScm.x: MovingAverage_SpCond_uScm) |> 
+  arrange(ID.x, chloride_mgL)
 
+ggplot(lakes, aes(value , chloride_mgL)) +
+  geom_point(aes(color = ID.x, group = chloride_mgL), size = 0.75, shape = 21, fill = 'black') +
+  geom_path(aes(color = ID.x, group = chloride_mgL), size = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, size = 1, aes(color = ID.x)) +
+  xlim(0,NA) + ylim(0,NA) +
+  scale_color_OkabeIto() +
+  scale_fill_OkabeIto() +
+  labs(x = "Specific Conductivity"~(mu~S~cm^-1)~"@ 25"*~degree*C~"\n", 
+       y = "\nChloride Concentration"~(mg~L^-1)) +
+  theme_minimal() + theme(legend.title = element_blank())
+
+ggplot(lakes |> filter(ID.x %in% c('YR-O','YR-S')), aes(value , chloride_mgL)) +
+  geom_point(aes(color = ID.x, group = chloride_mgL), size = 0.75, shape = 21, fill = 'black') +
+  geom_path(aes(color = ID.x, group = chloride_mgL), size = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, size = 1, aes(color = ID.x)) +
+  xlim(0,NA) + ylim(0,NA) +
+  scale_color_OkabeIto() +
+  scale_fill_OkabeIto() +
+  labs(x = "Specific Conductivity"~(mu~S~cm^-1)~"@ 25"*~degree*C~"\n", 
+       y = "\nChloride Concentration"~(mg~L^-1)) +
+  theme_minimal() + theme(legend.title = element_blank())
 
 ##Stats for regressions##
 source("Code/Functions/regression_stats_functions.R")
