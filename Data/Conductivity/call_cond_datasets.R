@@ -32,11 +32,19 @@ MO_cond <- read_csv("Data/Conductivity/MO_cond.csv") %>%
   force_tz(dateTime, tzone = "America/Chicago")%>%
   mutate(ID = "MO")
 
+# import USGS conductivity
+SH_cond = read_tsv('Data/USGS_SH/SH_SPC.txt') |> 
+  rename(Temp_C = `158191_00010`, SpCond_uScm = `158192_00095`, 
+         Discharge = `158188_00060`) |> 
+  mutate(EC_lowRange_uScm = NA, EC_highRange_uScm = NA, ID = 'SH') |> 
+  select(dateTime = datetime, EC_lowRange_uScm, EC_highRange_uScm,
+         Temp_C, SpCond_uScm, ID)
+
 #function to calculate moving average
-mov_ave <- function(ConductivityData) {
+mov_ave <- function(ConductivityData, span = 13) {
   #add column for 6 hour moving average and get the total average specific conductivity of the dataset
   Cond_data <- ConductivityData %>%
-    mutate(MovingAverage_SpCond_uScm = rollmean(SpCond_uScm, 13, fill = NA, na.rm = TRUE)) %>% #use zoo::rollmean over 13 rows (6 hours - 3 before and 3 after each point)
+    mutate(MovingAverage_SpCond_uScm = rollmean(SpCond_uScm, span, fill = NA, na.rm = TRUE)) %>% #use zoo::rollmean over 13 rows (6 hours - 3 before and 3 after each point)
     mutate(MovingAverage_SpCond_uScm = ifelse(row_number() <= 6, mean(SpCond_uScm[1:6]), MovingAverage_SpCond_uScm)) %>% # rollmean leaves empty rows at beginning and end of dataset. This line and the one below uses the mean of those empty rows
     mutate(MovingAverage_SpCond_uScm = ifelse(row_number() >= (nrow(ConductivityData) - 5), mean(SpCond_uScm[(nrow(ConductivityData) - 5):nrow(ConductivityData)]), MovingAverage_SpCond_uScm))
 }
@@ -51,4 +59,4 @@ YRS_cond <- mov_ave(YRS_cond) #Yahara River outflow
 SW_cond <- mov_ave(SW_cond) #Starkweather
 ME_cond <- mov_ave(ME_cond) #Mendota
 MO_cond <- mov_ave(MO_cond) #Monona
-
+SH_cond = mov_ave(SH_cond, span = 26) #Spring Harbor (15 minutes time stamp)

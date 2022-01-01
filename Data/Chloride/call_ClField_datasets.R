@@ -28,3 +28,25 @@ ME_cl <- read_csv("Data/Chloride/ME_cl.csv") %>% #Lake Mendota
 MO_cl <- read_csv("Data/Chloride/MO_cl.csv") %>% #Lake Monona 
   force_tz(dateTime, tzone = "America/Chicago")%>%
   mutate(ID = "MO")
+
+
+# import USGS conductivity
+SH_cond = read_tsv('Data/USGS_SH/SH_SPC.txt') |> 
+  rename(Temp_C = `158191_00010`, SpCond_uScm = `158192_00095`, 
+         Discharge = `158188_00060`) |> 
+  mutate(EC_lowRange_uScm = NA, EC_highRange_uScm = NA, ID = 'SH') |> 
+  select(dateTime = datetime, EC_lowRange_uScm, EC_highRange_uScm,
+         Temp_C, SpCond_uScm, ID)
+
+# import USGS chloride
+SH_cl = read_tsv('Data/USGS_SH/SH_Cl.txt') %>% 
+  select(sample_dt, sample_tm, chloride_mgL = p00940) %>% 
+  mutate(datetime = ymd_hms(paste(sample_dt,sample_tm))) %>% 
+  mutate(dateTime = lubridate::round_date(datetime, "15 minutes")) |> 
+  # mutate(ID = 'SH', EC_uScm = NA, Temp_C = NA, SpCond_uScm = NA) |>
+  select(dateTime, chloride_mgL) |> 
+  left_join(SH_cond) |> 
+  select(dateTime, chloride_mgL, EC_uScm = EC_highRange_uScm, Temp_C, SpCond_uScm,  ID) |> 
+  filter(!is.na(chloride_mgL))
+
+

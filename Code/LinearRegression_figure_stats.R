@@ -19,15 +19,15 @@ d <- join_for_linreg(PB_cl, PB_cond)
 e <- join_for_linreg(YRO_cl, YRO_cond) 
 f <- join_for_linreg(SW_cl, SW_cond) 
 g <- join_for_linreg(YRS_cl, YRS_cond) 
+h <- join_for_linreg(SH_cl, SH_cond) 
 
 #bind together 
-all_river_linreg <- bind_rows(a, b, c, d, e, f, g)
+all_river_linreg <- bind_rows(a, b, c, d, e, f, g, h)
 
 # Check EC similarities
-ggplot(all_river_linreg) +
+ggplot(all_river_linreg |> filter(ID.x != 'SH')) +
   geom_point(aes(x = SpCond_uScm.x, y = MovingAverage_SpCond_uScm)) +
   geom_abline()
-
 
 #plot regressions on one graph
 library(colorblindr)
@@ -43,7 +43,7 @@ ggplot(all_river_linreg, aes(SpCond_uScm.x , chloride_mgL)) +
        y = "\nChloride Concentration"~(mg~L^-1)) +
   theme_minimal() + theme(legend.title = element_blank())
 
-#save as a supplemental figure
+ #save as a supplemental figure
 ggsave("Figures/Supplemental/FigureS1_linearRegresions.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
 
 sites.df = all_river_linreg |> 
@@ -69,25 +69,36 @@ b.regs = sites.df %>%
 r2text <- function(site, Rin){
   paste0('"',site,":",'"',"~italic(r)^2~",'"',"=",'"',"~",Rin)
 }
-r2text('PB', 0.5)
 
-pr1 = ggplot(sites.df |> filter(ID.x %in% c('PB','SW')), aes(value , chloride_mgL)) +
+#Spring Harbor inset
+pr0 = ggplot(sites.df |> filter(ID.x %in% c('SH')), aes(value , chloride_mgL)) +
+  geom_point(aes(color = ID.x, group = chloride_mgL), size = 0.75, shape = 21, fill = 'black') +
+  geom_smooth(method = "lm", se = FALSE, size = 0.5, aes(color = ID.x)) +
+  scale_x_continuous(breaks = c(0,10000,20000)) +
+  scale_color_OkabeIto(order = 2) +
+  scale_fill_OkabeIto() +
+  labs(x = "SpC"~(µS~cm^-1), y = "Chloride"~(mg~L^-1)) +
+  theme_bw(base_size = 7) + 
+  theme(legend.position = "none",
+        axis.title = element_blank())
+
+pr1 = ggplot(sites.df |> filter(ID.x %in% c('SH','PB','SW')), aes(value , chloride_mgL)) +
   geom_point(aes(color = ID.x, group = chloride_mgL), size = 0.75, shape = 21, fill = 'black') +
   geom_path(aes(color = ID.x, group = chloride_mgL), size = 0.3) +
   geom_smooth(method = "lm", se = FALSE, size = 1, aes(color = ID.x)) +
-  xlim(0,NA) + ylim(0,NA) +
+  xlim(0,3000) + ylim(0,700) +
   annotate('text', x= 2000, y = 100, col = palette_OkabeIto[1], vjust = 0,
            label = r2text('PB',b.regs |> filter(River == 'PB') |> pull(Adjusted_R2)), parse=T, size = 2) +
-  annotate('text', x= 2500, y = 300, col = palette_OkabeIto[2], vjust = 0,
+  annotate('text', x= 500, y = 300, col = palette_OkabeIto[2], vjust = 0,
+           label = r2text('SH',b.regs |> filter(River == 'SH') |> pull(Adjusted_R2)), parse=T, size = 2) +
+  annotate('text', x= 2500, y = 300, col = palette_OkabeIto[3], vjust = 0,
            label = r2text('SW',b.regs |> filter(River == 'SW') |> pull(Adjusted_R2)), parse=T, size = 2) +
   scale_color_OkabeIto() +
   scale_fill_OkabeIto() +
   labs(x = "SpC"~(µS~cm^-1), y = "Chloride"~(mg~L^-1)) +
-  # labs(x = "Specific Conductivity"~(mu~S~cm^-1)~"@ 25"*~degree*C~"\n", 
-  #      y = "\nChloride Concentration"~(mg~L^-1)) +
   theme_minimal(base_size = 8) + theme(legend.title = element_blank())
 
-pr2 = ggplot(sites.df |> filter(!ID.x %in% c('PB','SW')), 
+pr2 = ggplot(sites.df |> filter(!ID.x %in% c('SH','PB','SW')), 
        aes(value , chloride_mgL)) +
   geom_point(aes(color = ID.x, group = chloride_mgL), size = 0.75, shape = 21, fill = 'black') +
   geom_path(aes(color = ID.x, group = chloride_mgL), size = 0.3) +
@@ -110,12 +121,14 @@ pr2 = ggplot(sites.df |> filter(!ID.x %in% c('PB','SW')),
   theme_minimal(base_size = 8) + theme(legend.title = element_blank())
 
 # join figures
-pr1 + pr2 +
+pr1 + inset_element(pr0,0,0.6,0.4,1)
+
+(pr1 + inset_element(pr0,0,0.6,0.4,1)) + pr2 +
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
   theme(plot.tag = element_text(size = 8), legend.position = "none")
 
 # Save combo plot
-ggsave('Figures/FX_regressions.png', width = 6.5, height = 3, units = 'in', dpi = 500)
+ggsave('Figures/FX_regressions2.png', width = 6.5, height = 3, units = 'in', dpi = 500)
 
 ##Stats for regressions##
 # source("Code/Functions/regression_stats_functions.R")
