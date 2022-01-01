@@ -5,18 +5,12 @@ source("Code/estimated_chloride_conc_mass.R")
 #load function to flow-normalize and calculate z-score
 source("Code/Functions/flow_normalize_zscore_function.R")
 
-
-#flow-normalized chloride in each river binded to a single dataframe
+# #flow-normalized chloride in each river binded to a single dataframe
 All_flow_norm <- flow_normalize(YRI_ts_mass, "YR-I") %>%
   bind_rows(flow_normalize(DC_ts_mass, "DC"),
             flow_normalize(SMC_ts_mass, "SMC"),
             flow_normalize(PB_ts_mass, "PB"),
             flow_normalize(YRO_ts_mass, "YR-O"))
-
-
-#create the z-score plot
-library(colorblindr)
-library(scales)
 
 ggplot() +
   geom_vline(aes(xintercept = as.Date('2020-03-22')), linetype = 2) +
@@ -31,5 +25,5 @@ ggplot() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 ggsave("Figures/F2_flow_norm_cl_zscore.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
-  
+
 
