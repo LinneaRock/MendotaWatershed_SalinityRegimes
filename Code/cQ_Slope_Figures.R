@@ -21,7 +21,7 @@ cQ_slopes_all$season = factor(cQ_slopes_all$season,
                               levels = c("Oct-Dec", "Jan-Mar", "Apr-Jun", "Jul-Sep", "Annual"))
 
 cQ_plot <- ggplot(cQ_slopes_all, aes(
-  slope,
+  slope_SpC,
   reorder(season, desc(season)),
   color = trib,
   fill = trib
@@ -76,7 +76,7 @@ ggplot() +
   labs(x = "cQ Slope", y = "") +
   geom_point(
     all_individual_events,
-    mapping = aes(slope, trib, color = season),
+    mapping = aes(slope_SpC, trib, color = season),
     size = 2.5,
     shape = 21
   ) +
@@ -98,20 +98,20 @@ ggplot() +
   ) +
   geom_point(
     all_full %>% filter(season == "Annual"),
-    mapping = aes(slope, trib),
+    mapping = aes(slope_SpC, trib),
     shape = "|",
     size = 6
   ) +
   geom_point(
     all_baseflow %>% filter(season == "Annual"),
-    mapping = aes(slope, trib),
+    mapping = aes(slope_SpC, trib),
     shape = "|",
     size = 6,
     color = "#CD5000"
   ) +
   geom_point(
     all_bulkstorm %>% filter(season == "Annual"),
-    mapping = aes(slope, trib),
+    mapping = aes(slope_SpC, trib),
     shape = "|",
     size = 6,
     color = "#016CA3"
@@ -178,8 +178,8 @@ simpleregtable <- gt_tbl %>%
     stormflow_pos = "No. Mobilization Events"
   ) %>%
   tab_header(
-    title = "Chloride Concentration - Discharge Relationships",
-    subtitle = "Log(C) - Log(Q) for all C-Q data"
+    title = "Specific Conductivity - Discharge Relationships",
+    subtitle = "Log(SpC) - Log(Q) for all cQ data"
 ); simpleregtable
 
 as_latex(simpleregtable)

@@ -32,18 +32,27 @@ baseflow <- function(events_bf, name) {
   
   df1 <- df %>%
     drop_na(bf_chloride_mgL) %>%
+    drop_na(bf_SpC_uScm) %>%
+    filter(bf_SpC_uScm > 0) %>%
     filter(bf_cms > 0) %>%
     filter(bf_chloride_mgL > 0) %>%
     mutate(discharge = log10(bf_cms)) %>%
     mutate(chloride = log10(bf_chloride_mgL)) %>%
-    mutate(trib = "name")
+    mutate(trib = "name")  %>%
+    mutate(SpC = log10(bf_SpC_uScm))
   
   #get regression information into dataframes
-  bf_fit <- summary(lm(chloride~discharge, data = df1))
-  bf_oct <- summary(lm(chloride~discharge, data = df1 %>% filter(season == "Oct-Dec")))
-  bf_jan <- summary(lm(chloride~discharge, data = df1 %>% filter(season == "Jan-Mar")))
-  bf_apr <- summary(lm(chloride~discharge, data = df1 %>% filter(season == "Apr-Jun")))
-  bf_jul <- summary(lm(chloride~discharge, data = df1 %>% filter(season == "Jul-Sep")))
+  bf_fit_Cl <- summary(lm(chloride~discharge, data = df1))
+  bf_oct_Cl <- summary(lm(chloride~discharge, data = df1 %>% filter(season == "Oct-Dec")))
+  bf_jan_Cl <- summary(lm(chloride~discharge, data = df1 %>% filter(season == "Jan-Mar")))
+  bf_apr_Cl <- summary(lm(chloride~discharge, data = df1 %>% filter(season == "Apr-Jun")))
+  bf_jul_Cl <- summary(lm(chloride~discharge, data = df1 %>% filter(season == "Jul-Sep")))
+  
+  bf_fit_SpC <- summary(lm(SpC~discharge, data = df1))
+  bf_oct_SpC <- summary(lm(SpC~discharge, data = df1 %>% filter(season == "Oct-Dec")))
+  bf_jan_SpC <- summary(lm(SpC~discharge, data = df1 %>% filter(season == "Jan-Mar")))
+  bf_apr_SpC <- summary(lm(SpC~discharge, data = df1 %>% filter(season == "Apr-Jun")))
+  bf_jul_SpC <- summary(lm(SpC~discharge, data = df1 %>% filter(season == "Jul-Sep")))
   
   #total volume of water discharged over full study period, plus seasonal volumes (limited to 2020)
   discharge_annual <- sum(df1$vol_water, na.rm = TRUE)
@@ -63,18 +72,31 @@ baseflow <- function(events_bf, name) {
   baseflow_fits <- data.frame(
     trib = c(name, name, name, name, name),
     season = c("Annual", "Oct-Dec", "Jan-Mar", "Apr-Jun", "Jul-Sep"),
-    slope = c(
-      slope_cq(bf_fit),
-      slope_cq(bf_oct),
-      slope_cq(bf_jan),
-      slope_cq(bf_apr),
-      slope_cq(bf_jul)
+    slope_Cl = c(
+      slope_cq(bf_fit_Cl),
+      slope_cq(bf_oct_Cl),
+      slope_cq(bf_jan_Cl),
+      slope_cq(bf_apr_Cl),
+      slope_cq(bf_jul_Cl)
     ),
-    intercept = c(intercept_cq(bf_fit),
-                  intercept_cq(bf_oct),
-                  intercept_cq(bf_jan),
-                  intercept_cq(bf_apr),
-                  intercept_cq(bf_jul)
+    intercept_Cl = c(intercept_cq(bf_fit_Cl),
+                  intercept_cq(bf_oct_Cl),
+                  intercept_cq(bf_jan_Cl),
+                  intercept_cq(bf_apr_Cl),
+                  intercept_cq(bf_jul_Cl)
+    ),
+    slope_SpC = c(
+      slope_cq(bf_fit_SpC),
+      slope_cq(bf_oct_SpC),
+      slope_cq(bf_jan_SpC),
+      slope_cq(bf_apr_SpC),
+      slope_cq(bf_jul_SpC)
+    ),
+    intercept_SpC = c(intercept_cq(bf_fit_SpC),
+                  intercept_cq(bf_oct_SpC),
+                  intercept_cq(bf_jan_SpC),
+                  intercept_cq(bf_apr_SpC),
+                  intercept_cq(bf_jul_SpC)
     ),
     water_volume_cm = c(discharge_annual,
                         discharge_OctDec,

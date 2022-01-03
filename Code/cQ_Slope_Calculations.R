@@ -55,10 +55,10 @@ source("Code/Functions/eachEvent_cQ_dataframe_function.R")
  SMC_bulkstorm <- bulk_event_cq(SMC_events_bf, "SMC")
  DC_bulkstorm <- bulk_event_cq(DC_events_bf, "DC")
  PB_bulkstorm <- bulk_event_cq(PB_events_bf, "PB")
- ##Before running the next line, the function in bulkEvent_cQ_dataframe_function.R needs to be ammended
+ ##Use the amended function in bulkEvent_cQ_dataframe_function.R for YRO
  ##The outlet only has a few events that occur in Apr-Jun and Oct-Dec. Need to comment out the other 
- ##two seasons before running. Notes in the function for what to comment out and include. 
- YRO_bulkstorm <- bulk_event_cq(YRO_events_bf, "YR-O")
+ ##two seasons. Notes in the function for what to comment out and include. 
+ YRO_bulkstorm <- bulk_event_cq_special_YRO(YRO_events_bf, "YR-O")
  
  #bind all data together 
  all_bulkstorm <- bind_rows(YRI_bulkstorm, SMC_bulkstorm, DC_bulkstorm, PB_bulkstorm, YRO_bulkstorm)

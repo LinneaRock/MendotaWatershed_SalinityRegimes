@@ -148,6 +148,7 @@ find.peaks <- function(df.orig, cl_ts_data){
   df_peaks <- df_combine %>% 
     drop_na(event.flag) %>%
     rename(event_flow_cms = MovingAverage_dis_cms,
+           event_SpC_uScm = MovingAverage_SpCond_uScm,
            event_chloride_mgL = chloride_estimated_mgL,
            event_chloride_Mg = chloride_mass_Mg)
   
@@ -155,6 +156,7 @@ find.peaks <- function(df.orig, cl_ts_data){
   df_baseflow_only <- df_combine %>%
     filter(is.na(event.flag)) %>%
     rename(bf_cms = MovingAverage_dis_cms,
+           bf_SpC_uScm = MovingAverage_SpCond_uScm,
            bf_chloride_mgL = chloride_estimated_mgL,
            bf_chloride_Mg = chloride_mass_Mg)
   
@@ -166,19 +168,23 @@ find.peaks <- function(df.orig, cl_ts_data){
     mutate(all_dis_cms = ifelse(is.na(bf_cms), event_flow_cms, bf_cms)) %>%
     mutate(all_chloride_mgL = ifelse(is.na(bf_chloride_mgL), event_chloride_mgL, bf_chloride_mgL)) %>%
     mutate(all_chloride_Mg = ifelse(is.na(bf_chloride_Mg), event_chloride_Mg, bf_chloride_Mg)) %>%
+    mutate(all_SpC_uScm = ifelse(is.na(bf_SpC_uScm), event_SpC_uScm, bf_SpC_uScm)) %>%
     rename(eckhardt = eckhardt.x) %>%
-    dplyr::select(dateTime, bf_cms, bf_chloride_mgL, bf_chloride_Mg, event_flow_cms, event_chloride_mgL, event_chloride_Mg, eckhardt, all_dis_cms, all_chloride_mgL, all_chloride_Mg, event.flag)
+    dplyr::select(dateTime, bf_cms, bf_SpC_uScm, bf_chloride_mgL, bf_chloride_Mg, event_flow_cms, event_SpC_uScm, event_chloride_mgL, event_chloride_Mg, eckhardt, all_dis_cms, all_SpC_uScm, all_chloride_mgL, all_chloride_Mg, event.flag)
 
   
   return(df_all_flow)
   #bf_cms = discharge (cms) not during events
+  #bf_SpC_uScm = specific conductivity (microsiemens per liter) during non-events
   #bf_chloride_mgL = chloride concentration (mg L^-1) during non-events
   #bf_chloride_Mg = chloride mass (metric tonnes) during non-events
   #event_flow_cms = discharge (cms) during stormflow events
+  #event_SpC_uScm = specific conductivity (microsiemens per liter) during stormflow events
   #event_chloride_mgL = chloride concentration (mg L^-1) during stormflow events
   #event_chloride_Mg = chloride mass (metric tonnes) during stormflow events
   #eckhardt = eckhardt baseflow (cms)
   #all_dis_cms = all (bf and stormflow) discharge (cms)
+  #all_SpC_uScm = all (bf and stormflow) specific conductivity (microsiemens per liter)
   #all_chloride_mgL = all (bf and stormflow) chloride concentrations (mg L^-1)
   #all_chloride_mass = all (bf and stormflow) chloride mass loading (metric tonnes)
   #event.flag = identifies individual events

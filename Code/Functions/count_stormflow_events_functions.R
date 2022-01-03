@@ -5,7 +5,7 @@ count_dilution_events <- function(df, name) {
   
   df <- df %>%
     filter(trib == name) %>%
-    filter(slope < -0.05)
+    filter(slope_SpC < -0.05)
   
   nrow(df)
   
@@ -16,7 +16,7 @@ count_chemostatic_events <- function(df, name) {
   
   df <- df %>%
     filter(trib == name) %>%
-    filter(slope >= -0.05 & slope <= 0.05)
+    filter(slope_SpC >= -0.05 & slope_SpC <= 0.05)
   
   nrow(df)
   
@@ -27,7 +27,7 @@ count_mobilization_events <- function(df, name) {
   
   df <- df %>%
     filter(trib == name) %>%
-    filter(slope > 0.05)
+    filter(slope_SpC > 0.05)
   
   nrow(df)
   
