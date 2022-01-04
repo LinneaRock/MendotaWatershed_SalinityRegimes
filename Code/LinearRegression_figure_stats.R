@@ -89,11 +89,11 @@ pr1 = ggplot(sites.df |> filter(ID.x %in% c('SH','PB','SW')), aes(value , chlori
   geom_path(aes(color = ID.x, group = chloride_mgL), size = 0.3) +
   geom_smooth(method = "lm", se = FALSE, size = 1, aes(color = ID.x)) +
   xlim(0,3000) + ylim(0,700) +
-  annotate('text', x= 2000, y = 100, col = palette_OkabeIto[1], vjust = 0,
+  annotate('text', x= 2000, y = 100, col = palette_OkabeIto[2], vjust = 0,
            label = r2text('PB',b.regs |> filter(River == 'PB') |> pull(Adjusted_R2)), parse=T, size = 2) +
-  annotate('text', x= 500, y = 300, col = palette_OkabeIto[2], vjust = 0,
+  annotate('text', x= 500, y = 300, col = palette_OkabeIto[3], vjust = 0,
            label = r2text('SH',b.regs |> filter(River == 'SH') |> pull(Adjusted_R2)), parse=T, size = 2) +
-  annotate('text', x= 2500, y = 300, col = palette_OkabeIto[3], vjust = 0,
+  annotate('text', x= 2500, y = 300, col = palette_OkabeIto[7], vjust = 0,
            label = r2text('SW',b.regs |> filter(River == 'SW') |> pull(Adjusted_R2)), parse=T, size = 2) +
   scale_color_OkabeIto(order = c(2,3,7)) +
   scale_fill_OkabeIto() +
@@ -131,6 +131,32 @@ pr1 + inset_element(pr0,0,0.6,0.4,1)
 
 # Save combo plot
 ggsave('Figures/FX_regressions2.png', width = 6.5, height = 3, units = 'in', dpi = 500)
+
+
+
+##########figure without SH########################################
+
+pr1.5 = ggplot(sites.df |> filter(ID.x %in% c('PB','SW')), aes(value , chloride_mgL)) +
+  geom_point(aes(color = ID.x, group = chloride_mgL), size = 0.75, shape = 21, fill = 'black') +
+  geom_path(aes(color = ID.x, group = chloride_mgL), size = 0.3) +
+  geom_smooth(method = "lm", se = FALSE, size = 1, aes(color = ID.x)) +
+  xlim(0,3000) + ylim(0,700) +
+  annotate('text', x= 2000, y = 100, col = palette_OkabeIto[2], vjust = 0,
+           label = r2text('PB',b.regs |> filter(River == 'PB') |> pull(Adjusted_R2)), parse=T, size = 2) +
+  annotate('text', x= 2500, y = 300, col = palette_OkabeIto[7], vjust = 0,
+           label = r2text('SW',b.regs |> filter(River == 'SW') |> pull(Adjusted_R2)), parse=T, size = 2) +
+  scale_color_OkabeIto(order = c(2,7)) +
+  scale_fill_OkabeIto() +
+  labs(x = "SpC"~(µS~cm^-1), y = "Chloride"~(mg~L^-1)) +
+  theme_minimal(base_size = 8) + theme(legend.title = element_blank())
+
+
+pr1.5 + pr2 +
+  plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
+  theme(plot.tag = element_text(size = 8), legend.position = "none")
+
+# Save combo plot
+ggsave('Figures/FX_regressions.png', width = 6.5, height = 3, units = 'in', dpi = 500)
 
 ##Stats for regressions##
 # source("Code/Functions/regression_stats_functions.R")
