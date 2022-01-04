@@ -135,33 +135,38 @@ BFI_tbl <- data.frame(
     "SMC",
     "DC",
     "PB",
-    "YR-O"
+    "YR-O",
+    "SH"
   ),
   #BFI found in cQ_Slope_Calculations.R
   BFI = c(42,
           82,
           77,
           49,
-          76
+          76,
+          20
   ),
   stormflow_pos = c(count_mobilization_events(all_individual_events, "YR-I"),
                     count_mobilization_events(all_individual_events, "SMC"),
                     count_mobilization_events(all_individual_events, "DC"),
                     count_mobilization_events(all_individual_events, "PB"),
-                    count_mobilization_events(all_individual_events, "YR-O")
+                    count_mobilization_events(all_individual_events, "YR-O"),
+                    count_mobilization_events(all_individual_events, "SH")
   ),
   stormflow_stat = c(count_chemostatic_events(all_individual_events, "YR-I"),
                      count_chemostatic_events(all_individual_events, "SMC"),
                      count_chemostatic_events(all_individual_events, "DC"),
                      count_chemostatic_events(all_individual_events, "PB"),
-                     count_chemostatic_events(all_individual_events, "YR-O")
+                     count_chemostatic_events(all_individual_events, "YR-O"),
+                     count_chemostatic_events(all_individual_events, "SH")
                      
   ),
   stormflow_neg = c(count_dilution_events(all_individual_events, "YR-I"),
                     count_dilution_events(all_individual_events, "SMC"),
                     count_dilution_events(all_individual_events, "DC"),
                     count_dilution_events(all_individual_events, "PB"),
-                    count_dilution_events(all_individual_events, "YR-O")
+                    count_dilution_events(all_individual_events, "YR-O"),
+                    count_dilution_events(all_individual_events, "SH")
                     
   )
 )

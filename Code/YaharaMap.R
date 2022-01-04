@@ -10,11 +10,11 @@ esri_land <- paste0('https://services.arcgisonline.com/arcgis/rest/services/NatG
 basemap <- paste0('https://tiles.wmflabs.org/osm-no-labels/${z}/${x}/${y}.png')
 
 # Manually build dataframes with coordinates of sampling locations
-gage.bb = data.frame(site = c('DC', 'PBMS', 'SMC','YR-I', 'YR-O', 'SW', 'YR-S'),
-                     lat = c(43.14027778, 43.10333333, 43.14683333, 43.15083333, 43.08944444, 43.09259, 43.04718), 
-                     lon = c(-89.44222222, -89.51166667, -89.43694444, -89.40194444,-89.36083333, -89.33318, -89.33605), 
-                     fill = as.character(palette_OkabeIto[1:7]),
-                     shape = c(22, 22, 22, 22, 22, 22, 22))
+gage.bb = data.frame(site = c('DC', 'PBMS', 'SH', 'SMC','YR-I', 'YR-O', 'SW', 'YR-S'),
+                     lat = c(43.14027778, 43.10333333, 43.079166, 43.14683333, 43.15083333, 43.08944444, 43.09259, 43.04718), 
+                     lon = c(-89.44222222, -89.51166667,-89.470833, -89.43694444, -89.40194444,-89.36083333, -89.33318, -89.33605), 
+                     fill = as.character(palette_OkabeIto[1:8]),
+                     shape = c(22, 22, 22, 22, 22, 22, 22, 22))
 gage.bb.sf = st_as_sf(gage.bb, coords = c("lon", "lat"), 
                       crs = 4326)
 
@@ -38,6 +38,7 @@ ws.ME = st_read('GIS/Shapefiles_Watersheds/ME/ws_ME.shp')
 ws.MO = readRDS('GIS/Shapefiles_Watersheds/MO/MO.rds')
 ws.SW = st_read('GIS/Shapefiles_Watersheds/SW/ws_SW.shp')
 ws.YRS = st_read('GIS/Shapefiles_Watersheds/YS/ws_YS.shp')
+ws.SH = st_read('GIS/Shapefiles_Watersheds/SH/ws_SH.shp')
 
 # lakes
 YaharaLakes = st_read('GIS/Shapefiles_Yahara/YaharaLakes_DaneCty.shp') %>% st_transform(4326)
@@ -56,6 +57,7 @@ m1 = ggplot(YaharaWatershed) +
   geom_sf(data = ws.DC, alpha = 0.1, size = 0.3, fill = '#900C3F') +
   geom_sf(data = ws.SM, alpha = 0.1, size = 0.3, fill = '#C70039') +
   geom_sf(data = ws.SW, alpha = 0.1, size = 0.3, fill = '#581845') +
+  geom_sf(data = ws.SH, alpha = 0.1, size = 0.3, fill = '#581845') +
   geom_sf(data = ws.YRS, alpha = 0.05, size = 0.3, fill = '#FF5733') +
   geom_sf(data = YaharaFlowlines, color = 'lightsteelblue4', size = 0.2) +
   geom_sf(data = YaharaLakes,fill = alpha('lightsteelblue1',1), size = 0.2) +
@@ -87,13 +89,13 @@ m2 = ggplot() +
   theme_void() +
   xlim(0,1) +
   ylim(0,1) +
-  geom_point(aes(x = 0, y = seq(0.85,0.125,length.out = 9)), 
-             size = 2, shape = c(rep(22,7),21,21), 
-             fill = c(palette_OkabeIto[1:7], 'gold', 'black')) +
+  geom_point(aes(x = 0, y = seq(1,0.2,length.out = 10)), 
+             size = 2, shape = c(rep(22,8),21,21), 
+             fill = c(palette_OkabeIto[1:8], 'gold', 'black')) +
   #fill = c(as.character(wes_palette("Darjeeling1", n = 5, type = "discrete")), 'gold')) +
-  geom_text(aes(x=0.08,y=0.5,
+  geom_text(aes(x=0.08,y=0.6,
                 #label='Dorn Creek (DC)\nSix Mile Creek (SMC)\nPheasant Branch (PB)\nYahara River (YR-I)\nYahara Outlet (YR-O)\nLake Mendota '),
-                label='Dorn Creek (DC)\nPheasant Branch (PB)\nSix Mile Creek (SMC)\nYahara River (YR-I)\nYahara Outlet (YR-O)\nStarkweather Creek (SW)\nYahara River South (YR-S)\nLake Mendota\nLake Monona '),
+                label='Dorn Creek (DC)\nPheasant Branch (PB)\nSpring Harbor (SH)\nSix Mile Creek (SMC)\nYahara River (YR-I)\nYahara Outlet (YR-O)\nStarkweather Creek (SW)\nYahara River South (YR-S)\nLake Mendota\nLake Monona '),
             hjust = 0,
             size = 2) +
   xlab(NULL) + plot_layout(tag_level = 'new'); m2

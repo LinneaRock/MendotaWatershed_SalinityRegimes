@@ -47,7 +47,13 @@ YRO_d <- YRO_discharge %>%
 YRO_d <- get_eckhardt_bf("05428500", YRO_d)
 calc_bfi(YRO_d) #bfi = 76%
 
-
+#filter out NA and anything below 0 cms
+SH_d <- SH_discharge %>%
+  filter(!is.na(MovingAverage_dis_cms)) %>%
+  filter(MovingAverage_dis_cms >= 0)
+#calculate eckhardt
+SH_d <- get_eckhardt_bf("05427965", SH_d)
+calc_bfi(SH_d) #bfi = 20%
 
 
 ##Identify stormflow events using EventPicker code from Gorski (2020)####
@@ -58,4 +64,7 @@ SMC_events_bf <- find.peaks(SMC_d, SMC_ts_mass)
 DC_events_bf <- find.peaks(DC_d, DC_ts_mass)
 PB_events_bf <- find.peaks(PB_d, PB_ts_mass)
 YRO_events_bf <- find.peaks(YRO_d, YRO_ts_mass)
+SH_events_bf <- find.peaks(SH_d, SH_ts_mass) %>%
+  filter(dateTime >= as.Date("2019-12-19") &
+           dateTime < as.Date("2021-04-01"))
 

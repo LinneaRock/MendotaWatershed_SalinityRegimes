@@ -49,6 +49,13 @@ YRO_d <- YRO_discharge %>%
 YRO_d <- get_eckhardt_bf("05428500", YRO_d)
 calc_bfi(YRO_d) #bfi = 76%
 
+#filter out NA and anything below 0 cms
+SH_d <- SH_discharge %>%
+  filter(!is.na(MovingAverage_dis_cms)) %>%
+  filter(MovingAverage_dis_cms >= 0)
+#calculate eckhardt
+SH_d <- get_eckhardt_bf("05427965", SH_d)
+calc_bfi(SH_d) #bfi = 20%
 
 
 
@@ -67,3 +74,5 @@ chemo_hydro_graph(PB_d, PB_ts_mass, "Pheasant Branch Creek")
 ggsave("Figures/Supplemental/FigureS5_PB_grid.png", width = 6.25, height = 5.5, units = "in", dpi = 500)
 chemo_hydro_graph(YRO_d, YRO_ts_mass, "Yahara River Outflow")
 ggsave("Figures/Supplemental/FigureS6_YR-O_grid.png", width = 6.25, height = 5.5, units = "in", dpi = 500)
+chemo_hydro_graph(SH_d, SH_ts_mass, "Spring Harbor")
+ggsave("Figures/Supplemental/FigureSX_SH_grid.png", width = 6.25, height = 5.5, units = "in", dpi = 500)

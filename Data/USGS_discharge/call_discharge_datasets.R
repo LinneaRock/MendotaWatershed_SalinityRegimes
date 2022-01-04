@@ -16,3 +16,6 @@ PB_discharge <- read_csv("Data/USGS_discharge/PB_discharge.csv") %>%
 #Yahara River outlet of Lake Mendota
 YRO_discharge <- read_csv("Data/USGS_discharge/YR-O_discharge.csv") %>%
   mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))
+#Spring Harbor
+SH_discharge <- read_csv("Data/USGS_discharge/SH_discharge.csv") %>%
+  mutate(dateTime = with_tz(dateTime, tzone = "America/Chicago"))

@@ -20,18 +20,20 @@ DC_ts_mass <- chloride_ts_mass(DC_cl, DC_cond, DC_discharge)
 PB_ts_mass <- chloride_ts_mass(PB_cl, PB_cond, PB_discharge)
 #Yahara River outflow
 YRO_ts_mass <- chloride_ts_mass(YRO_cl, YRO_cond, YRO_discharge)
+#Spring Harbor 
+SH_ts_mass <- chloride_ts_mass_SH(SH_cl, SH_cond, SH_discharge) %>%
+  filter(dateTime >= as.Date("2019-12-19") &
+           dateTime < as.Date("2021-04-01"))
 
-all_ts_mass <- bind_rows(YRI_ts_mass, SMC_ts_mass, DC_ts_mass, PB_ts_mass, YRO_ts_mass)
+all_ts_mass <- bind_rows(YRI_ts_mass, SMC_ts_mass, DC_ts_mass, PB_ts_mass, YRO_ts_mass, SH_ts_mass)
 
 #plot to look at chloride concentration timeseries
-library(wesanderson)
 
 ggplot(all_ts_mass) +
   geom_line(aes(dateTime, chloride_estimated_mgL, color = ID)) +
   facet_wrap(~ID, scales = "free_y")  +
   theme_minimal() + theme(legend.position = "none") +
   labs(x = "",
-       y = "Chloride Concentration"~(mg~L^-1)) +
-  scale_color_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete"))
+       y = "Chloride Concentration"~(mg~L^-1))
   
   

@@ -1,4 +1,5 @@
-#script to make plot of monthly chloride mass in each river and get distinctions between baseflow and stormflow contributions to chloride export
+#script to make plot of monthly chloride mass in each river and get distinctions between
+#baseflow and stormflow contributions to chloride export
 
 
 
@@ -7,7 +8,7 @@ source("Code/Baseflow_Events_Separation.R")
 
 
 #combine all data into single dataframe
-all_rivers_events_bf <- bind_rows(YRI_events_bf %>% mutate(ID = "YR-I"), SMC_events_bf %>% mutate(ID = "SMC"), DC_events_bf %>% mutate(ID = "DC"), PB_events_bf %>% mutate(ID = "PB"), YRO_events_bf %>% mutate(ID = "YR-O")) %>%
+all_rivers_events_bf <- bind_rows(YRI_events_bf %>% mutate(ID = "YR-I"), SMC_events_bf %>% mutate(ID = "SMC"), DC_events_bf %>% mutate(ID = "DC"), PB_events_bf %>% mutate(ID = "PB"), YRO_events_bf %>% mutate(ID = "YR-O"), SH_events_bf %>% mutate(ID = "SH")) %>%
   mutate(mon = months.POSIXt(dateTime)) %>%
   mutate(yr = year(dateTime))
 
@@ -37,7 +38,7 @@ ggplot() +
   geom_bar(monthly_mass_events_bf, mapping = aes(fill = ID, x = date, y = total_chloride_mass_Mg), position = "stack", stat = "identity") +
   scale_fill_OkabeIto() +
   #scale_fill_manual(values = wes_palette("Darjeeling1", n = 5, type = "discrete")) +
-  scale_color_manual(values = c("black", NA), guide = FALSE) +
+  scale_color_manual(values = c("black", NA), guide = "none") +
   theme_minimal() + theme(legend.title = element_blank()) +
   labs(y = "Mass of Chloride (Mg)", x = "") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +

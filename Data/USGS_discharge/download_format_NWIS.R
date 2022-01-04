@@ -29,7 +29,9 @@ d.PB <- readNWISuv("05427948", "00060", "2019-12-18", "2021-04-11", tz = "Americ
 #Yahara River outlet of Lake Mendota
 d.YRO <- readNWISuv("05428500", "00060", "2019-12-18", "2021-04-11", tz = "America/Chicago") %>%
   format()
-
+#Spring Harbor
+d.SH <- readNWISuv("05427965", "00060", "2019-12-18", "2021-04-11", tz = "America/Chicago") %>%
+  format()
 
 
 
@@ -83,3 +85,26 @@ write_csv(PB_discharge, "Data/USGS_discharge/PB_discharge.csv")
 #Yahara River outlet of Lake Mendota
 YRO_discharge <- rolling_ave_discharge(read_csv("Data/Conductivity/YR-O_cond.csv"), d.YRO)
 write_csv(YRO_discharge, "Data/USGS_discharge/YR-O_discharge.csv")
+#Spring Harbor
+# import USGS conductivity
+SH_cond = read_tsv('Data/USGS_SH/SH_SPC.txt') |> 
+  rename(Temp_C = `158191_00010`, SpCond_uScm = `158192_00095`, 
+         Discharge = `158188_00060`) |> 
+  mutate(EC_lowRange_uScm = NA, EC_highRange_uScm = NA, ID = 'SH') |> 
+  select(dateTime = datetime, EC_lowRange_uScm, EC_highRange_uScm,
+         Temp_C, SpCond_uScm, ID)
+
+#function to calculate moving average
+mov_ave <- function(ConductivityData, span = 13) {
+  #add column for 6 hour moving average and get the total average specific conductivity of the dataset
+  Cond_data <- ConductivityData %>%
+    mutate(MovingAverage_SpCond_uScm = rollmean(SpCond_uScm, span, fill = NA, na.rm = TRUE)) %>% #use zoo::rollmean over 13 rows (6 hours - 3 before and 3 after each point)
+    mutate(MovingAverage_SpCond_uScm = ifelse(row_number() <= 6, mean(SpCond_uScm[1:6]), MovingAverage_SpCond_uScm)) %>% # rollmean leaves empty rows at beginning and end of dataset. This line and the one below uses the mean of those empty rows
+    mutate(MovingAverage_SpCond_uScm = ifelse(row_number() >= (nrow(ConductivityData) - 5), mean(SpCond_uScm[(nrow(ConductivityData) - 5):nrow(ConductivityData)]), MovingAverage_SpCond_uScm))
+}
+
+#finalized datasets
+SH_cond <- mov_ave(SH_cond) #Yahara River inflow
+
+SH_discharge <- rolling_ave_discharge(SH_cond, d.SH)
+write_csv(SH_discharge, "Data/USGS_discharge/SH_discharge.csv")

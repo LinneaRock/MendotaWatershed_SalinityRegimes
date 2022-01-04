@@ -23,6 +23,8 @@ h <- join_for_linreg(SH_cl, SH_cond)
 
 #bind together 
 all_river_linreg <- bind_rows(a, b, c, d, e, f, g, h)
+all_river_linreg$ID.x = factor(all_river_linreg$ID.x,
+                               levels = c("DC", "PB", "SH", "SMC", "YR-I", "YR-O", "SW", "YR-S"))
 
 # Check EC similarities
 ggplot(all_river_linreg |> filter(ID.x != 'SH')) +
@@ -75,7 +77,7 @@ pr0 = ggplot(sites.df |> filter(ID.x %in% c('SH')), aes(value , chloride_mgL)) +
   geom_point(aes(color = ID.x, group = chloride_mgL), size = 0.75, shape = 21, fill = 'black') +
   geom_smooth(method = "lm", se = FALSE, size = 0.5, aes(color = ID.x)) +
   scale_x_continuous(breaks = c(0,10000,20000)) +
-  scale_color_OkabeIto(order = 2) +
+  scale_color_OkabeIto(order = 3) +
   scale_fill_OkabeIto() +
   labs(x = "SpC"~(µS~cm^-1), y = "Chloride"~(mg~L^-1)) +
   theme_bw(base_size = 7) + 
@@ -93,7 +95,7 @@ pr1 = ggplot(sites.df |> filter(ID.x %in% c('SH','PB','SW')), aes(value , chlori
            label = r2text('SH',b.regs |> filter(River == 'SH') |> pull(Adjusted_R2)), parse=T, size = 2) +
   annotate('text', x= 2500, y = 300, col = palette_OkabeIto[3], vjust = 0,
            label = r2text('SW',b.regs |> filter(River == 'SW') |> pull(Adjusted_R2)), parse=T, size = 2) +
-  scale_color_OkabeIto() +
+  scale_color_OkabeIto(order = c(2,3,7)) +
   scale_fill_OkabeIto() +
   labs(x = "SpC"~(µS~cm^-1), y = "Chloride"~(mg~L^-1)) +
   theme_minimal(base_size = 8) + theme(legend.title = element_blank())
@@ -105,16 +107,16 @@ pr2 = ggplot(sites.df |> filter(!ID.x %in% c('SH','PB','SW')),
   geom_smooth(method = "lm", se = FALSE, size = 1, aes(color = ID.x)) +
   annotate('text', x= 1000, y = 30, col = palette_OkabeIto[1], hjust = 0, vjust = 0, 
            label = r2text('DC',b.regs |> filter(River == 'DC') |> pull(Adjusted_R2)), parse=T, size = 2) +
-  annotate('text', x= 1000, y = 55, col = palette_OkabeIto[2], hjust = 0, vjust = 0, 
+  annotate('text', x= 1000, y = 55, col = palette_OkabeIto[4], hjust = 0, vjust = 0, 
            label = r2text('SMC',b.regs |> filter(River == 'SMC') |> pull(Adjusted_R2)), parse=T, size = 2) +
-  annotate('text', x= 1000, y = 60, col = palette_OkabeIto[3], hjust = 0, vjust = 0, 
+  annotate('text', x= 1000, y = 60, col = palette_OkabeIto[5], hjust = 0, vjust = 0, 
            label = r2text('YR-I',b.regs |> filter(River == 'YR-I') |> pull(Adjusted_R2)), parse=T, size = 2) +
-  annotate('text', x= 750, y = 60, col = '#d9bb11', hjust = 0, vjust = 0, 
+  annotate('text', x= 750, y = 60, col = palette_OkabeIto[6], hjust = 0, vjust = 0, 
            label = r2text('YR-O',b.regs |> filter(River == 'YR-O') |> pull(Adjusted_R2)), parse=T, size = 2) +
-  annotate('text', x= 650, y = 75, col = palette_OkabeIto[5], hjust = 0, vjust = 0, 
+  annotate('text', x= 650, y = 75, col = palette_OkabeIto[8], hjust = 0, vjust = 0, 
            label = r2text('YR-S',b.regs |> filter(River == 'YR-S') |> pull(Adjusted_R2)), parse=T, size = 2) +
-  scale_color_OkabeIto() +
-  scale_fill_OkabeIto() +
+  scale_color_OkabeIto(order = c(1,4,5,6,8)) +
+  scale_fill_OkabeIto(order = c(1,4,5,6,8)) +
   labs(x = "SpC"~(µS~cm^-1), y = "Chloride"~(mg~L^-1)) +
   # labs(x = "Specific Conductivity"~(mu~S~cm^-1)~"@ 25"*~degree*C~"\n", 
   #      y = "\nChloride Concentration"~(mg~L^-1)) +
