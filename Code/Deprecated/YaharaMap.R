@@ -10,22 +10,19 @@ esri_land <- paste0('https://services.arcgisonline.com/arcgis/rest/services/NatG
 basemap <- paste0('https://tiles.wmflabs.org/osm-no-labels/${z}/${x}/${y}.png')
 
 # Manually build dataframes with coordinates of sampling locations
-gage.bb = data.frame(site = c('DC', 'PBMS', 'SMC','YR-I', 'YR-O', 'SW', 'YR-S'),
-                     lat = c(43.14027778, 43.10333333, 43.14683333, 43.15083333, 43.08944444, 43.09259, 43.04718), 
-                     lon = c(-89.44222222, -89.51166667, -89.43694444, -89.40194444,-89.36083333, -89.33318, -89.33605), 
-                     fill = as.character(palette_OkabeIto[1:7]),
-                     shape = c(22, 22, 22, 22, 22, 22, 22))
+gage.bb = data.frame(site = c('DC', 'PBMS', 'SMC','YR-I', 'YR-O'),
+                     lat = c(43.14027778, 43.10333333, 43.14683333, 43.15083333, 43.08944444), 
+                     lon = c(-89.44222222, -89.51166667, -89.43694444, -89.40194444,-89.36083333), 
+                     fill = as.character(palette_OkabeIto[1:5]),
+                     shape = c(22, 22, 22, 22, 22))
 gage.bb.sf = st_as_sf(gage.bb, coords = c("lon", "lat"), 
                       crs = 4326)
 
-lakebuoys <-
-  data.frame(
-    site = c('ME', 'MO'),
-    lat = c(43.097951, 43.063516),
-    lon = c(-89.404744,-89.360746),
-    fill = c('gold', 'black'),
-    shape = c(21, 21)
-  )
+lakebuoys <- data.frame(site = c('ME'), 
+                        lat = c(43.097951), 
+                        lon = c(-89.404744),
+                        fill = c('gold'),
+                        shape = c(21))
 sites.sf <- st_as_sf(lakebuoys, coords = c("lon", "lat"),
                      crs = 4326)
 
@@ -35,9 +32,6 @@ ws.PB = st_read('GIS/Shapefiles_Watersheds/PBMS/ws_PBMS.shp')
 ws.SM = st_read('GIS/Shapefiles_Watersheds/SMC/ws_SMC.shp')
 ws.DC = st_read('GIS/Shapefiles_Watersheds/DC/ws_DC.shp')
 ws.ME = st_read('GIS/Shapefiles_Watersheds/ME/ws_ME.shp')
-ws.MO = readRDS('GIS/Shapefiles_Watersheds/MO/MO.rds')
-ws.SW = st_read('GIS/Shapefiles_Watersheds/SW/ws_SW.shp')
-ws.YRS = st_read('GIS/Shapefiles_Watersheds/YS/ws_YS.shp')
 
 # lakes
 YaharaLakes = st_read('GIS/Shapefiles_Yahara/YaharaLakes_DaneCty.shp') %>% st_transform(4326)
@@ -55,8 +49,6 @@ m1 = ggplot(YaharaWatershed) +
   geom_sf(data = ws.PB, alpha = 0.1, size = 0.3, fill = '#FF5733') +
   geom_sf(data = ws.DC, alpha = 0.1, size = 0.3, fill = '#900C3F') +
   geom_sf(data = ws.SM, alpha = 0.1, size = 0.3, fill = '#C70039') +
-  geom_sf(data = ws.SW, alpha = 0.1, size = 0.3, fill = '#581845') +
-  geom_sf(data = ws.YRS, alpha = 0.05, size = 0.3, fill = '#FF5733') +
   geom_sf(data = YaharaFlowlines, color = 'lightsteelblue4', size = 0.2) +
   geom_sf(data = YaharaLakes,fill = alpha('lightsteelblue1',1), size = 0.2) +
   geom_sf(data = sites.sf, aes(fill = fill, shape = shape), size = 1, stroke = 0.2, #USGS gages
@@ -87,15 +79,15 @@ m2 = ggplot() +
   theme_void() +
   xlim(0,1) +
   ylim(0,1) +
-  geom_point(aes(x = 0, y = seq(0.85,0.125,length.out = 9)), 
-             size = 2, shape = c(rep(22,7),21,21), 
-             fill = c(palette_OkabeIto[1:7], 'gold', 'black')) +
-  #fill = c(as.character(wes_palette("Darjeeling1", n = 5, type = "discrete")), 'gold')) +
+  geom_point(aes(x = 0, y = seq(0.8,0.2,length.out = 6)), 
+             size = 2, shape = c(rep(22,5),21), 
+             fill = c(palette_OkabeIto[1:5], 'gold')) +
+             #fill = c(as.character(wes_palette("Darjeeling1", n = 5, type = "discrete")), 'gold')) +
   geom_text(aes(x=0.08,y=0.5,
                 #label='Dorn Creek (DC)\nSix Mile Creek (SMC)\nPheasant Branch (PB)\nYahara River (YR-I)\nYahara Outlet (YR-O)\nLake Mendota '),
-                label='Dorn Creek (DC)\nPheasant Branch (PB)\nSix Mile Creek (SMC)\nYahara River (YR-I)\nYahara Outlet (YR-O)\nStarkweather Creek (SW)\nYahara River South (YR-S)\nLake Mendota\nLake Monona '),
+                label='Dorn Creek (DC)\nPheasant Branch (PB)\nSix Mile Creek (SMC)\nYahara River (YR-I)\nYahara Outlet (YR-O)\nLake Mendota '),
             hjust = 0,
-            size = 2) +
+            size = 2.4) +
   xlab(NULL) + plot_layout(tag_level = 'new'); m2
 
 ##### Figure B #####
@@ -119,7 +111,7 @@ w1 = ggplot(wi.simple) +
     axis.title.x=element_blank(),axis.title.y=element_blank(),
     axis.text.x = element_text(angle = 45, hjust = 1),
     # plot.background = element_rect(fill = 'white', colour = 'black ', size = 0.3)
-  )
+    )
 
 # Map without lat/long
 w2 = ggplot(wi.simple) +
@@ -148,8 +140,6 @@ watershed <- read_xlsx("Data/Historical/YaharaHist.xlsx") %>%
 m3 = ggplot(watershed) +
   geom_smooth(aes(Date, ME), color = "black", size = 0.3, se = FALSE) +
   geom_point(aes(Date, ME), fill = "gold", size = .7, shape = 21, stroke = 0.2) +
-  geom_smooth(aes(Date, MO), color = "black", size = 0.3, se = FALSE) +
-  geom_point(aes(Date, MO), fill = "black", size = .7, shape = 21, stroke = 0.2) +
   labs(y = "Chloride Concentration"~(mg~L^-1)) + 
   theme_bw(base_size = 8) +
   theme(legend.title = element_blank(), 
@@ -170,4 +160,4 @@ combo = m1 + w2 + m2 + m3 +
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
   theme(plot.tag = element_text(size = 8)) & theme(plot.margin = margin(0,0,0,0, "cm"))
 ggsave(plot = combo, filename = "Figures/F1_map.png", width = 6.5, height = 3, units = "in", dpi = 300)
-
+ 
