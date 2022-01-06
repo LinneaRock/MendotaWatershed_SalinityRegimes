@@ -19,6 +19,7 @@ massNorm <- mass_normalized(all_ts_mass)
 ggplot() +
   # geom_vline(aes(xintercept = as.Date('2020-03-22')), linetype = 2) +
   # geom_vline(aes(xintercept = as.Date('2021-03-20')), linetype = 2) +
+  geom_line(massNorm %>% filter(ID == "SH"), mapping = aes(dateTime, zscore_chloride_mass, group = ID, color = ID), size = 0.25) +
   geom_line(massNorm %>% filter(ID != "YR-O"), mapping = aes(dateTime, zscore_chloride_mass, group = ID, color = ID)) +
   geom_line(massNorm %>% filter(ID == "YR-O"), mapping = aes(dateTime, zscore_chloride_mass, group = ID, color = ID), size = 1.25) +
   scale_color_OkabeIto() +
@@ -28,6 +29,6 @@ ggplot() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 
-ggsave("Figures/FX_cl_mass_zscore.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
+ggsave("Figures/F5_cl_mass_zscore.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
 
 
