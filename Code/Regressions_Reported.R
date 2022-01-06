@@ -19,6 +19,13 @@ tests <- data.frame(
   Ave_discharge_cms = c(mean(YRI_discharge$MovingAverage_dis_cms, na.rm = TRUE),mean(SMC_discharge$MovingAverage_dis_cms, na.rm = TRUE),mean(DC_discharge$MovingAverage_dis_cms, na.rm = TRUE),mean(PB_discharge$MovingAverage_dis_cms, na.rm = TRUE), mean(YRO_discharge$MovingAverage_dis_cms, na.rm = TRUE), mean(SH_discharge$MovingAverage_dis_cms, na.rm = TRUE))
 )
 
+median(SW_cl$chloride_mgL, na.rm = TRUE)
+mean(SW_cl$chloride_mgL, na.rm = TRUE)
+sd(SW_cl$chloride_mgL, na.rm = TRUE)
+
+mean(SH_ts_mass$chloride_estimated_mgL, na.rm = TRUE)
+sd(SH_ts_mass$chloride_estimated_mgL, na.rm = TRUE)
+
 tests <- tests %>%
   mutate(bf_mass_percent = (mass_chloride_baseflow_Mg/total_chloride_mass_Mg) * 100) %>% #percentage of chloride mass from baseflow
   mutate(event_mass_percent = (mass_chloride_events_Mg/total_chloride_mass_Mg)*100) %>% #percentage of chloride mass from stormflow

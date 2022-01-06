@@ -142,6 +142,7 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
     left_join(
       cl_ts_data %>% mutate(date = as.Date(dateTime)) %>% group_by(date) %>% summarise(
         Daily_chloride_mgL = mean(chloride_estimated_mgL),
+        Daily_SpCond_uScm = mean(MovingAverage_SpCond_uScm),
         Daily_chloride_load_Mg = sum(chloride_mass_Mg)
       ),
       by = "date")
@@ -150,12 +151,14 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
   df_peaks <- df_combine %>%
     drop_na(event.flag) %>%
     rename(event_flow = Daily_dis_cms,
+           event_SpCond = Daily_SpCond_uScm,
            event_conc = Daily_chloride_mgL,
            event_mass = Daily_chloride_load_Mg)
   
   df_baseflow_only <- df_combine %>%
     filter(is.na(event.flag)) %>%
     rename(bf = Daily_dis_cms,
+           bf_SpCond = Daily_SpCond_uScm,
            bf_conc = Daily_chloride_mgL,
            bf_mass = Daily_chloride_load_Mg)
   
@@ -163,20 +166,24 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
     bind_rows(df_peaks) %>%
     arrange(date) %>%
     mutate(all_dis = ifelse(is.na(bf), event_flow, bf)) %>%
+    mutate(all_SpCond = ifelse(is.na(bf_SpCond), event_SpCond, bf_SpCond)) %>%
     mutate(all_conc = ifelse(is.na(bf_conc), event_conc, bf_conc)) %>%
     mutate(all_mass = ifelse(is.na(bf_mass), event_mass, bf_mass)) %>%
-    dplyr::select(date, bf, bf_conc, bf_mass, event_flow, event_conc, event_mass, eckhardt, all_dis, all_conc, all_mass, event.flag) 
+    dplyr::select(date, bf, bf_SpCond, bf_conc, bf_mass, event_flow, event_SpCond, event_conc, event_mass, eckhardt, all_dis, all_SpCond, all_conc, all_mass, event.flag) 
   
-  #bf = discharge (cms) not during events
-  #bf_conc = chloride concentration (mg L^-1) during non-events
-  #bf_mass = chloride mass (metric tonnes) during non-events
-  #event_flow = discharge (cms) during stormflow events
-  #event_conc = chloride concentration (mg L^-1) during stormflow events
-  #event_mass = chloride mass (metric tonnes) during stormflow events
+  #bf_cms = discharge (cms) not during events
+  #bf_SpC_uScm = specific conductivity (microsiemens per liter) during non-events
+  #bf_chloride_mgL = chloride concentration (mg L^-1) during non-events
+  #bf_chloride_Mg = chloride mass (metric tonnes) during non-events
+  #event_flow_cms = discharge (cms) during stormflow events
+  #event_SpC_uScm = specific conductivity (microsiemens per liter) during stormflow events
+  #event_chloride_mgL = chloride concentration (mg L^-1) during stormflow events
+  #event_chloride_Mg = chloride mass (metric tonnes) during stormflow events
   #eckhardt = eckhardt baseflow (cms)
-  #all_dis = all (bf and stormflow) discharge (cms)
-  #all_conc = all (bf and stormflow) chloride concentrations (mg L^-1)
-  #all_mass = all (bf and stormflow) chloride mass loading (metric tonnes)
+  #all_dis_cms = all (bf and stormflow) discharge (cms)
+  #all_SpC_uScm = all (bf and stormflow) specific conductivity (microsiemens per liter)
+  #all_chloride_mgL = all (bf and stormflow) chloride concentrations (mg L^-1)
+  #all_chloride_mass = all (bf and stormflow) chloride mass loading (metric tonnes)
   #event.flag = identifies individual events
   
   library(cowplot)
@@ -187,10 +194,10 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
   
   #chemograph (chloride concentration)
   a <- ggplot(df_all_flow) +
-    geom_line(aes(date, all_conc)) +
-    geom_line(aes(date, event_conc), color = "#E69F00") +
+    geom_line(aes(date, all_SpCond)) +
+    geom_line(aes(date, event_SpCond), color = "#E69F00") +
     theme_minimal() +
-    labs(x = "", y = "Chloride Concentration"~(mg~L^-1),
+    labs(x = "", y = "SpC"~(mu~S~cm^-1)~"@ 25"*~degree*C,
          title = rivername) + 
     theme(legend.title = element_blank(),
           legend.position = "bottom") +
