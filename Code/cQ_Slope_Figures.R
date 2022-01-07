@@ -57,7 +57,7 @@ tag_facet(cQ_plot, x = -Inf, y = Inf,
           tag_pool = my_tags)
 
 ggsave(
-  "Figures/F3_fR_bf_qf_slopes.png",
+  "Figures/F5_fR_bf_qf_slopes.png",
   height = 4.25,
   width = 6.25,
   units = "in",
@@ -118,7 +118,7 @@ ggplot() +
   )
 
 ggsave(
-  "Figures/F4_individualSlopes.png",
+  "Figures/F6_individualSlopes.png",
   height = 4.25,
   width = 6.25,
   units = "in",

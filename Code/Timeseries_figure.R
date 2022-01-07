@@ -61,7 +61,7 @@ p1 / p2 / p3 +
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
   theme(plot.tag = element_text(size = 8))
 # Save combo plot
-ggsave('Figures/F3_timeseries.png', width = 6.5, height = 6, units = 'in', dpi = 500)
+ggsave('Figures/Supplemental/FigureS1_timeseries.png', width = 6.5, height = 6, units = 'in', dpi = 500)
 
   
 #######################same as above figures for SH#############################
@@ -109,7 +109,7 @@ p1 / p2  +
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
   theme(plot.tag = element_text(size = 8))
 # Save combo plot
-ggsave('Figures/F4_timeseries_SH.png', width = 6.5, height = 6, units = 'in', dpi = 500)
+ggsave('Figures/Supplemental/FigureS2_timeseries_SH.png', width = 6.5, height = 6, units = 'in', dpi = 500)
 
 
 

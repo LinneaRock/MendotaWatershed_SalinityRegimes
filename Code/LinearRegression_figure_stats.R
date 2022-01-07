@@ -46,7 +46,7 @@ ggplot(all_river_linreg, aes(SpCond_uScm.x , chloride_mgL)) +
   theme_minimal() + theme(legend.title = element_blank())
 
  #save as a supplemental figure
-ggsave("Figures/Supplemental/FigureS1_linearRegresions.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
+ggsave("Figures/Supplemental/FigureSX_linearRegresions.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
 
 sites.df = all_river_linreg |> 
   dplyr::select(date, ID.x, chloride_mgL, SpCond_uScm.x, MovingAverage_SpCond_uScm) |> 
@@ -130,7 +130,7 @@ pr1 + inset_element(pr0,0,0.6,0.4,1)
   theme(plot.tag = element_text(size = 8), legend.position = "none")
 
 # Save combo plot
-ggsave('Figures/FX_regressions2.png', width = 6.5, height = 3, units = 'in', dpi = 500)
+ggsave('Figures/F2_regressions.png', width = 6.5, height = 3, units = 'in', dpi = 500)
 
 
 
