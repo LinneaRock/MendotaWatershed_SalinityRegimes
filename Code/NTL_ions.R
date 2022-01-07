@@ -147,4 +147,4 @@ c2 = ggplot(cond.YRS) +
   theme(plot.tag = element_text(size = 8), legend.justification = "left")
 
 # Save combo plot
-ggsave('Figures/FX_lakeIons.png', width = 6.5, height = 6, units = 'in', dpi = 500)
+ggsave('Figures/F6_lakeIons.png', width = 6.5, height = 6, units = 'in', dpi = 500)
