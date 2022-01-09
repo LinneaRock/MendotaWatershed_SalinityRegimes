@@ -6,7 +6,7 @@ library(patchwork)
 library(readxl)
 
 # Background maps 
-esri_land <- paste0('https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/tile/${z}/${y}/${x}.jpeg')
+# esri_land <- paste0('https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/tile/${z}/${y}/${x}.jpeg')
 basemap <- paste0('https://tiles.wmflabs.org/osm-no-labels/${z}/${x}/${y}.png')
 
 # Manually build dataframes with coordinates of sampling locations
@@ -59,11 +59,11 @@ m1 = ggplot(YaharaWatershed) +
   geom_sf(data = ws.SW, alpha = 0.1, size = 0.3, fill = '#581845') +
   geom_sf(data = ws.SH, alpha = 0.1, size = 0.3, fill = '#581845') +
   geom_sf(data = ws.YRS, alpha = 0.05, size = 0.3, fill = '#FF5733') +
-  geom_sf(data = YaharaFlowlines, color = 'lightsteelblue4', size = 0.2) +
-  geom_sf(data = YaharaLakes,fill = alpha('lightsteelblue1',1), size = 0.2) +
-  geom_sf(data = sites.sf, aes(fill = fill, shape = shape), size = 1, stroke = 0.2, #USGS gages
+  geom_sf(data = YaharaFlowlines, color = 'lightsteelblue4', size = 0.3) +
+  geom_sf(data = YaharaLakes,fill = alpha('lightsteelblue1',1), size = 0.4) +
+  geom_sf(data = sites.sf, aes(fill = fill, shape = shape), size = 2, stroke = 0.3, #Lake sites
           show.legend = "point", inherit.aes = FALSE) +
-  geom_sf(data = gage.bb.sf, aes(fill = fill, shape = shape), size = 2, stroke = 0.2, #USGS gages
+  geom_sf(data = gage.bb.sf, aes(fill = fill, shape = shape), size = 2, stroke = 0.3, #USGS gages
           show.legend = "point", inherit.aes = FALSE) +
   scale_fill_identity() +
   scale_shape_identity() +
@@ -152,7 +152,7 @@ m3 = ggplot(watershed) +
   geom_point(aes(Date, ME), fill = "gold", size = .7, shape = 21, stroke = 0.2) +
   geom_smooth(aes(Date, MO), color = "black", size = 0.3, se = FALSE) +
   geom_point(aes(Date, MO), fill = "black", size = .7, shape = 21, stroke = 0.2) +
-  labs(y = "Chloride Concentration"~(mg~L^-1)) + 
+  labs(y = "Chloride Concentration "~(mg~L^-1)) + 
   theme_bw(base_size = 8) +
   theme(legend.title = element_blank(), 
         legend.text = element_text(size = 8),
