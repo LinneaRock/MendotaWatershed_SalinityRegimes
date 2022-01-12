@@ -46,7 +46,7 @@ ggplot() +
   scale_y_continuous(n.breaks = 10)
 
 ggsave(
-  "Figures/F7_massbalance.png",
+  "Figures/F8_massbalance.png",
   height = 4,
   width = 6.25,
   units = "in",

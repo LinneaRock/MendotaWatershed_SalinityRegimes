@@ -29,6 +29,6 @@ ggplot() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 
-ggsave("Figures/F3_cl_mass_zscore.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
+ggsave("Figures/F5_cl_mass_zscore.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
 
 

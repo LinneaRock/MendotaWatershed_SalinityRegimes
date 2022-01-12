@@ -130,7 +130,7 @@ pr1 + inset_element(pr0,0,0.6,0.4,1)
   theme(plot.tag = element_text(size = 8), legend.position = "none")
 
 # Save combo plot
-ggsave('Figures/F2_regressions.png', width = 6.5, height = 3, units = 'in', dpi = 500)
+ggsave('Figures/F3_regressions.png', width = 6.5, height = 3, units = 'in', dpi = 500)
 
 
 

@@ -109,7 +109,7 @@ p1 / p2  +
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
   theme(plot.tag = element_text(size = 8))
 # Save combo plot
-ggsave('Figures/Supplemental/FigureS2_timeseries_SH.png', width = 6.5, height = 6, units = 'in', dpi = 500)
+ggsave('Figures/Supplemental/FigureS1_timeseries_SH.png', width = 6.5, height = 6, units = 'in', dpi = 500)
 
 
 
