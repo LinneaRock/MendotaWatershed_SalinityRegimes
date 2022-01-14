@@ -2,7 +2,6 @@
 
 source("Code/Functions/join_field_cond_function.R")
 
-
 #function to obtain slope:
 slope <- function(field_data, logger_data) {
   round(coef(summary(lm(chloride_mgL ~ SpCond_uScm.x, join_for_linreg(field_data, logger_data))))[2,1], 2)

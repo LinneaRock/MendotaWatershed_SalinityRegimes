@@ -1,53 +1,40 @@
 #estimating chloride concentration from continuous logger specific conductivity data 
 #and linear regression equations
 
-source("Code/Functions/regression_stats_functions.R")
+source('Code/Functions/join_field_cond_function.R')
 
 #function to calculate a timeseries at 30 min timesteps of chloride concentration and loading mass
-#4 visualization functions follow
 chloride_ts_mass <- function(field_data, logger_data, discharge_data) {
 
-  combined <- logger_data %>%
+  # Set up for linear regression
+  a = join_for_linreg(field_data, logger_data) |> 
+    dplyr::select(date, chloride_mgL, SpCond_uScm.x, MovingAverage_SpCond_uScm) |> 
+    filter(!is.na(SpCond_uScm.x) | !is.na(MovingAverage_SpCond_uScm)) |> 
+    pivot_longer(cols = SpCond_uScm.x: MovingAverage_SpCond_uScm, values_to = 'MovingAverage_SpCond_uScm') |> 
+    arrange(chloride_mgL)
+  
+  # Linear fit 
+  fit = lm(chloride_mgL ~ MovingAverage_SpCond_uScm, data = a)
+    
+  # Join for EC & Discharge 
+  site <- logger_data %>% filter(!is.na(MovingAverage_SpCond_uScm)) |> 
     left_join(discharge_data, by = "dateTime")
+
+  minobs <- min(field_data$chloride_mgL) # lowest recorded chloride value
   
-  sl <- slope(field_data, logger_data) #get slope value
-  int <- intercept(field_data, logger_data) #intercept value 
-  minobs <- min(field_data$chloride_mgL)
+  # predictions from linear regression 
+  site.pred = data.frame(predict(fit, newdata = site, interval = 'prediction', level = 0.95)) |> 
+    mutate_if(is.numeric, funs(ifelse(. < 0, 0, .))) %>% #if concentration less than 0, set to 0 |> 
+    rename(chloride_estimated_mgL = fit, chloride_estimated_mgL_high = upr, chloride_estimated_mgL_low = lwr) 
   
-  
-  ts_load <- combined %>%
-    mutate(timestep = (dateTime - lag(dateTime)) * 60) %>% #timestep in seconds
-    mutate(chloride_estimated_mgL = (sl * MovingAverage_SpCond_uScm) + int) %>% #estimate chloride [mg L^-1] for each specific conductivity measure
-    mutate(chloride_estimated_mgL = ifelse(chloride_estimated_mgL <= 0, minobs, chloride_estimated_mgL)) %>% #if concentration falls to or below zero, use the minimum observed value
+  # bind predictions and calculate load 
+  site.load = site |> bind_cols(site.pred) |> 
+    mutate(timestep = as.numeric(difftime(dateTime, lag(dateTime)), units="secs")) %>% #timestep in seconds
+    mutate(timestep  = ifelse(timestep > 5000, NA, timestep )) %>% #loggers were removed for a week and I don't want to calculate for that time. 
     mutate(chloride_mass_Mg = ((chloride_estimated_mgL * MovingAverage_dis_cms) * timestep) / 1000000) %>% #load in metric tonnes [Mg]
-    mutate(chloride_mass_Mg  = ifelse(timestep > 5000, NA, chloride_mass_Mg )) %>% #loggers were removed for a week and I don't want to calculate for that time. 
+    mutate(chloride_mass_Mg_high = ((chloride_estimated_mgL_high * MovingAverage_dis_cms) * timestep) / 1000000) %>% #load in metric tonnes [Mg]
+    mutate(chloride_mass_Mg_low = ((chloride_estimated_mgL_low * MovingAverage_dis_cms) * timestep) / 1000000) %>% #load in metric tonnes [Mg]
     filter(timestep > 0)
   
-  return(ts_load)
-  
-}
-
-
-
-
-chloride_ts_mass_SH <- function(field_data, logger_data, discharge_data) {
-  
-  combined <- logger_data %>%
-    left_join(discharge_data, by = "dateTime")
-  
-  sl <- slope(field_data, logger_data) #get slope value
-  int <- intercept(field_data, logger_data) #intercept value 
-  minobs <- min(field_data$chloride_mgL)
-  
-  
-  ts_load <- combined %>%
-    mutate(timestep = (dateTime - lag(dateTime))) %>% #timestep in seconds
-    mutate(chloride_estimated_mgL = (sl * MovingAverage_SpCond_uScm) + int) %>% #estimate chloride [mg L^-1] for each specific conductivity measure
-    mutate(chloride_estimated_mgL = ifelse(chloride_estimated_mgL <= 0, minobs, chloride_estimated_mgL)) %>% #if concentration falls to or below zero, use the minimum observed value
-    mutate(chloride_mass_Mg = ((chloride_estimated_mgL * MovingAverage_dis_cms) * timestep) / 1000000) %>% #load in metric tonnes [Mg]
-    mutate(chloride_mass_Mg  = ifelse(timestep > 5000, NA, chloride_mass_Mg )) %>% #loggers were removed for a week and I don't want to calculate for that time. 
-    filter(timestep > 0)
-  
-  return(ts_load)
-  
+  return(site.load)
 }
