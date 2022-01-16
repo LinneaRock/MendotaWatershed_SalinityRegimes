@@ -95,7 +95,8 @@ ggplot() +
     values = palette_OkabeIto[1:4]
     #values = c("#1DACE8", "#1C366B", "#F24D29", "#E5C4A1")
   ) +
-  scale_y_discrete(limits=rev) + # flip y axis order for continutity with other plots
+  scale_y_discrete(limits=rev) + # flip y axis order for continuity with other plots
+  expand_limits(y = 7) +
   theme_minimal() +
   theme(legend.title = element_blank()) +
   annotate(
@@ -136,12 +137,12 @@ ggplot() +
     size = 6,
     color = "#801129"
   ) +
-  geom_curve(aes(x = -0.38, y = 0.2, xend = -0.33, yend = 0.6), arrow = arrow(length = unit(0.03, "npc")), col = "#801129") +
-  geom_curve(aes(x = -0.2, y = 0.2, xend = -0.19, yend = 0.6), curvature = 0.1, arrow = arrow(length = unit(0.03, "npc"))) +
-  geom_curve(aes(x = 0.1, y = 0.2, xend = -0.07, yend = 0.6), curvature = -0.5, arrow = arrow(length = unit(0.03, "npc")), color = "#CD5000") +
-  annotate('text', label = 'stormflow', x = -0.51, y = 0.2, hjust = 0, size = 2.5, col = "#801129") +
-  annotate('text', label = 'all', x = -0.24, y = 0.2, hjust = 0, size = 2.5) +
-  annotate('text', label = 'baseflow', x = 0.11, y = 0.2, hjust = 0, size = 2.5, col = "#CD5000")
+  geom_curve(aes(x = -0.38, y = 6.6, xend = -0.33, yend = 6.4), curvature = -0.5, arrow = arrow(length = unit(0.03, "npc")), col = "#801129") +
+  geom_curve(aes(x = -0.2, y = 6.6, xend = -0.19, yend = 6.4), curvature = -0.1, arrow = arrow(length = unit(0.03, "npc"))) +
+  geom_curve(aes(x = 0.1, y = 6.6, xend = -0.07, yend = 6.4), curvature = 0.5, arrow = arrow(length = unit(0.03, "npc")), color = "#CD5000") +
+  annotate('text', label = 'stormflow', x = -0.51, y = 6.6, hjust = 0, size = 2.5, col = "#801129") +
+  annotate('text', label = 'all', x = -0.24, y = 6.6, hjust = 0, size = 2.5) +
+  annotate('text', label = 'baseflow', x = 0.11, y = 6.6, hjust = 0, size = 2.5, col = "#CD5000")
 
 ggsave(
   "Figures/F7_individualSlopes.png",
