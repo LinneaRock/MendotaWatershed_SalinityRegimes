@@ -21,11 +21,8 @@ PB_ts_mass <- chloride_ts_mass(PB_cl, PB_cond, PB_discharge)
 #Yahara River outflow
 YRO_ts_mass <- chloride_ts_mass(YRO_cl, YRO_cond, YRO_discharge)
 #Spring Harbor
-SH_ts_mass <- chloride_ts_mass(SH_cl, SH_cond |> filter(dateTime >= as.Date("2019-12-19")), SH_discharge |> filter(dateTime >= as.Date("2019-12-19")))
-
-# SH_ts_mass <- chloride_ts_mass_SH(field_data = SH_cl, logger_data = SH_cond, discharge_data = SH_discharge) %>%
-#   filter(dateTime >= as.Date("2019-12-19") &
-#            dateTime < as.Date("2021-04-01"))
+SH_ts_mass <- chloride_ts_mass(SH_cl, SH_cond |> filter(dateTime >= as.Date("2019-12-19")), SH_discharge |> filter(dateTime >= as.Date("2019-12-19"))) |> 
+  filter(dateTime < as.Date("2021-04-11"))
 
 all_ts_mass <- bind_rows(YRI_ts_mass, SMC_ts_mass, DC_ts_mass, PB_ts_mass, YRO_ts_mass, SH_ts_mass)
 

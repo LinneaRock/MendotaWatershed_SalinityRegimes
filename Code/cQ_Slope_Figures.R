@@ -24,9 +24,8 @@ cQ_plot <- ggplot(cQ_slopes_all, aes(
   slope_SpC,
   reorder(season, desc(season)),
   color = trib,
-  fill = trib
-)) +
-  geom_point(aes(shape = flow), size = 2) +
+  fill = trib)) +
+  geom_jitter(aes(shape = flow), size = 2, width = 0, height = 0.07) +
   facet_wrap(~ flow) +
   annotate(
     "rect",
@@ -37,14 +36,24 @@ cQ_plot <- ggplot(cQ_slopes_all, aes(
     alpha = 0.2,
     color = "grey"
   ) +
+  annotate(
+    "text",
+    label = 'chemostatic',
+    x = 0.02,
+    y = 1,
+    size = 2.5,
+    angle = 90,
+    color = "grey50",
+  ) +
   scale_color_OkabeIto() +
   scale_fill_OkabeIto() +
   theme_minimal() +
   labs(x = "cQ Slope",
        y = "")  +
-  guides(shape = FALSE) +
+  guides(shape = FALSE, colour = guide_legend(nrow = 1)) +
   theme(legend.title = element_blank(),
-        legend.position = "bottom")
+        legend.position = "bottom", 
+        legend.margin=margin(t = 0, unit='cm')); cQ_plot
 
 my_tags <- c("a) Full Record", "b) Baseflow", "c) Stormflow")
 
@@ -52,13 +61,13 @@ tag_facet(cQ_plot, x = -Inf, y = Inf,
           vjust = 1, hjust = 0.005,
           open = "", close = "",
           fontface = 4,
-          size = 4,
+          size = 3.5,
           #family = "serif",
           tag_pool = my_tags)
 
 ggsave(
   "Figures/F6_fR_bf_qf_slopes.png",
-  height = 4.25,
+  height = 2.75,
   width = 6.25,
   units = "in",
   dpi = 500
@@ -67,24 +76,26 @@ ggsave(
 
 
 
-##plot showing individual stormflow events####
+ ##plot showing individual stormflow events####
 #using all_individual events dataframe, plus 
 all_individual_events$season = factor(all_individual_events$season,
                                       levels = c("Oct-Dec", "Jan-Mar", "Apr-Jun", "Jul-Sep"))
 
 ggplot() +
-  labs(x = "cQ Slope", y = "") +
-  geom_point(
+  labs(x = "Stormflow cQ Slope", y = "") +
+  geom_jitter(
     all_individual_events,
-    mapping = aes(slope_SpC, trib, color = season),
+    mapping = aes(slope_SpC, trib, fill = season),
+    width = 0, height = 0.2,
     size = 2.5,
-    shape = 21
+    shape = 21, alpha = 0.8,
   ) +
-  scale_color_manual(
+  scale_fill_manual(
     labels = c("Oct-Dec", "Jan-Mar", "Apr-Jun", "Jul-Sep"),
     values = palette_OkabeIto[1:4]
     #values = c("#1DACE8", "#1C366B", "#F24D29", "#E5C4A1")
   ) +
+  scale_y_discrete(limits=rev) + # flip y axis order for continutity with other plots
   theme_minimal() +
   theme(legend.title = element_blank()) +
   annotate(
@@ -95,6 +106,15 @@ ggplot() +
     ymax = Inf,
     alpha = 0.2,
     color = "grey"
+  ) +
+  annotate(
+    "text",
+    label = 'chemostatic',
+    x = 0.02,
+    y = 5.9,
+    size = 2.5,
+    angle = 90,
+    color = "grey50",
   ) +
   geom_point(
     all_full %>% filter(season == "Annual"),
@@ -114,12 +134,18 @@ ggplot() +
     mapping = aes(slope_SpC, trib),
     shape = "|",
     size = 6,
-    color = "#016CA3"
-  )
+    color = "#801129"
+  ) +
+  geom_curve(aes(x = -0.38, y = 0.2, xend = -0.33, yend = 0.6), arrow = arrow(length = unit(0.03, "npc")), col = "#801129") +
+  geom_curve(aes(x = -0.2, y = 0.2, xend = -0.19, yend = 0.6), curvature = 0.1, arrow = arrow(length = unit(0.03, "npc"))) +
+  geom_curve(aes(x = 0.1, y = 0.2, xend = -0.07, yend = 0.6), curvature = -0.5, arrow = arrow(length = unit(0.03, "npc")), color = "#CD5000") +
+  annotate('text', label = 'stormflow', x = -0.51, y = 0.2, hjust = 0, size = 2.5, col = "#801129") +
+  annotate('text', label = 'all', x = -0.24, y = 0.2, hjust = 0, size = 2.5) +
+  annotate('text', label = 'baseflow', x = 0.11, y = 0.2, hjust = 0, size = 2.5, col = "#CD5000")
 
 ggsave(
   "Figures/F7_individualSlopes.png",
-  height = 4.25,
+  height = 3.25,
   width = 6.25,
   units = "in",
   dpi = 500
