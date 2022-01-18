@@ -32,14 +32,15 @@ tests <- tests %>%
   mutate(yield = total_chloride_mass_Mg/watershed_size_ha) #watershed size-normalized yield of chloride mass 
 
 
-summary(lm(median_chloride_mgL~development, tests)) #p = 2.582e-05; r = 0.9896
-summary(lm(median_chloride_mgL~road_denisty_mha, tests)) #p = 1.489e-05, r = 0.9921
-summary(lm(total_chloride_mass_Mg ~watershed_size_ha, tests)) #p = 2.148e-06, r = 0.997
-summary(lm(yield~development, tests)) #p = 0.000832, r = 0.9416
-summary(lm(yield~road_denisty_mha, tests))#p = 0.000123, r = 0.9774
-summary(lm(total_chloride_mass_Mg~Ave_discharge_cms, tests)) #p =8.367e-05, r = 0.9814
+summary(lm(median_chloride_mgL~development, tests)) #p = 6.842e-05; r = 0.9832
+summary(lm(median_chloride_mgL~road_denisty_mha, tests)) #p = 9.097e-06, r =  0.9938 
+summary(lm(total_chloride_mass_Mg ~watershed_size_ha, tests)) #p = 2.645e-06, r =0.9967
+summary(lm(yield~development, tests)) #p =  0.001582, r =  0.9197
+summary(lm(yield~road_denisty_mha, tests))#p = 0.0002223, r = 0.9697
+summary(lm(total_chloride_mass_Mg~Ave_discharge_cms, tests)) #p =8.896e-05, r =  0.9808
 
-
+summary(lm(total_chloride_mass_Mg ~ development, tests)) #p = 0.5304, r = -0.11
+summary(lm(total_chloride_mass_Mg ~ road_denisty_mha, tests)) #p = 0.4867, r = -0.09
 
 
 
