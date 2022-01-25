@@ -5,6 +5,7 @@ library(ggspatial)
 library(patchwork)
 library(readxl)
 
+
 # Background maps 
 # esri_land <- paste0('https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/tile/${z}/${y}/${x}.jpeg')
 basemap <- paste0('https://tiles.wmflabs.org/osm-no-labels/${z}/${x}/${y}.png')
