@@ -26,7 +26,7 @@ fullRecord <- function(events_bf, name) {
           mon == "August" |
           mon == "September", "Jul-Sep", season),
     ) %>%
-    mutate(timestep = (dateTime - lag(dateTime)) *  60) %>% #timestep in seconds
+    mutate(timestep = as.numeric((dateTime) - lag(as.numeric(dateTime)))) %>% #timestep in seconds
     mutate(vol_water = all_dis_cms * timestep)
   
   #calculate log of the full record of chloride concentration and discharge 
@@ -67,7 +67,7 @@ fullRecord <- function(events_bf, name) {
  chloride_mass_AprJun <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Apr-Jun"))$all_chloride_Mg, na.rm = TRUE)
  chloride_mass_JulSep <- sum((df1 %>% filter(year(dateTime) == 2020, season == "Jul-Sep"))$all_chloride_Mg, na.rm = TRUE)
    
-  fullRecord_fits <- data.frame(
+ fullRecord_fits <- data.frame(
     trib = c(name, name, name, name, name),
     season = c("Annual", "Oct-Dec", "Jan-Mar", "Apr-Jun", "Jul-Sep"),
     slope_Cl = c(
