@@ -1,10 +1,7 @@
 #script to calculate of seasonal salt export in each river and get distinctions between baseflow and stormflow contributions 
 
-
-
 #call in datasets of baseflow and event discharge and salt
 source("Code/Baseflow_Events_Separation.R")
-
 
 #combine all data into single dataframe
 all_rivers_events_bf <- bind_rows(YRI_events_bf %>% mutate(ID = "YR-I"), SMC_events_bf %>% mutate(ID = "SMC"), DC_events_bf %>% mutate(ID = "DC"), PB_events_bf %>% mutate(ID = "PB"), YRO_events_bf %>% mutate(ID = "YR-O"), SH_events_bf %>% mutate(ID = "SH")) %>%
@@ -38,7 +35,7 @@ all_rivers_events_bf <- bind_rows(YRI_events_bf %>% mutate(ID = "YR-I"), SMC_eve
 ## SEASONAL SALT EXPORT CALCULATED AS A PERCENTAGE OF sPECIFIC CONDUCTIVITY EXPORTED ##
 seasonal_mass_events_bf <- all_rivers_events_bf %>%
   filter(yr != 2019) %>%
-  filter(as.character(dateTime) < "2021-04-01 00:00:00") %>% #only calculate mass for seasons which we have no missing data, i.e., do not include the partial months Dec 2019 or Apr 2021
+  filter(dateTime < as.POSIXct("2021-04-01 00:00:00")) %>% #only calculate mass for seasons which we have no missing data, i.e., do not include the partial months Dec 2019 or Apr 2021
   group_by(ID, yr, season) %>%
   summarise(bfTOT_SpC = sum(bf_SpC_uScm, na.rm = TRUE),
             eventTOT_SpC = sum(event_SpC_uScm, na.rm = TRUE)) %>%
@@ -52,11 +49,10 @@ seasonal_mass_events_bf <- all_rivers_events_bf %>%
   mutate(percent = total_SpC/total_annual_SpC)
 
 
-
 ## ANNUAL SALT EXPORT CALCULATED AS A PERCENTAGE OF sPECIFIC CONDUCTIVITY EXPORTED ##
 annual_mass_events_bf <- all_rivers_events_bf %>%
   filter(yr != 2019) %>%
-  filter(as.character(dateTime) < "2021-04-01 00:00:00") %>% #only calculate mass for seasons which we have no missing data, i.e., do not include the partial months Dec 2019 or Apr 2021
+  filter(dateTime < as.POSIXct("2021-04-01 00:00:00")) %>% #only calculate mass for seasons which we have no missing data, i.e., do not include the partial months Dec 2019 or Apr 2021
   group_by(ID) %>%
   summarise(bfTOT_SpC = sum(bf_SpC_uScm, na.rm = TRUE),
             eventTOT_SpC = sum(event_SpC_uScm, na.rm = TRUE)) %>%
