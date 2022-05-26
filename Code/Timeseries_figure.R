@@ -3,7 +3,6 @@
 #load datasets with chloride timeseries
 source("Code/estimated_chloride_conc_mass.R")
 
-
 #bind river conductivity data together
 all_river_cond <- bind_rows(YRI_cond, PB_cond, DC_cond, SMC_cond, YRO_cond, 
                               SW_cond, YRS_cond) 
@@ -21,14 +20,38 @@ library(colorblindr)
 library(scales)
 library(patchwork)
 
+t.test(SMC_cond$SpCond_uScm, DC_cond$SpCond_uScm)
+
+all_river_cond |> rbind(SH_cond) |> group_by(ID) |> 
+  summarise(meanSpC = mean(SpCond_uScm, na.rm = T))
+
+p0 = ggplot(all_river_cond |> rbind(SH_cond)) +
+  geom_boxplot(aes(x = ID, y = SpCond_uScm, fill = ID), 
+               size = 0.1, outlier.size = 0.1) +
+  scale_fill_OkabeIto(order = c(1:2,4:8,3)) +
+  theme_bw(base_size = 8) +
+  labs(y = "SpC") +
+  scale_y_log10(limits = c(100,10000), expand = c(0,0.02)) +
+  theme(axis.title.x = element_blank(), 
+        legend.position = 'none', 
+        plot.margin = unit(c(0,0,0,0), "cm"))
+
+# Compute the analysis of variance
+res.aov <- aov(SpCond_uScm ~ ID, data = all_river_cond |> rbind(SH_cond))
+# Summary of the analysis
+summary(res.aov)
+TukeyHSD(res.aov)
+
+
 p1 = ggplot(all_river_cond) +
   geom_line(mapping = aes(dateTime, MovingAverage_SpCond_uScm, 
                                           group = ID, color = ID)) +
   scale_color_OkabeIto(order = c(1:2,4:8)) +
   theme_minimal(base_size = 8) + theme(legend.title = element_blank()) +
   scale_x_datetime(date_breaks = 'month', labels = date_format("%b")) +
-  labs(y = "SpC"~(µS~cm^-1), x = "") +
+  labs(y = "SpC"~(µS~cm^-1)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+        axis.title.x = element_blank(),
         legend.position = 'none')
 
 # Same plot zoomed in on y-axis without SW and PB
@@ -38,8 +61,9 @@ p2 = ggplot(all_river_cond |> filter(!ID %in% c('SW', 'PB'))) +
   scale_color_OkabeIto(order = c(1,4,5,6,8)) +
   theme_minimal(base_size = 8) + theme(legend.title = element_blank()) +
   scale_x_datetime(date_breaks = 'month', labels = date_format("%b")) +
-  labs(y = "SpC"~(µS~cm^-1), x = "") +
+  labs(y = "SpC"~(µS~cm^-1)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+        axis.title.x = element_blank(),
         legend.position = 'none')
 
 p3 = ggplot(all_river_cl) +
@@ -50,18 +74,21 @@ p3 = ggplot(all_river_cl) +
   scale_color_OkabeIto(order = c(1:2,4:8)) +
   theme_minimal(base_size = 8) + theme(legend.title = element_blank()) +
   scale_x_datetime(date_breaks = 'month', labels = date_format("%b")) +
-  labs(y = "Chloride"~(mg~L^-1), x = "") +
+  labs(y = "Chloride"~(mg~L^-1)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), 
+        axis.title.x = element_blank(),
         legend.position = 'bottom', 
         legend.title=element_blank(),
         legend.margin = margin(0, 0, 0, 0)) +
   guides(colour = guide_legend(nrow = 1))
 
-p1 / p2 / p3 +
+(p1 + inset_element(p0, left = 0.4, bottom = 0.55, right = 1, top = 1, align_to = 'full')) / 
+  p2 / p3 +
+  plot_layout(widths = c(2,1.5,1.5)) +
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
   theme(plot.tag = element_text(size = 8))
 # Save combo plot
-ggsave('Figures/Supplemental/FigureS1_timeseries.png', width = 6.5, height = 6, units = 'in', dpi = 500)
+ggsave('Figures/F2_timeseries.png', width = 6.5, height = 6, units = 'in', dpi = 500)
 
   
 #######################same as above figures for SH#############################
@@ -110,19 +137,6 @@ p1 / p2  +
   theme(plot.tag = element_text(size = 8))
 # Save combo plot
 ggsave('Figures/Supplemental/FigureS1_timeseries_SH.png', width = 6.5, height = 6, units = 'in', dpi = 500)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ##################figures including SH###################################################
 
