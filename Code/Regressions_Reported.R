@@ -32,6 +32,8 @@ tests <- tests %>%
   mutate(yield = total_chloride_mass_Mg/watershed_size_ha) #watershed size-normalized yield of chloride mass 
 
 
+plot(median_chloride_mgL~development, tests)
+
 summary(lm(median_chloride_mgL~development, tests)) #p = 6.842e-05; r = 0.9832
 summary(lm(median_chloride_mgL~road_denisty_mha, tests)) #p = 9.097e-06, r =  0.9938 
 summary(lm(total_chloride_mass_Mg ~watershed_size_ha, tests)) #p = 2.645e-06, r =0.9967
