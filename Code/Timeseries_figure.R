@@ -15,15 +15,25 @@ all_river_cl <- bind_rows(YRI_cl, PB_cl, DC_cl, SMC_cl, YRO_cl,
 all_river_cl$ID = factor(all_river_cl$ID,
                            levels = c("DC", "PB", "SMC", "YR-I", "YR-O", "SW", "YR-S"))
 
+# Highest values
+maxValues = all_river_cl |> group_by(ID) |> 
+  mutate(cl.max = max(chloride_mgL, na.rm = T)) |> 
+  filter(chloride_mgL == cl.max) |> 
+  left_join(all_river_cond |> group_by(ID) |> 
+  summarise(cond.max = max(MovingAverage_SpCond_uScm, na.rm = T)))
 
-library(colorblindr)
-library(scales)
-library(patchwork)
+SH_cl |> #filter(dateTime > as.POSIXct('2019-12-01')) |> 
+  mutate(cl.max = max(chloride_mgL, na.rm = T)) |> 
+  filter(chloride_mgL == cl.max)
 
-t.test(SMC_cond$SpCond_uScm, DC_cond$SpCond_uScm)
+SH_cond |> #filter(dateTime > as.POSIXct('2019-12-01')) |> 
+  mutate(cond.max = max(MovingAverage_SpCond_uScm, na.rm = T)) |> 
+  filter(MovingAverage_SpCond_uScm == cond.max)
 
+# Mean concentrations at each site
 all_river_cond |> rbind(SH_cond) |> group_by(ID) |> 
   summarise(meanSpC = mean(SpCond_uScm, na.rm = T))
+
 
 p0 = ggplot(all_river_cond |> rbind(SH_cond)) +
   geom_boxplot(aes(x = ID, y = SpCond_uScm, fill = ID), 
@@ -47,11 +57,12 @@ p1 = ggplot(all_river_cond) +
   geom_line(mapping = aes(dateTime, MovingAverage_SpCond_uScm, 
                                           group = ID, color = ID)) +
   scale_color_OkabeIto(order = c(1:2,4:8)) +
-  theme_minimal(base_size = 8) + theme(legend.title = element_blank()) +
+  theme_minimal(base_size = 8) + 
   scale_x_datetime(date_breaks = 'month', labels = date_format("%b")) +
   labs(y = "SpC"~(µS~cm^-1)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
         axis.title.x = element_blank(),
+        legend.title = element_blank(),
         legend.position = 'none')
 
 # Same plot zoomed in on y-axis without SW and PB
@@ -59,11 +70,12 @@ p2 = ggplot(all_river_cond |> filter(!ID %in% c('SW', 'PB'))) +
   geom_line(mapping = aes(dateTime, MovingAverage_SpCond_uScm, 
                                           group = ID, color = ID)) +
   scale_color_OkabeIto(order = c(1,4,5,6,8)) +
-  theme_minimal(base_size = 8) + theme(legend.title = element_blank()) +
+  theme_minimal(base_size = 8) + 
   scale_x_datetime(date_breaks = 'month', labels = date_format("%b")) +
   labs(y = "SpC"~(µS~cm^-1)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
         axis.title.x = element_blank(),
+        legend.title = element_blank(),
         legend.position = 'none')
 
 p3 = ggplot(all_river_cl) +
@@ -72,7 +84,7 @@ p3 = ggplot(all_river_cl) +
   geom_path(mapping = aes(dateTime, chloride_mgL, 
                            group = ID, color = ID), size = 0.2, linetype = 2) +
   scale_color_OkabeIto(order = c(1:2,4:8)) +
-  theme_minimal(base_size = 8) + theme(legend.title = element_blank()) +
+  theme_minimal(base_size = 8) + 
   scale_x_datetime(date_breaks = 'month', labels = date_format("%b")) +
   labs(y = "Chloride"~(mg~L^-1)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), 
@@ -80,7 +92,7 @@ p3 = ggplot(all_river_cl) +
         legend.position = 'bottom', 
         legend.title=element_blank(),
         legend.margin = margin(0, 0, 0, 0)) +
-  guides(colour = guide_legend(nrow = 1))
+  guides(colour = guide_legend(nrow = 1)); p3
 
 (p1 + inset_element(p0, left = 0.4, bottom = 0.55, right = 1, top = 1, align_to = 'full')) / 
   p2 / p3 +
@@ -91,7 +103,7 @@ p3 = ggplot(all_river_cl) +
 ggsave('Figures/F2_timeseries.png', width = 6.5, height = 6, units = 'in', dpi = 500)
 
   
-#######################same as above figures for SH#############################
+####################### SPRING HARBOR #############################
 SH_cl_estimated <- SH_ts_mass %>%
   rename(chloride_mgL = chloride_estimated_mgL) %>%
   filter(dateTime <= max(DC_cl$dateTime)) %>%

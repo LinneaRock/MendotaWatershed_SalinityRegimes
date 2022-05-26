@@ -1,5 +1,6 @@
-# This code makes two figures 
+# This code makes two figures and stats 
 # 1) stormflow cQ slope by site and season
+# OLS model for chloride load and yield
 # 2) Total chloride load and percentage base vs. storm flow
 
 #call in datasets of baseflow and event discharge and salt
@@ -8,6 +9,7 @@ library(tidyverse)
 library(scatterpie)
 library(colorblindr)
 library(patchwork)
+
 #combine all data into single dataframe
 all_rivers_events_bf <- bind_rows(YRI_events_bf %>% mutate(ID = "YR-I"), 
                                   SMC_events_bf %>% mutate(ID = "SMC"), 
@@ -63,20 +65,20 @@ a$Season = factor(a$season,
                    levels = c("2020 Jan-Mar", "2020 Apr-Jun", "2020 Jul-Sep", "2020 Oct-Dec",
                               "2021 Jan-Mar"))
 
-
 ################################################
 ######## ######## Stats ######## ######## #####
-m1 <- lm(Chloride ~ TotQ + Developed:Storm,
+library(jtools)
+m1 <- lm(Chloride ~ TotQ + Developed:quarter + Developed:TotQ,
              data = a) #f2 = 0.9393
+summ(m1)
 
-summary(m1)
-
-m1 <- lm(ChlorideYield ~ Developed:quarter,
+m2 <- lm(ChlorideYield ~ Developed:quarter,
          data = a) #f2 = 0.9044
-summary(m1)
+summ(m2)
+# huxtable::print_latex(export_summs(m1))
 
 ################################################
-######## ######## PLOT 1 ######## ######## #####
+######## ######## PLOT 1: Chloride Load ######## 
 # Arrange for plotting. Need axes of the same range so pie charts are circles. 
 siteX = c(-1.5,-0.75,0,0.75,1.5)
 df = a |> 
@@ -108,13 +110,11 @@ p1 = ggplot(df) +
     legend.text = element_text(size = 7), 
     legend.title = element_text(size = 7))
 
-
 # ggsave("Figures/FX_stormflowContribution.png",
 #        height = 2.75, width = 6.25, units = "in", dpi = 500)
   
-
 ################################################
-######## ######## PLOT 2 ######## ######## #####
+######## ######## PLOT 2: Chloride Yield #######
 # Chloride Yield instead of Load 
 # Arrange for plotting. Need axes of the same range so pie charts are circles. 
 siteX = c(-1.5,-0.75,0,0.75,1.5)
@@ -147,7 +147,7 @@ p2 = ggplot(df) +
   theme(#legend.position = 'bottom', 
     axis.title.x = element_text(size = 7),
     legend.text = element_text(size = 7), 
-    legend.title = element_text(size = 7)); p2
+    legend.title = element_text(size = 7))
 
 
 ################################################

@@ -37,7 +37,7 @@ SH_cond = read_tsv('Data/USGS_SH/SH_SPC.txt') |>
   rename(Temp_C = `158191_00010`, SpCond_uScm = `158192_00095`, 
          Discharge = `158188_00060`) |> 
   mutate(EC_lowRange_uScm = NA, EC_highRange_uScm = NA, ID = 'SH') |> 
-  select(dateTime = datetime, EC_lowRange_uScm, EC_highRange_uScm,
+  dplyr::select(dateTime = datetime, EC_lowRange_uScm, EC_highRange_uScm,
          Temp_C, SpCond_uScm, ID)
 
 #function to calculate moving average
