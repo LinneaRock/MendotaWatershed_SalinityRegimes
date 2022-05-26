@@ -19,24 +19,13 @@ cQ_slopes_all <- all_full %>%
 cQ_slopes_all$flow = factor(cQ_slopes_all$flow, levels = c("Full Record", "Baseflow", "Stormflow - bulk averaged"))
 
 cQ_slopes_all$season = factor(cQ_slopes_all$season,
-                              levels = c("Oct-Dec", "Jan-Mar", "Apr-Jun", "Jul-Sep", "Annual"))
+                              levels = c( "Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec", "Annual"))
 
-cQ_plot <- ggplot(cQ_slopes_all, aes(
-  slope_SpC,
-  reorder(season, desc(season)),
-  color = trib,
-  fill = trib)) +
-  geom_jitter(aes(shape = flow), size = 2, width = 0, height = 0.07) +
-  facet_wrap(~ flow) +
-  annotate(
-    "rect",
-    xmin = -0.05,
-    xmax = 0.05,
-    ymin = 0,
-    ymax = Inf,
-    alpha = 0.2,
-    color = "grey"
-  ) +
+cQ_plot <- ggplot(cQ_slopes_all) +
+  geom_jitter(aes(slope_SpC,reorder(season, desc(season)), shape = flow, color = trib, fill = trib), 
+              size = 2, width = 0, height = 0.07, alpha = 0) + # need to have this before annotate
+  annotate(geom = "rect", xmin = -0.05, xmax = 0.05, ymin = 0, ymax = Inf,
+    alpha = 0.2, color = "grey", size = 0.2) +
   annotate(
     "text",
     label = 'chemostatic',
@@ -46,6 +35,9 @@ cQ_plot <- ggplot(cQ_slopes_all, aes(
     angle = 90,
     color = "grey50",
   ) +
+  geom_jitter(aes(slope_SpC,reorder(season, desc(season)), shape = flow, color = trib, fill = trib), 
+              size = 2, width = 0, height = 0.07) +
+  facet_wrap(~flow) +
   scale_color_OkabeIto() +
   scale_fill_OkabeIto() +
   theme_minimal() +
@@ -62,17 +54,12 @@ tag_facet(cQ_plot, x = -Inf, y = Inf,
           vjust = 1, hjust = 0.005,
           open = "", close = "",
           fontface = 4,
-          size = 3.5,
+          size = 3,
           #family = "serif",
           tag_pool = my_tags)
 
-ggsave(
-  "Figures/F6_fR_bf_qf_slopes.png",
-  height = 2.75,
-  width = 6.25,
-  units = "in",
-  dpi = 500
-)
+ggsave("Figures/F6_fR_bf_qf_slopes.png", height = 2.75, width = 6.25, 
+       units = "in", dpi = 500, bg = 'white')
 
 ################################################
 ######## ######## PLOT ######## ######## #####
