@@ -196,24 +196,26 @@ chemo_hydro_graph <- function(df.orig, cl_ts_data, rivername){
   a <- ggplot(df_all_flow) +
     geom_line(aes(date, all_SpCond)) +
     geom_line(aes(date, event_SpCond), color = "#E69F00") +
-    theme_minimal() +
-    labs(x = "", y = "SpC"~(mu~S~cm^-1)~"@ 25"*~degree*C,
+    theme_minimal(base_size = 9) +
+    labs(x = "", y = "SpC"~(mu*S~cm^-1)~"@ 25"*~degree*C,
          title = rivername) + 
     theme(legend.title = element_blank(),
-          legend.position = "bottom") +
+          legend.position = "bottom",
+          plot.title = element_text(size = 9)) +
     scale_x_datetime(limits = c(datemin, datemax))
   #hydrograph (discharge)
   b <- ggplot(df_all_flow) +
     geom_line(aes(date, all_dis)) +
     geom_line(aes(date, event_flow), color = "#E69F00") +
     geom_ribbon(mapping = aes(x = date, ymin = 0, ymax = eckhardt, fill = "#0072B2")) +
-    theme_minimal() +
+    theme_minimal(base_size = 9) +
     scale_color_manual(labels = "Stormflow",
                        values = "#E69F00") +
     scale_fill_manual(labels = "Eckhardt Baseflow",
                      values = "#0072B2") +
     labs(x = "", y = "Discharge"~(m^3~s^-1)) + 
-    theme(legend.title = element_blank(),
+    theme(plot.title = element_text(size = 9),
+          legend.title = element_blank(),
           legend.position = "bottom") +
     scale_x_datetime(limits = c(datemin, datemax)) 
   
