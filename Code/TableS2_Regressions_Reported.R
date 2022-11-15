@@ -3,7 +3,7 @@
 
 #load in datasets needed to create tests df
 source("Data/cQ_slopes/call_cQslope_datasets.R")
-source("Code/Baseflow_Events_Separation.R")
+source("Code/DataLoad/Baseflow_Events_Separation.R")
 
 tests <- data.frame(
   site = c("YR-I", "SMC", "DC", "PB", "YR-O", "SH"),
@@ -11,10 +11,10 @@ tests <- data.frame(
   total_chloride_mass_Mg = c(sum(YRI_ts_mass$chloride_mass_Mg, na.rm = TRUE),sum(SMC_ts_mass$chloride_mass_Mg, na.rm = TRUE),sum(DC_ts_mass$chloride_mass_Mg, na.rm = TRUE),sum(PB_ts_mass$chloride_mass_Mg, na.rm = TRUE), sum(YRO_ts_mass$chloride_mass_Mg, na.rm = TRUE), sum(SH_ts_mass$chloride_mass_Mg, na.rm = TRUE)),
   mass_chloride_baseflow_Mg = c(sum(YRI_events_bf$bf_chloride_Mg, na.rm = TRUE),sum(SMC_events_bf$bf_chloride_Mg, na.rm = TRUE),sum(DC_events_bf$bf_chloride_Mg, na.rm = TRUE),sum(PB_events_bf$bf_chloride_Mg, na.rm = TRUE), sum(YRO_events_bf$bf_chloride_Mg, na.rm = TRUE), sum(SH_events_bf$bf_chloride_Mg, na.rm = TRUE)),
   mass_chloride_events_Mg = c(sum(YRI_events_bf$event_chloride_Mg, na.rm = TRUE),sum(SMC_events_bf$event_chloride_Mg, na.rm = TRUE),sum(DC_events_bf$event_chloride_Mg, na.rm = TRUE),sum(PB_events_bf$event_chloride_Mg, na.rm = TRUE), sum(YRO_events_bf$event_chloride_Mg, na.rm = TRUE), sum(SH_events_bf$event_chloride_Mg, na.rm = TRUE)),
-  development = c(14.69, 12.12, 7.55, 38.46, 20.45, 81.50), #percentage developed land in subwatershed
-  agriculture = c(75.66, 77.84, 83.84, 55.7, 63.32, 5.10), #percentage agricultural land in subwatershed
-  road_denisty_mha = c(32.41, 42.04, 24.18, 112.8, 57.84, 305.83), #road density in subwatershed (m/ha)
-  watershed_size_ha = c(29408.4, 12532.03, 3270.64, 4750.4, 60805.84, 585.78), #waterhsed area (ha)
+  development = c(17.09, 15.91, 9.39, 41.03, 22.95, 86.30), #percentage developed land in subwatershed
+  agriculture = c(71.68, 73.99, 82.80 , 53.34, 60.22, 4.09), #percentage agricultural land in subwatershed
+  road_denisty_mha = c(34.61, 28.82, 20.30, 56.64, 38.01, 106.71), #road density in subwatershed (m/ha)
+  watershed_size_ha = c(29405.99, 12530.32, 3269.92, 4750.24, 60800.41, 912.15), #waterhsed area (ha)
   BFI = c(42, 82, 77, 49, 76, 20), #BFI from cQ_Slope_Calculations.R
   Ave_discharge_cms = c(mean(YRI_discharge$MovingAverage_dis_cms, na.rm = TRUE),mean(SMC_discharge$MovingAverage_dis_cms, na.rm = TRUE),mean(DC_discharge$MovingAverage_dis_cms, na.rm = TRUE),mean(PB_discharge$MovingAverage_dis_cms, na.rm = TRUE), mean(YRO_discharge$MovingAverage_dis_cms, na.rm = TRUE), mean(SH_discharge$MovingAverage_dis_cms, na.rm = TRUE))
 )
@@ -34,15 +34,15 @@ tests <- tests %>%
 
 plot(median_chloride_mgL~development, tests)
 
-summary(lm(median_chloride_mgL~development, tests)) #p = 6.842e-05; r = 0.9832
-summary(lm(median_chloride_mgL~road_denisty_mha, tests)) #p = 9.097e-06, r =  0.9938 
-summary(lm(total_chloride_mass_Mg ~watershed_size_ha, tests)) #p = 2.645e-06, r =0.9967
-summary(lm(yield~development, tests)) #p =  0.001582, r =  0.9197
-summary(lm(yield~road_denisty_mha, tests))#p = 0.0002223, r = 0.9697
-summary(lm(total_chloride_mass_Mg~Ave_discharge_cms, tests)) #p =8.896e-05, r =  0.9808
+summary(lm(median_chloride_mgL ~ development, tests)) #p = 6.842e-05; r = 0.9898
+summary(lm(median_chloride_mgL ~ road_denisty_mha, tests)) #p = 9.097e-06, r =  0.9771 
+summary(lm(total_chloride_mass_Mg ~ watershed_size_ha, tests)) #p = 2.645e-06, r =0.9971
+summary(lm(yield ~ development, tests)) #p =  0.001582, r =  0.9945
+summary(lm(yield ~ road_denisty_mha, tests))#p = 5.844e-05, r = 0.9844
+summary(lm(total_chloride_mass_Mg ~ Ave_discharge_cms, tests)) #p =8.896e-05, r =  0.9812
 
-summary(lm(total_chloride_mass_Mg ~ development, tests)) #p = 0.5304, r = -0.11
-summary(lm(total_chloride_mass_Mg ~ road_denisty_mha, tests)) #p = 0.4867, r = -0.09
+summary(lm(total_chloride_mass_Mg ~ development, tests)) #p = 0.5207, r = -0.11
+summary(lm(total_chloride_mass_Mg ~ road_denisty_mha, tests)) #p = 0.5618, r = -0.1366
 
 
 

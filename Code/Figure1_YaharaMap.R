@@ -41,6 +41,8 @@ ws.SW = st_read('GIS/Shapefiles_Watersheds/SW/ws_SW.shp')
 ws.YRS = st_read('GIS/Shapefiles_Watersheds/YS/ws_YS.shp')
 ws.SH = st_read('GIS/Shapefiles_Watersheds/SH/ws_SH.shp')
 
+st_area(ws.PB) + st_area(ws.SM) + st_area(ws.DC) + st_area(ws.SW) + st_area(ws.PB) + st_area(ws.PB) + st_area(ws.SH) + 
+
 # lakes
 YaharaLakes = st_read('GIS/Shapefiles_Yahara/YaharaLakes_DaneCty.shp') %>% st_transform(4326)
 NHD = st_read('GIS/Shapefiles_Yahara/Hydrolakes_DaneCountyArea.shp') %>% st_transform(4326)

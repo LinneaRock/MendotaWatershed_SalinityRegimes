@@ -3,7 +3,7 @@ library(colorblindr)
 library(scales)
 
 #call in chloride and discharge data:
-source("Code/Estimated_Chloride_Conc_Mass.R") 
+source("Code/DataLoad/Estimated_Chloride_Conc_Mass.R") 
 
 #### Figure a) Z-score of chloride mass balance ####
 mass_normalized <- function(ts_mass, id) {
@@ -39,7 +39,7 @@ month.mass = all_ts_mass |> mutate(month = month(dateTime), year = year(dateTime
             chloride_mass_Mg_low = sum(chloride_mass_Mg_low)) |> 
   mutate(date = ymd(paste(year,month,'01'))) |> 
   mutate_at(vars(starts_with('chloride_mass')), funs(if_else(ID %in% c("YR-O"), . * -1, .))) |>  ## YR-O is negative -- it is the outflow of the lake
-  mutate_at(vars(starts_with('chloride_mass')), funs(if_else(ID %in% c("SH"), . / 0.118, .))) |>  ## YR-O is negative -- it is the outflow of the lake
+  mutate_at(vars(starts_with('chloride_mass')), funs(if_else(ID %in% c("SH"), . / 0.184, .))) |>  ## Spring Harbor extrapolation
   mutate(ID = if_else(ID %in% c("SH"), 'Sewers', ID)) |> 
   ungroup() |> 
   filter(date >= as.Date('2020-01-01') & date <= as.Date('2021-03-01')) #do not include the partial months Dec 2019 or Apr 2021
@@ -85,7 +85,7 @@ p1 / p2 +
   theme(plot.tag = element_text(size = 8))
 
 ggsave(
-  "Figures/F5_zscore_massbalance.png",
+  "Figures/F7_zscore_massbalance.png",
   height = 6,
   width = 6.25,
   units = "in",

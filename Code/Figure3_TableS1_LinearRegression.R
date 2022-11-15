@@ -66,7 +66,6 @@ sites.df = all_river_linreg |>
   pivot_longer(cols = SpCond_uScm.x: MovingAverage_SpCond_uScm) |> 
   arrange(ID.x, chloride_mgL)
 
-sites.df |> filter(ID.x == 'YR-I')
 
 ## Broom regressions ####
 b.regs = sites.df %>% 
@@ -92,6 +91,16 @@ a = sites.df %>%
 #   print(check_model(a$fit[[i]]))
 # }
 
+### Test predictions
+test = sites.df |> filter(ID.x == 'SH')
+test.fit = lm(log10(chloride_mgL) ~ log10(value), data = test)
+summary(test.fit)
+10^predict(object = test.fit, newdata = data.frame(value = 3000))
+
+test.fit = lm((chloride_mgL) ~ (value), data = test)
+summary(test.fit)
+predict(object = test.fit, newdata = data.frame(value = 3000))
+ 
 
 # r2 equations for plots
 r2text <- function(site, Rin){

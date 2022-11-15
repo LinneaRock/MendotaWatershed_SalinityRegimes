@@ -79,3 +79,15 @@ a |> mutate(ag = area.ha*ag/100) |>
 
 # Latex code for easy copying to overleaf
 xtable(a)
+
+# Lake Mendota Outfalls
+ME.watershed = st_read('GIS/Shapefiles_Yahara/Mendota_Basin.shp') 
+SH.watershed = st_read('GIS/Shapefiles_Yahara/SpringHarborWateshed.shp') |> st_transform(crs(ME.watershed))
+Mendota.outfalls = st_read('GIS/Shapefiles_Yahara/MendotaOutfalls.shp') |> st_transform(crs(ME.watershed))
+upperYahara = st_read('GIS/Shapefiles_Yahara/UpperYahara.shp') |> st_transform(crs(ME.watershed))
+
+sum(st_area(upperYahara)) * 0.0001 #hectares
+st_area(SH.watershed)/sum(st_area(Mendota.outfalls))
+sum(st_area(Mendota.outfalls))/st_area(ME.watershed)
+
+#18.4%

@@ -4,7 +4,7 @@
 # 2) Total chloride load and percentage base vs. storm flow
 
 #call in datasets of baseflow and event discharge and salt
-source("Code/Baseflow_Events_Separation.R")
+source("Code/DataLoad/Baseflow_Events_Separation.R")
 library(tidyverse)
 library(scatterpie)
 library(colorblindr)
@@ -41,9 +41,10 @@ all_rivers_events_bf <- bind_rows(YRI_events_bf %>% mutate(ID = "YR-I"),
 #   theme_minimal()
 # ggsave(plot = fb, filename = "Figures/FX_QCscatter.png",
 #        height = 8, width = 8, units = "in", dpi = 500)
+
 drainageArea = data.frame(ID = c('SH','PB','YR-I','SMC','DC'),
-                          Area = c(585.78, 4750.40,29408.40,12532.03, 3270.64),
-                          Developed = c(81.5, 38.46,  14.69, 12.12, 7.55))
+                          Area = c(912.15, 4750.24, 29405.99, 12530.32, 3269.92),
+                          Developed = c(86.30, 41.03, 17.09, 15.91, 9.39))
 
 a = all_rivers_events_bf %>%
   filter(ID != 'YR-O', yr != 2019) |> 
@@ -157,5 +158,5 @@ p1 / p2 + plot_layout(guides = 'collect') +
   theme(plot.tag = element_text(size = 8), 
         legend.key.height = unit(0.5, "cm"))
 # Save combo plot
-ggsave('Figures/F7_TribLoadsYields.png', width = 6.5, units = 'in', dpi = 500)
+ggsave('Figures/F6_TribLoadsYields.png', width = 6.5, units = 'in', dpi = 500)
 

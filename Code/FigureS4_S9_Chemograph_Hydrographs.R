@@ -1,7 +1,8 @@
-#script to separate storm events in discharge and chloride timeseries data
+#script to separate storm events in hydrographs and chemographs and create graphs
+
 
 #call in chloride and discharge data:
-source("Code/Estimated_Chloride_Conc_Mass.R") 
+source("Code/DataLoad/Estimated_Chloride_Conc_Mass.R") 
 
 ##Get eckhardt baseflow for each river using GlobalBaseflow code from Zipper (2018)####
 source("Code/Functions/baseflow_separation_functions_Zipper2018.R")
@@ -55,15 +56,24 @@ SH_d <- get_eckhardt_bf("05427965", SH_d)
 calc_bfi(SH_d) #bfi = 20%
 
 
-##Identify stormflow events using EventPicker code from Gorski (2020)####
-source("Code/Functions/EventPicker_functions_Gorski2020.R")
+##function to create plots of chemographs and hydrographs####
+source("Code/Functions/chemo_hydro_graph_grid_function.R")
 
-YRI_events_bf <- find.peaks(YRI_d, YRI_ts_mass)
-SMC_events_bf <- find.peaks(SMC_d, SMC_ts_mass)
-DC_events_bf <- find.peaks(DC_d, DC_ts_mass)
-PB_events_bf <- find.peaks(PB_d, PB_ts_mass)
-YRO_events_bf <- find.peaks(YRO_d, YRO_ts_mass)
-SH_events_bf <- find.peaks(SH_d, SH_ts_mass) %>%
-  filter(dateTime >= as.Date("2019-12-19") &
-           dateTime < as.Date("2021-04-01"))
+chemo_hydro_graph(DC_d, DC_ts_mass, "Dorn Creek")
+ggsave("Figures/Supplemental/FigureS4_DC_grid.png", width = 6.25, height = 5.5, units = "in", dpi = 500)
+
+chemo_hydro_graph(PB_d, PB_ts_mass, "Pheasant Branch Creek")
+ggsave("Figures/Supplemental/FigureS5_PB_grid.png", width = 6.25, height = 5.5, units = "in", dpi = 500)
+
+chemo_hydro_graph(SH_d, SH_ts_mass, "Spring Harbor")
+ggsave("Figures/Supplemental/FigureS6_SH_grid.png", width = 6.25, height = 5.5, units = "in", dpi = 500)
+
+chemo_hydro_graph(SMC_d, SMC_ts_mass, "Sixmile Creek")
+ggsave("Figures/Supplemental/FigureS7_SMC_grid.png", width = 6.25, height = 5.5, units = "in", dpi = 500)
+
+chemo_hydro_graph(YRI_d, YRI_ts_mass, "Yahara River Inflow")
+ggsave("Figures/Supplemental/FigureS8_YR-I_grid.png", width = 6.25, height = 5.5, units = "in", dpi = 500)
+
+chemo_hydro_graph(YRO_d, YRO_ts_mass, "Yahara River Outflow")
+ggsave("Figures/Supplemental/FigureS9_YR-O_grid.png", width = 6.25, height = 5.5, units = "in", dpi = 500)
 
