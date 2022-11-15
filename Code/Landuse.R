@@ -72,4 +72,10 @@ a = ws.DC |> bind_rows(ws.PB) |>
   bind_rows(ws.SW) |> 
   bind_rows(ws.YRS) 
 
+# total ag in Upper Yahara
+a |> mutate(ag = area.ha*ag/100) |> 
+  summarise(area = sum(area.ha), ag = sum(ag)) |> 
+  mutate(ag/area)
+
+# Latex code for easy copying to overleaf
 xtable(a)
