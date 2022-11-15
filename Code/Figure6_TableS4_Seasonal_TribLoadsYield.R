@@ -72,10 +72,12 @@ library(jtools)
 m1 <- lm(Chloride ~ TotQ + Developed:quarter + Developed:TotQ,
              data = a) #f2 = 0.9393
 summ(m1)
+xtable(m1)
 
 m2 <- lm(ChlorideYield ~ Developed:quarter,
          data = a) #f2 = 0.9044
 summ(m2)
+xtable(m2)
 # huxtable::print_latex(export_summs(m1))
 
 ################################################
