@@ -11,7 +11,7 @@ source("Code/Functions/estimate_chloride_function.R")
 
 #run function to get chloride timeseries
 #Yahara River inflow
-YRI_ts_mass <- chloride_ts_mass(YRI_cl, YRI_cond, YRI_discharge)
+YRI_ts_mass <- chloride_ts_mass(field_data = YRI_cl, logger_data = YRI_cond, discharge_data = YRI_discharge)
 #Sixmile Creek
 SMC_ts_mass <- chloride_ts_mass(SMC_cl, SMC_cond, SMC_discharge)
 #Dorn Creek
