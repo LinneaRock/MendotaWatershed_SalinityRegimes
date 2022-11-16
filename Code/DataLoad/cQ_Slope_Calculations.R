@@ -1,7 +1,7 @@
 #script to calculate cQ Slopes
 #slope datasets are saved under the Data folder and can be loaded via sourcing Data/cQ_slopes/call_cQslope_datasets.R
 
-source("Code/DataLoad/Baseflow_Events_Separation.R")
+# source("Code/DataLoad/Baseflow_Events_Separation.R")
 
 ##Full record cQ slopes####
 source("Code/Functions/fullRecord_cQ_dataframe_function.R")

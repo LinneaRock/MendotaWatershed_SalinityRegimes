@@ -1,11 +1,9 @@
 #script to separate storm events in hydrographs and chemographs and create graphs
 
-
-#call in chloride and discharge data:
-source("Code/DataLoad/Estimated_Chloride_Conc_Mass.R") 
-
 ##Get eckhardt baseflow for each river using GlobalBaseflow code from Zipper (2018)####
 source("Code/Functions/baseflow_separation_functions_Zipper2018.R")
+##function to create plots of chemographs and hydrographs####
+source("Code/Functions/chemo_hydro_graph_grid_function.R")
 
 #filter out NA and anything below 0 cms
 YRI_d <- YRI_discharge %>%
@@ -56,8 +54,6 @@ SH_d <- get_eckhardt_bf("05427965", SH_d)
 calc_bfi(SH_d) #bfi = 20%
 
 
-##function to create plots of chemographs and hydrographs####
-source("Code/Functions/chemo_hydro_graph_grid_function.R")
 
 chemo_hydro_graph(DC_d, DC_ts_mass, "Dorn Creek")
 ggsave("Figures/Supplemental/FigureS5_DC_grid.png", width = 6.25, height = 5.5, units = "in", dpi = 500)

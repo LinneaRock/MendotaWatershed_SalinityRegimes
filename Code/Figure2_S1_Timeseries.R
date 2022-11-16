@@ -1,8 +1,3 @@
-#script to create timeseries figure
-library(scales)
-library(tidyverse)
-#load datasets with chloride timeseries
-source("Code/DataLoad/Estimated_Chloride_Conc_Mass.R") 
 
 #bind river conductivity data together
 all_river_cond <- bind_rows(YRI_cond, PB_cond, DC_cond, SMC_cond, YRO_cond, 

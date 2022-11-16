@@ -4,9 +4,9 @@
 source("Data/Chloride/call_Clfield_datasets.R")
 source("Data/Conductivity/call_cond_datasets.R")
 source("Data/USGS_discharge/call_discharge_datasets.R")
-
 #load functions
 source("Code/Functions/estimate_chloride_function.R")
+source("Code/Functions/join_field_cond_function.R") #function to join field and logger data to fill in missing field specific conductivity values with logger values where possible
 
 
 #run function to get chloride timeseries

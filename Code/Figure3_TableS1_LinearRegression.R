@@ -1,16 +1,5 @@
 #Script to create linear regressions from known chloride concentrations and 
 #specific conductivity from grab sampling
-library(tidyverse)
-library(patchwork)
-library(broom)
-library(easystats)
-#load conductivity logger data
-source("Data/Conductivity/call_cond_datasets.R")
-#load chloride/conductivity field data
-source("Data/Chloride/call_Clfield_datasets.R")
-
-#function to join field and logger data to fill in missing field specific conductivity values with logger values where possible
-source("Code/Functions/join_field_cond_function.R")
 
 #join datasets for each river
 a <- join_for_linreg(YRI_cl, YRI_cond)
@@ -43,7 +32,6 @@ ggplot(all_river_linreg |> filter(ID.x != 'SH')) +
   scale_y_log10() + scale_x_log10()
 
 #plot regressions on one graph
-library(colorblindr)
 
 ggplot(all_river_linreg, aes(SpCond_uScm.x , chloride_mgL)) +
   geom_point(aes(color = ID.x), size = 0.75) +
@@ -58,7 +46,7 @@ ggplot(all_river_linreg, aes(SpCond_uScm.x , chloride_mgL)) +
   theme_minimal() + theme(legend.title = element_blank())
 
 #save as a supplemental figure
-ggsave("Figures/Supplemental/FigureSX_linearRegresions.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
+# ggsave("Figures/Supplemental/FigureSX_linearRegresions.png", width = 6.25, height = 4.25, units = "in", dpi = 500)
 
 sites.df = all_river_linreg |> 
   dplyr::select(date, ID.x, chloride_mgL, SpCond_uScm.x, MovingAverage_SpCond_uScm) |> 
@@ -88,11 +76,11 @@ a = sites.df %>%
     tidied = map(fit, tidy),
     glanced = map(fit, glance))
 
-for (i in 1:8) {
-  print(as.character(a$ID.x[i]))
-  print(check_model(a$fit[[i]]))
-  readline(prompt="Press [enter] to continue")
-}
+# for (i in 1:8) {
+#   print(as.character(a$ID.x[i]))
+#   print(check_model(a$fit[[i]]))
+#   readline(prompt="Press [enter] to continue")
+# }
 
 ### Test predictions
 test = sites.df |> filter(ID.x == 'SH')
@@ -168,7 +156,7 @@ pr2 = ggplot(sites.df |> filter(!ID.x %in% c('SH','PB','SW')),
 
 
 # join figures
-pr1 + inset_element(pr0,0,0.6,0.4,1)
+# pr1 + inset_element(pr0,0,0.6,0.4,1)
 
 (pr1 + inset_element(pr0,0,0.6,0.4,1)) + pr2 +
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
@@ -206,8 +194,6 @@ ggsave('Figures/F3_regressions_log10.png', width = 6.5, height = 3,
 
 
 ### output regression table #####
-library(gt)
-library(webshot)
 ## Broom regressions
 b.slopes = sites.df %>% 
   nest(data = -ID.x) %>% 

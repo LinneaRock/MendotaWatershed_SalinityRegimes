@@ -1,7 +1,5 @@
 #script to calculate of seasonal salt export in each river and get distinctions between baseflow and stormflow contributions 
 
-#call in datasets of baseflow and event discharge and salt
-source("Code/DataLoad/Baseflow_Events_Separation.R")
 
 #combine all data into single dataframe
 all_rivers_events_bf <- bind_rows(YRI_events_bf %>% mutate(ID = "YR-I"), SMC_events_bf %>% mutate(ID = "SMC"), DC_events_bf %>% mutate(ID = "DC"), PB_events_bf %>% mutate(ID = "PB"), YRO_events_bf %>% mutate(ID = "YR-O"), SH_events_bf %>% mutate(ID = "SH")) %>%
@@ -87,7 +85,7 @@ p1 / p2 +
         axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 # Save combo plot
-ggsave('Figures/Supplemental/FigureS3_Seasonal_bf_event_export.png', 
+ggsave('Figures/Supplemental/FigureS34_Seasonal_bf_event_export.png', 
        height = 6, width = 6.5, units = 'in', dpi = 500)
 
 
