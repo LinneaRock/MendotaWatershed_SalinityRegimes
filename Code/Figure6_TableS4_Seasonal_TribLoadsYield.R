@@ -3,12 +3,6 @@
 # OLS model for chloride load and yield
 # 2) Total chloride load and percentage base vs. storm flow
 
-#call in datasets of baseflow and event discharge and salt
-source("Code/DataLoad/Baseflow_Events_Separation.R")
-library(tidyverse)
-library(scatterpie)
-library(colorblindr)
-library(patchwork)
 
 #combine all data into single dataframe
 all_rivers_events_bf <- bind_rows(YRI_events_bf %>% mutate(ID = "YR-I"), 
@@ -68,7 +62,6 @@ a$Season = factor(a$season,
 
 ################################################
 ######## ######## Stats ######## ######## #####
-library(jtools)
 m1 <- lm(Chloride ~ TotQ + Developed:quarter + Developed:TotQ,
              data = a) #f2 = 0.9393
 summ(m1)

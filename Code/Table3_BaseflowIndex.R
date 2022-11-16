@@ -1,12 +1,5 @@
 #script to create table with relevant cQ slope information
 
-#load in cQ slope dataframes
-source("Data/cQ_slopes/call_cQslope_datasets.R")
-
-library(colorblindr)
-library(egg)
-library(xtable)
-
 ################################################
 ######## ######## CQ Table ######## ######## #####
 source("Code/Functions/count_stormflow_events_functions.R")

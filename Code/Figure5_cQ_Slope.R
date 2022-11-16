@@ -1,12 +1,7 @@
 #script to create figures with relevant cQ slope information
 
-#load in cQ slope dataframes
-source("Data/cQ_slopes/call_cQslope_datasets.R")
-
-
 ################################################
 ######## ######## PLOT ######## ######## #####
-
 all_individual_events$season = factor(all_individual_events$season,
                                       levels = c("Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec"))
 all_individual_events$trib = factor(all_individual_events$trib, levels = c('SH','PB','YR-I','SMC','DC', 'YR-O'))

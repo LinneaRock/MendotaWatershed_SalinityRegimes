@@ -1,8 +1,3 @@
-library(NTLlakeloads) #install_github('hdugan/NTLlakeloads)
-library(tidyverse)
-library(lubridate)
-library(purrr)
-library(MetBrewer) # devtools::install_github("BlakeRMills/MetBrewer") 
 
 # load NTL-LTER core datasets
 lterions = loadLTERions()

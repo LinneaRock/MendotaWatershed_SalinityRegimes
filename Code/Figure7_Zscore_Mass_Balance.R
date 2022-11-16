@@ -1,9 +1,4 @@
 #script to make plot of z-score of chloride mass tranpsort and monthly chloride mass in each river 
-library(colorblindr)
-library(scales)
-
-#call in chloride and discharge data:
-source("Code/DataLoad/Estimated_Chloride_Conc_Mass.R") 
 
 #### Figure a) Z-score of chloride mass balance ####
 mass_normalized <- function(ts_mass, id) {
@@ -28,8 +23,7 @@ p1 = ggplot() +
 
 #### Figure b) monthly chloride mass balance ####
 ### Important: 
-# The Spring Harbor storm sewer encompasses 29 of the 133 outfall basins within the Lake Mendota sewershed, i.e.
-# sewers that directly contribute to the lake. Spring Harbor represents 11.8% of the total Lake
+# Spring Harbor represents 18.4% of the total Lake
 # Mendota sewershed area. Therefore, the SH data accounts for all stormsewers. 
 
 #combine all mass data into monthly totals 

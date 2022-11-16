@@ -1,11 +1,3 @@
-# Load packages
-library(FedData)
-library(sf)
-library(raster)
-library(tidyverse)
-library(tigris)
-options(tigris_use_cache = TRUE)
-library(xtable) #latex output
 
 # Get road network
 daneroads = roads(state = 'WI', county = 'DANE') |> st_transform(crs(shapefile.utm), year = 2021)

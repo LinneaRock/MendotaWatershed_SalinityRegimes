@@ -3,7 +3,6 @@
 
 #load in datasets needed to create tests df
 source("Data/cQ_slopes/call_cQslope_datasets.R")
-source("Code/DataLoad/Baseflow_Events_Separation.R")
 
 tests <- data.frame(
   site = c("YR-I", "SMC", "DC", "PB", "YR-O", "SH"),
