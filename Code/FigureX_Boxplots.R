@@ -56,9 +56,9 @@ dt = dt |>  mutate(cld = cld$Letters) |>
 
 p1 = ggplot(df.cond) +
   geom_boxplot(aes(y = MovingAverage_SpCond_uScm, x = ID, fill = ID), 
-               size = 0.3, outlier.size = 0.1) +
+               size = 0.1, outlier.size = 0.1) +
   scale_fill_OkabeIto(order = c(1:2,4:8,3)) +
-  geom_text(data = dt, aes(x = ID, label = cld, y = w + sd), vjust = -6, hjust = -0.5, size = 2.5) +
+  geom_text(data = dt, aes(x = ID, label = cld, y = w + sd), vjust = -6, hjust = -0.5, size = 2) +
   theme_minimal(base_size = 8) +
   labs(y = "SpC"~(µS~cm^-1), x = "") +
   scale_y_log10(expand = c(0,0.02)) +
@@ -90,9 +90,9 @@ dt = dt |>  mutate(cld = cld$Letters) |>
 
 p2 = ggplot(df.cl) +
   geom_boxplot(aes(y = chloride_mgL, x = ID, fill = ID), 
-               size = 0.3, outlier.size = 0.1) +
+               size = 0.1, outlier.size = 0.1) +
   scale_fill_OkabeIto(order = c(1:2,4:8,3)) +
-  geom_text(data = dt, aes(x = ID, label = cld, y = w + sd), vjust = -6, hjust = -0.5, size = 2.5) +
+  geom_text(data = dt, aes(x = ID, label = cld, y = w + sd), vjust = -6, hjust = -0.5, size = 2) +
   theme_minimal(base_size = 8) +
   labs(y = "Chloride"~(mg~L^-1), x = "") +
   scale_y_log10(expand = c(0,0.02)) +
@@ -104,6 +104,6 @@ p1 / p2 +
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
   theme(plot.tag = element_text(size = 8))
 # Save combo plot
-ggsave('Figures/FX_boxplots.png', width = 6.5, height = 6, units = 'in', dpi = 500)
+ggsave('Figures/FX_boxplots.png', width = 6.5, height = 4, units = 'in', dpi = 500)
 
 
