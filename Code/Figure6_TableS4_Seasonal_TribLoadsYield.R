@@ -92,7 +92,14 @@ df = a |>
                   100*(18+siteX),
                   100*(24+siteX)))
 
+multiplier = 100
 p1 = ggplot(df) +
+  annotate("rect", xmin = 0-(3*multiplier), xmax = 0+(3*multiplier),
+           ymin = 0.01, ymax = 1500, fill = 'grey80', alpha = 0.2) +
+  annotate("rect", xmin = 12*multiplier-(3*multiplier), xmax = 12*multiplier+(3*multiplier),
+           ymin = 0.01, ymax = 1500, fill = 'grey80', alpha = 0.2) +
+  annotate("rect", xmin = 24*multiplier-(3*multiplier), xmax = 24*multiplier+(3*multiplier),
+           ymin = 0.01, ymax = 1500, fill = 'grey80', alpha = 0.2) +
   geom_path(aes(x = site, y = Chloride, 
                 col = Season, group = Season),
             alpha = 0.5, size = 1) +
@@ -101,7 +108,7 @@ p1 = ggplot(df) +
                   cols = c('Base','Storm'), lwd = 0.2,
                   legend_name = 'Flow') + 
   coord_equal() +
-  scale_x_continuous(breaks = 100*c(0,6,12,18,24), 
+  scale_x_continuous(breaks = multiplier*c(0,6,12,18,24), 
                      labels = c('SH','PB','YR-I','SMC','DC')) +
   scale_fill_manual(values = c("#6394a6","#801129")) +
   scale_color_OkabeIto() +
@@ -111,7 +118,7 @@ p1 = ggplot(df) +
   theme(#legend.position = 'bottom', 
     axis.title.x = element_text(size = 7),
     legend.text = element_text(size = 7), 
-    legend.title = element_text(size = 7))
+    legend.title = element_text(size = 7)); p1
 
 # ggsave("Figures/FX_stormflowContribution.png",
 #        height = 2.75, width = 6.25, units = "in", dpi = 500)
@@ -131,6 +138,12 @@ df = a |>
                   multiplier*(24+siteX)))
 
 p2 = ggplot(df) +
+  annotate("rect", xmin = 0-(3*multiplier), xmax = 0+(3*multiplier),
+            ymin = 0.01, ymax = 0.2, fill = 'grey80', alpha = 0.2) +
+  annotate("rect", xmin = 12*multiplier-(3*multiplier), xmax = 12*multiplier+(3*multiplier),
+           ymin = 0.01, ymax = 0.2, fill = 'grey80', alpha = 0.2) +
+  annotate("rect", xmin = 24*multiplier-(3*multiplier), xmax = 24*multiplier+(3*multiplier),
+           ymin = 0.01, ymax = 0.2, fill = 'grey80', alpha = 0.2) +
   geom_path(aes(x = site, y = ChlorideYield,
                 col = Season, group = Season),
             alpha = 0.5, size = 1) +
@@ -150,7 +163,7 @@ p2 = ggplot(df) +
   theme(#legend.position = 'bottom', 
     axis.title.x = element_text(size = 7),
     legend.text = element_text(size = 7), 
-    legend.title = element_text(size = 7))
+    legend.title = element_text(size = 7)); p2
 
 
 ################################################
