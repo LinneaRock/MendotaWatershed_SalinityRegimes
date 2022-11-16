@@ -87,9 +87,12 @@ a = sites.df %>%
     fit = map(data, ~ lm(log10(chloride_mgL) ~ log10(value), data = .x)),
     tidied = map(fit, tidy),
     glanced = map(fit, glance))
-# for (i in 1:8) {
-#   print(check_model(a$fit[[i]]))
-# }
+
+for (i in 1:8) {
+  print(as.character(a$ID.x[i]))
+  print(check_model(a$fit[[i]]))
+  readline(prompt="Press [enter] to continue")
+}
 
 ### Test predictions
 test = sites.df |> filter(ID.x == 'SH')
