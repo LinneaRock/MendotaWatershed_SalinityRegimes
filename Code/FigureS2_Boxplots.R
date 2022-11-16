@@ -104,6 +104,6 @@ p1 / p2 +
   plot_annotation(tag_levels = 'a', tag_suffix = ')') & 
   theme(plot.tag = element_text(size = 8))
 # Save combo plot
-ggsave('Figures/FX_boxplots.png', width = 6.5, height = 4, units = 'in', dpi = 500)
+ggsave('Figures/Supplemental/FigureS2_boxplots.png', width = 6.5, height = 4, units = 'in', dpi = 500)
 
 
