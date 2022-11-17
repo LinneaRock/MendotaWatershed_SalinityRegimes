@@ -48,6 +48,17 @@ month.mass.total = month.mass |>
 month.mass.total |> filter(year == 2020) |> 
   summarise_if(is.numeric, sum, na.rm = TRUE)
 
+# month balance in 2020 as a percentage of inputs
+month.mass.total |> filter(year == 2020) |> 
+  summarise_if(is.numeric, sum, na.rm = TRUE) |> select(chloride_mass_Mg)
+
+month.mass |> filter(ID != 'YR-O') |> filter(year == 2020) |> 
+  summarise_if(is.numeric, sum, na.rm = TRUE) |> select(chloride_mass_Mg)
+
+month.mass |> filter(ID == 'YR-O') |> filter(year == 2020) |> 
+  summarise_if(is.numeric, sum, na.rm = TRUE) 
+
+
 month.mass.in = month.mass |> filter(ID != 'YR-O') |> 
   group_by(month, year, date) |> 
   summarise(chloride_mass_Mg = sum(chloride_mass_Mg), chloride_mass_Mg_high = sum(chloride_mass_Mg_high), 
@@ -58,8 +69,11 @@ month.mass.out = month.mass |> filter(ID == 'YR-O') |>
   summarise(chloride_mass_Mg = sum(chloride_mass_Mg), chloride_mass_Mg_high = sum(chloride_mass_Mg_high), 
             chloride_mass_Mg_low = sum(chloride_mass_Mg_low))
 
+
+
 # only plots mass for months which we have no missing data, i.e., do not include the partial months Dec 2019 or Apr 2021
 p2 = ggplot(month.mass) +
+  geom_hline(aes(yintercept = 0), linetype = 2) +
   geom_ribbon(data = month.mass.out, aes(x = date, ymin = chloride_mass_Mg_low, ymax = chloride_mass_Mg_high), alpha = 0.3) +
   geom_ribbon(data = month.mass.in, aes(x = date, ymin = chloride_mass_Mg_low, ymax = chloride_mass_Mg_high), alpha = 0.3) +
   geom_bar(mapping = aes(fill = ID, x = date, y = chloride_mass_Mg), position = "stack", stat = "identity") +
@@ -71,7 +85,7 @@ p2 = ggplot(month.mass) +
   labs(y = "Mass of Chloride (Mg)", x = "") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   scale_x_date(date_breaks = "2 months", date_labels = "%b %Y", limits = c(as.Date('2019-12-12'),as.Date('2021-04-15'))) +
-  scale_y_continuous(n.breaks = 10)
+  scale_y_continuous(n.breaks = 10);p2
 
 
 p1 / p2 +
