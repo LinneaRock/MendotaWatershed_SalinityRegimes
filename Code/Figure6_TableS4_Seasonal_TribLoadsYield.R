@@ -62,8 +62,13 @@ a$Season = factor(a$season,
 
 ################################################
 ######## ######## Stats ######## ######## #####
-m1 <- lm(Chloride ~ TotQ + Developed:quarter + Developed:TotQ,
-             data = a) #f2 = 0.9393
+# m1 <- lm(Chloride ~ TotQ + Developed:quarter + Developed:TotQ,
+#              data = a) #f2 = 0.9393
+# summ(m1)
+# xtable(m1)
+
+m1 <- lm(Chloride ~ TotQ + Developed:TotQ,
+         data = a) #f2 = 0.9393
 summ(m1)
 xtable(m1)
 
