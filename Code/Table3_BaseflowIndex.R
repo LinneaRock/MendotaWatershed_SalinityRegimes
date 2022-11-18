@@ -2,7 +2,7 @@
 
 ################################################
 ######## ######## CQ Table ######## ######## #####
-source("Code/Functions/count_stormflow_events_functions.R")
+source("Code/Functions/cQ_stats_functions.R")
 
 eventTotals = all_individual_events |> 
   mutate(slope_SpC = if_else(pval_SpC > 0.05, NA_real_, slope_SpC)) |> 

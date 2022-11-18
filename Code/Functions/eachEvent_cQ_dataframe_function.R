@@ -9,29 +9,9 @@ each_event_cq <- function(events_bf, name) {
   #identify months and seasons 
   df <- events_bf %>%
     mutate(event.flag = ifelse(event.flag < 0, event.flag * -1, event.flag)) %>%
-    mutate(mon = months.POSIXt(dateTime)) %>%
-    mutate(season = NA) %>%
-    mutate(season = ifelse(
-      mon == "October" |
-        mon == "November" |
-        mon == "December" , "Oct-Dec", season),
-      season =  ifelse(
-        mon == "January" |
-          mon == "February" |
-          mon == "March", "Jan-Mar", season),
-      season = ifelse(
-        mon == "April" |
-          mon == "May" |
-          mon == "June", "Apr-Jun", season),
-      season = ifelse(
-        mon == "July" |
-          mon == "August" |
-          mon == "September", "Jul-Sep", season),
-    ) %>%
+    addSeason() %>%
     drop_na(event.flag) %>%
     mutate(trib = name)
-  
-  
   
   df <- df %>%
     drop_na(event_chloride_mgL) %>% #drop NAs and anything below 0 (will not work with log)
@@ -54,5 +34,4 @@ each_event_cq <- function(events_bf, name) {
     dplyr::select(-new) %>%
     ungroup()
 
-  
 }

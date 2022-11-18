@@ -80,10 +80,10 @@ baseflow <- function(events_bf, name) {
       slope_cq(bf_jul_Cl)
     ),
     intercept_Cl = c(intercept_cq(bf_fit_Cl),
-                  intercept_cq(bf_oct_Cl),
-                  intercept_cq(bf_jan_Cl),
-                  intercept_cq(bf_apr_Cl),
-                  intercept_cq(bf_jul_Cl)
+                     intercept_cq(bf_oct_Cl),
+                     intercept_cq(bf_jan_Cl),
+                     intercept_cq(bf_apr_Cl),
+                     intercept_cq(bf_jul_Cl)
     ),
     slope_SpC = c(
       slope_cq(bf_fit_SpC),
@@ -93,10 +93,10 @@ baseflow <- function(events_bf, name) {
       slope_cq(bf_jul_SpC)
     ),
     intercept_SpC = c(intercept_cq(bf_fit_SpC),
-                  intercept_cq(bf_oct_SpC),
-                  intercept_cq(bf_jan_SpC),
-                  intercept_cq(bf_apr_SpC),
-                  intercept_cq(bf_jul_SpC)
+                      intercept_cq(bf_oct_SpC),
+                      intercept_cq(bf_jan_SpC),
+                      intercept_cq(bf_apr_SpC),
+                      intercept_cq(bf_jul_SpC)
     ),
     water_volume_cm = c(discharge_annual,
                         discharge_OctDec,
@@ -111,5 +111,5 @@ baseflow <- function(events_bf, name) {
   )
   
   return(baseflow_fits)
-
+  
 }
