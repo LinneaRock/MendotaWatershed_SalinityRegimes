@@ -38,34 +38,38 @@ saveRDS(all_baseflow, "Data/cQ_slopes/baseflow.rds")
 ##individual stormflow cQ slopes####
 source("Code/Functions/eachEvent_cQ_dataframe_function.R")
 
- YRI_events <- each_event_cq(YRI_events_bf, "YR-I")
- SMC_events <- each_event_cq(SMC_events_bf, "SMC")
- DC_events <- each_event_cq(DC_events_bf, "DC")
- PB_events <- each_event_cq(PB_events_bf, "PB")
- YRO_events <- each_event_cq(YRO_events_bf, "YR-O")
- SH_events <- each_event_cq(SH_events_bf, "SH")
+YRI_events <- each_event_cq(events_bf = YRI_events_bf, name =  "YR-I")
+SMC_events <- each_event_cq(SMC_events_bf, "SMC")
+DC_events <- each_event_cq(DC_events_bf, "DC")
+PB_events <- each_event_cq(PB_events_bf, "PB")
+YRO_events <- each_event_cq(YRO_events_bf, "YR-O")
+SH_events <- each_event_cq(SH_events_bf, "SH")
 
- #bind all data together
- all_individual_events <- bind_rows(YRI_events, SMC_events, DC_events, PB_events, YRO_events, SH_events)
- #save dataset for easy loading later
- saveRDS(all_individual_events, "Data/cQ_slopes/individualEvents.rds")
- 
+#bind all data together
+all_individual_events <- bind_rows(YRI_events, SMC_events, DC_events, PB_events, YRO_events, SH_events)
+#save dataset for easy loading later
+saveRDS(all_individual_events, "Data/cQ_slopes/individualEvents.rds")
 
- ##bulk stormflow cQ slopes####
- source("Code/Functions/bulkEvent_cQ_dataframe_function.R")
- 
- YRI_bulkstorm <- bulk_event_cq(YRI_events_bf, "YR-I")
- SMC_bulkstorm <- bulk_event_cq(SMC_events_bf, "SMC")
- DC_bulkstorm <- bulk_event_cq(DC_events_bf, "DC")
- PB_bulkstorm <- bulk_event_cq(PB_events_bf, "PB")
- SH_bulkstorm <- bulk_event_cq(SH_events_bf, "SH")
- ##Use the amended function in bulkEvent_cQ_dataframe_function.R for YRO
- ##The outlet only has a few events that occur in Apr-Jun and Oct-Dec. Need to comment out the other 
- ##two seasons. Notes in the function for what to comment out and include. 
- YRO_bulkstorm <- bulk_event_cq_special_YRO(YRO_events_bf, "YR-O")
- 
- #bind all data together 
- all_bulkstorm <- bind_rows(YRI_bulkstorm, SMC_bulkstorm, DC_bulkstorm, PB_bulkstorm, YRO_bulkstorm, SH_bulkstorm)
- #save dataset for easy loading later
- saveRDS(all_bulkstorm, "Data/cQ_slopes/bulkStormflow.rds")
+# Negative cQ slopes ($<$ -0.05) implied chemodynamic dilution behavior, 
+# as concentration decreases with increasing discharge, and positive cQ slopes ($>$ 0.05) 
+# implied chemodynamic mobilization behavior
+
+
+##bulk stormflow cQ slopes####
+source("Code/Functions/bulkEvent_cQ_dataframe_function.R")
+
+YRI_bulkstorm <- bulk_event_cq(YRI_events_bf, "YR-I")
+SMC_bulkstorm <- bulk_event_cq(SMC_events_bf, "SMC")
+DC_bulkstorm <- bulk_event_cq(DC_events_bf, "DC")
+PB_bulkstorm <- bulk_event_cq(PB_events_bf, "PB")
+SH_bulkstorm <- bulk_event_cq(SH_events_bf, "SH")
+##Use the amended function in bulkEvent_cQ_dataframe_function.R for YRO
+##The outlet only has a few events that occur in Apr-Jun and Oct-Dec. Need to comment out the other 
+##two seasons. Notes in the function for what to comment out and include. 
+YRO_bulkstorm <- bulk_event_cq_special_YRO(YRO_events_bf, "YR-O")
+
+#bind all data together 
+all_bulkstorm <- bind_rows(YRI_bulkstorm, SMC_bulkstorm, DC_bulkstorm, PB_bulkstorm, YRO_bulkstorm, SH_bulkstorm)
+#save dataset for easy loading later
+saveRDS(all_bulkstorm, "Data/cQ_slopes/bulkStormflow.rds")
  

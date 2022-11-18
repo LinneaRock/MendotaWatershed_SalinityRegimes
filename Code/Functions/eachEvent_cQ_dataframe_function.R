@@ -47,7 +47,8 @@ each_event_cq <- function(events_bf, name) {
     mutate(intercept_Cl = intercept_cq(summary(lm(chloride~discharge, data = df %>% group_by(event.flag))))) %>%
     mutate(slope_SpC = slope_cq(summary(lm(SpC~discharge, data = df %>% group_by(event.flag))))) %>%
     mutate(intercept_SpC = intercept_cq(summary(lm(SpC~discharge, data = df %>% group_by(event.flag))))) %>%
-    dplyr::select(trib, event.flag, mon, season, slope_Cl, intercept_Cl, slope_SpC, intercept_SpC) %>%
+    mutate(pval_SpC = pval_cq(lm(SpC~discharge, data = df %>% group_by(event.flag)))) %>%
+    dplyr::select(trib, event.flag, mon, season, slope_Cl, intercept_Cl, slope_SpC, intercept_SpC, pval_SpC) %>%
     distinct() %>%
     mutate(new = ifelse(event.flag == lag(event.flag), "X", event.flag)) %>% #sometimes an event may cross months, next lines ensure these are not double counted
     dplyr::select(-new) %>%

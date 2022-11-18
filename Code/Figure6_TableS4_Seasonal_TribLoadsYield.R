@@ -72,10 +72,15 @@ m1 <- lm(Chloride ~ TotQ + Developed:TotQ,
 summ(m1)
 xtable(m1)
 
+library(nlme)
+# Mixed model example 
+# summary(lme(Chloride ~ TotQ + Developed:TotQ, data=a, random= ~1|ID))
+
 m2 <- lm(ChlorideYield ~ Developed:quarter,
          data = a) #f2 = 0.9044
 summ(m2)
 xtable(m2)
+# summary(lme(ChlorideYield ~ Developed:quarter, data=a, random= ~1|ID))
 # huxtable::print_latex(export_summs(m1))
 
 ################################################

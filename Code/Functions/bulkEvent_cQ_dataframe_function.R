@@ -6,7 +6,7 @@ source("Code/Functions/cQ_stats_functions.R")
 
 bulk_event_cq <- function(events_bf, name) {
   
-  #identfiy months and seasons
+  #identify months and seasons
   df <- events_bf %>%
     mutate(event.flag = ifelse(event.flag < 0, event.flag * -1, event.flag)) %>%
     mutate(mon = months.POSIXt(dateTime)) %>%
