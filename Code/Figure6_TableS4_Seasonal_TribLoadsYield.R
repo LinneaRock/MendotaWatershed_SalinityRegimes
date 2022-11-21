@@ -156,7 +156,7 @@ p2 = ggplot(df) +
                   legend_name = 'Flow') + 
   coord_equal() +
   scale_x_continuous(breaks = multiplier*c(0,6,12,18,24), 
-                     labels = c('SH','PB','YR-I','DC','SMC')) +
+                     labels = c('SH','PB','YR-I','SMC','DC')) +
   scale_fill_manual(values = c("#6394a6","#801129")) +
   scale_color_OkabeIto() +
   scale_y_log10() +
