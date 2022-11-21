@@ -35,13 +35,15 @@ plot(median_chloride_mgL~development, tests)
 
 summary(lm(median_chloride_mgL ~ development, tests)) #p = 6.842e-05; r = 0.9898
 summary(lm(median_chloride_mgL ~ road_denisty_mha, tests)) #p = 9.097e-06, r =  0.9771 
-summary(lm(total_chloride_mass_Mg ~ watershed_size_ha, tests)) #p = 2.645e-06, r =0.9971
-summary(lm(yield ~ development, tests)) #p =  0.001582, r =  0.9945
-summary(lm(yield ~ road_denisty_mha, tests))#p = 5.844e-05, r = 0.9844
-summary(lm(total_chloride_mass_Mg ~ Ave_discharge_cms, tests)) #p =8.896e-05, r =  0.9812
 
+summary(lm(total_chloride_mass_Mg ~ watershed_size_ha, tests)) #p = 2.645e-06, r =0.9971
+summary(lm(total_chloride_mass_Mg ~ Ave_discharge_cms, tests)) #p =8.896e-05, r =  0.9812
 summary(lm(total_chloride_mass_Mg ~ development, tests)) #p = 0.5207, r = -0.11
 summary(lm(total_chloride_mass_Mg ~ road_denisty_mha, tests)) #p = 0.5618, r = -0.1366
+
+
+summary(lm(yield ~ development, tests)) #p =  0.001582, r =  0.9945
+summary(lm(yield ~ road_denisty_mha, tests))#p = 5.844e-05, r = 0.9844
 
 
 
