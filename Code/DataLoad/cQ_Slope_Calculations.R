@@ -34,10 +34,7 @@ SMC_bulkstorm <- cQslopes_function(SMC_events_bf, "SMC", use = 'bulk')
 DC_bulkstorm <- cQslopes_function(DC_events_bf, "DC", use = 'bulk')
 PB_bulkstorm <- cQslopes_function(PB_events_bf, "PB", use = 'bulk')
 SH_bulkstorm <- cQslopes_function(SH_events_bf, "SH", use = 'bulk')
-##Use the amended function in bulkEvent_cQ_dataframe_function.R for YRO
-##The outlet only has a few events that occur in Apr-Jun and Oct-Dec. Need to comment out the other 
-##two seasons. Notes in the function for what to comment out and include. 
-YRO_bulkstorm <- bulk_event_cq_special_YRO(YRO_events_bf, "YR-O")
+YRO_bulkstorm <- cQslopes_function(YRO_events_bf, "YR-O", use = 'bulk')
 
 #bind all data together 
 all_bulkstorm <- bind_rows(YRI_bulkstorm, SMC_bulkstorm, DC_bulkstorm, PB_bulkstorm, YRO_bulkstorm, SH_bulkstorm)

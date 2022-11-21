@@ -26,6 +26,10 @@ library(tigris)
 options(tigris_use_cache = TRUE)
 library(webshot)
 library(xtable)
+library(conflicted)
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lag", "dplyr")
 
 
 #load datasets in this order 
