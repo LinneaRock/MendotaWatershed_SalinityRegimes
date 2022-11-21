@@ -48,17 +48,6 @@ seasonal_mass_events_bf = all_rivers_events_bf %>%
 seasonal_mass_events_bf$flow_type = factor(seasonal_mass_events_bf$flow_type, 
                                            levels = c('Storm','Base'))
 
-annual_mass_events_bf = all_rivers_events_bf %>%
-  filter(yr != 2019, dateTime < as.POSIXct("2021-04-01 00:00:00")) %>%
-  group_by(ID) %>%
-  summarise(Base = sum(bf_chloride_Mg, na.rm = TRUE),
-            Storm = sum(event_chloride_Mg, na.rm = TRUE)) %>%
-  pivot_longer(c(Base, Storm), names_to = "flow_type", values_to = "clmass") %>%
-  group_by(ID) |> 
-  mutate(total_clmass = sum(clmass)) %>%
-  mutate(percent = clmass/total_clmass) |> 
-  ungroup()
-
 p1 = ggplot(seasonal_mass_events_bf) +
   geom_col(aes(x = ID, y = percent, fill = flow_type)) +
   facet_wrap(~season, nrow = 1) +
@@ -91,7 +80,16 @@ ggsave('Figures/Supplemental/FigureS34_Seasonal_bf_event_export.png',
 
 ## ANNUAL SALT EXPORT CALCULATED AS A PERCENTAGE OF SPECIFIC CONDUCTIVITY EXPORTED ##
 # For Table S3
-annual_mass_events_bf
+annual_mass_events_bf = all_rivers_events_bf %>%
+  filter(yr != 2019, dateTime < as.POSIXct("2021-04-01 00:00:00")) %>%
+  group_by(ID) %>%
+  summarise(Base = sum(bf_chloride_Mg, na.rm = TRUE),
+            Storm = sum(event_chloride_Mg, na.rm = TRUE)) %>%
+  pivot_longer(c(Base, Storm), names_to = "flow_type", values_to = "clmass") %>%
+  group_by(ID) |> 
+  mutate(total_clmass = sum(clmass)) %>%
+  mutate(percent = clmass/total_clmass) |> 
+  ungroup()
 
 annual_mass_events_bf |> select(ID, flow_type, percent) |> 
   pivot_wider(names_from = flow_type, values_from = percent) |> 
