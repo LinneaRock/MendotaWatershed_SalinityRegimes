@@ -1,3 +1,6 @@
+[![DOI](https://zenodo.org/badge/378938614.svg)](https://zenodo.org/badge/latestdoi/378938614)
+
+
 # MendotaWatershed_SalinityRegimes
 Data and code for assessing salinity (chloride) regimes in the tributaries of Lake Mendota.
 
