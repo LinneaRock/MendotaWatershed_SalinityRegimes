@@ -6,6 +6,8 @@ Data and code for assessing salinity (chloride) regimes in the tributaries of La
 
 Authors: Linnea Rock, Hilary Dugan
 
+https://doi.org/10.1002/lno.12340
+
 ## Folders:
 
 **Code:** Contains .R files to run analyses and make figures.
